@@ -1,8 +1,9 @@
-const express = require("express");
+import express from "express"
+import mongoose from "mongoose"
+import path from "path"
+const __dirname = path.resolve();
+
 const app = express();
-const mongoose = require("mongoose");
-const path = require("path")
-const Player = require("./models/Player")
 
 mongoose.connect("mongodb://localhost:27017/altisima", {
   useNewUrlParser: true,
@@ -18,21 +19,16 @@ db.once("open", () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
+// Ruta para todas las demás solicitudes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
-});
-
-app.get("/", async (req, res) => {
-  res.send();
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen("3000", () => {
   console.log('ON 3000')
 });
-
-
 
 // app.get("/login", (req, res) => {})
 // app.post("/login", (req, res) => {})
