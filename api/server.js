@@ -21,10 +21,15 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Ruta para todas las demás solicitudes
-app.get('*', (req, res) => {
+app.post("/api/player", (req, res) => {
+  const formData = req.body;
+  console.log(formData)
+})
+
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
+
 
 app.listen("3000", () => {
   console.log('ON 3000')
