@@ -1,22 +1,24 @@
 import "./App.css";
-import api from "./utils/api-client";
+// import api from "./utils/api-client";
+import Players from "./pages/Players.jsx";
 
 function App() {
-  function handleSubmit(e) {
-    e.preventDefault();
-    let username = e.target.elements.username.value;
-    let password = e.target.elements.password.value;
-    let image = e.target.elements.image.value;
-    const formData = { username: username, password: password, image: image };
-    api.createPlayer(formData)
-    username = ""
-    password = ""
-    image = ""
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   let username = e.target.elements.username.value;
+  //   let password = e.target.elements.password.value;
+  //   let image = e.target.elements.image.value;
+  //   const formData = { username: username, password: password, image: image };
+  //   api.createPlayer(formData)
+  //   username = ""
+  //   password = ""
+  //   image = ""
+  // }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <Players />
+      {/* <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Username: </label>
           <input type="text" name="username" id="username" />
@@ -32,7 +34,7 @@ function App() {
         <div>
           <button type="submit">Submit</button>
         </div>
-      </form>
+      </form> */}
     </>
   );
 }

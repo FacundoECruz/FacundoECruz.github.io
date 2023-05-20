@@ -1,9 +1,12 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema
 
 const PlayerSchema = new Schema({
-  name: String,
-  score: Number,
-});
+  username: String,
+  image: String,
+  password: String,
+})
 
-module.exports = mongoose.model("Player", PlayerSchema);
+const Player = mongoose.model("Player", PlayerSchema);
+
+export default Player;
