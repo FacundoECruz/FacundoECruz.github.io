@@ -1,15 +1,11 @@
 import axios from "axios";
 
-const client = axios.create({
-  baseURL: "/api",
-});
-
 const api = {
-  getGame: () => client.get("/game"),
-  createGame: (gameData) => client.post("/game", gameData),
-  getPlayer: () => client.get("/player"),
-  createPlayer: (playerData) => client.post("/player", playerData),
-  getPlayers: () => client.get("/players"),
+  getGame: () => axios.get("/game"),
+  createGame: (gameData) => axios.post("/game", gameData),
+  getPlayer: () => axios.get("/player"),
+  createPlayer: (playerData) => axios.post("/player", playerData),
+  getPlayers: () => axios.get("/players"),
 };
 
 export default api;

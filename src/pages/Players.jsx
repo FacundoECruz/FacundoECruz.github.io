@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import api from "../utils/api-client.js";
 
 function Players() {
@@ -9,7 +9,7 @@ function Players() {
   useEffect(() => {
     api
       .getPlayers()
-      .then((data) => setPlayers(data))
+      .then((response) => setPlayers(response.data))
       .catch((error) => console.log(error));
   }, []);
 
