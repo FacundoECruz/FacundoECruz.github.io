@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import path from "path"
 const __dirname = path.resolve();
 import Player from "./models/Player.js"; 
+import Game from "./models/Game.js"
 
 const app = express();
 
@@ -22,12 +23,22 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get("/players", async (req, res) => {
+app.get("/api/players", async (req, res) => {
   try {
     const players = await Player.find();
     res.json(players);
   } catch (error) {
     res.status(500).json({ message: 'Error retrieving players', error });
+  }
+})
+
+app.get("/api/player/:id", async(req, res) => {
+  try {
+    const id = req.params.id;
+    const player = await Player.findById(id);
+    res.json(player);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving player', error });
   }
 })
 
@@ -37,6 +48,15 @@ app.post("/api/player", (req, res) => {
   console.log(player)
   player.save()
   res.redirect("/players")
+})
+
+app.get("/api/games", async (req, res) => {
+  try {
+    const games = await Game.find();
+    res.json(games);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving games', error });
+  }
 })
 
 app.get("*", (req, res) => {
