@@ -59,6 +59,24 @@ app.get("/api/games", async (req, res) => {
   }
 })
 
+app.get("/api/game/:id", async(req, res) => {
+  try {
+    const id = req.params.id;
+    const game = await Game.findById(id);
+    res.json(game);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving game', error });
+  }
+})
+
+app.post("/api/game", (req, res) => {
+  const formData = req.body;
+  const game = new Game(formData)
+  console.log(game)
+  game.save()
+  res.redirect("/")
+})
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
