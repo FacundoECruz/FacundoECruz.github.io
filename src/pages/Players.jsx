@@ -3,8 +3,8 @@ import api from "../utils/api-client.js";
 
 function Players() {
   const [players, setPlayers] = useState(null);
-  
-  console.log(players)
+
+  console.log(players);
 
   useEffect(() => {
     api
@@ -15,9 +15,16 @@ function Players() {
 
   return (
     <>
-      <h1>Players</h1>
+      {players
+        ? players.map((p) => {
+            <div key={p._id}>
+              <h3>{p.username}</h3>
+              <img src={p.image} />
+            </div>;
+          })
+        : null}
     </>
-  )
+  );
 }
 
 export default Players;
