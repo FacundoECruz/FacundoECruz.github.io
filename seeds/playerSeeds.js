@@ -17,8 +17,11 @@ db.once("open", () => {
     console.log("Database connected")
 })
 
+let usersArray = []
+
 for (let i = 0; i < 20; i++) {
   const username = generateUsername("-", 2, 14)
+  usersArray.push(username)
   const player = new Player({
     username: username,
   })
@@ -28,5 +31,7 @@ for (let i = 0; i < 20; i++) {
     })
     .catch(e => {
       console.log(e)
-    })
+  })
 }
+
+export default usersArray;

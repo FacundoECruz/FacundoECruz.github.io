@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 const GameSchema = new Schema({
   results: Array,
-  duration: String,
-  date: Date,
+  duration: Number,
+  date: String,
   rounds: Number,
 })
 
