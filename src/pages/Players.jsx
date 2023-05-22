@@ -20,8 +20,15 @@ function Players() {
         ? players.map((p) => {
             return (
               <div key={p._id}>
-                <h3>{p.username}</h3>
-                <img src={p.image} />
+                <a href={`/player/${p._id}`}>
+                  <h3>{p.username}</h3>
+                  <img
+                    width="80"
+                    height="80"
+                    alt="player-image"
+                    src={p.image}
+                  />
+                </a>
               </div>
             );
           })
