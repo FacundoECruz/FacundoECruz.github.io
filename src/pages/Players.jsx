@@ -15,6 +15,7 @@ function Players() {
 
   return (
     <>
+      <h1>All Players page</h1>
       {players
         ? players.map((p) => {
             <div key={p._id}>
