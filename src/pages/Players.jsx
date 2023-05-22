@@ -18,10 +18,12 @@ function Players() {
       <h1>All Players page</h1>
       {players
         ? players.map((p) => {
-            <div key={p._id}>
-              <h3>{p.username}</h3>
-              <img src={p.image} />
-            </div>;
+            return (
+              <div key={p._id}>
+                <h3>{p.username}</h3>
+                <img src={p.image} />
+              </div>
+            );
           })
         : null}
     </>
