@@ -4,7 +4,7 @@ const api = {
   getGame: () => axios.get("/api/game"),
   createGame: (gameData) => axios.post("/api/game", gameData),
   getGames: () => axios.get("/api/games"),
-  getPlayer: () => axios.get("/api/player"),
+  getPlayer: (id) => axios.get(`/api/player/${id}`),
   createPlayer: (playerData) => axios.post("/api/player", playerData),
   getPlayers: () => axios.get("/api/players"),
 };
