@@ -2,8 +2,8 @@ import express from "express"
 import mongoose from "mongoose"
 import path from "path"
 const __dirname = path.resolve();
-import Player from "./models/Player.js"; 
-import Game from "./models/Game.js"
+import {router as playerRouter} from "./routes/players.js";
+import {router as gameRouter} from "./routes/games.js"
 
 const app = express();
 
@@ -23,59 +23,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get("/api/players", async (req, res) => {
-  try {
-    const players = await Player.find();
-    res.json(players);
-  } catch (error) {
-    res.status(500).json({ message: 'Error retrieving players', error });
-  }
-})
-
-app.get("/api/player/:id", async(req, res) => {
-  try {
-    const id = req.params.id;
-    const player = await Player.findById(id);
-    res.json(player);
-  } catch (error) {
-    res.status(500).json({ message: 'Error retrieving player', error });
-  }
-})
-
-app.post("/api/player", (req, res) => {
-  const formData = req.body;
-  const player = new Player(formData)
-  console.log(player)
-  player.save()
-  res.redirect("/players")
-})
-
-app.get("/api/games", async (req, res) => {
-  try {
-    const games = await Game.find();
-    res.json(games);
-  } catch (error) {
-    res.status(500).json({ message: 'Error retrieving games', error });
-  }
-})
-
-app.get("/api/game/:id", async(req, res) => {
-  try {
-    const id = req.params.id;
-    const game = await Game.findById(id);
-    res.json(game);
-  } catch (error) {
-    res.status(500).json({ message: 'Error retrieving game', error });
-  }
-})
-
-app.post("/api/game", (req, res) => {
-  const formData = req.body;
-  const game = new Game(formData)
-  console.log(game)
-  game.save()
-  res.redirect("/")
-})
+app.use('/api/players', playerRouter)
+app.use('/api/games', gameRouter)
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
