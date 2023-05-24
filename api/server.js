@@ -2,8 +2,8 @@ import express from "express"
 import mongoose from "mongoose"
 import path from "path"
 const __dirname = path.resolve();
-import {router as playerRouter} from "./routes/players.js";
-import {router as gameRouter} from "./routes/games.js"
+import {router as playersRouter} from "./routes/players.js";
+import {router as gamesRouter} from "./routes/games.js"
 
 const app = express();
 
@@ -23,8 +23,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/api/players', playerRouter)
-app.use('/api/games', gameRouter)
+app.use('/api/players', playersRouter)
+app.use('/api/games', gamesRouter)
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
