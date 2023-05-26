@@ -1,6 +1,8 @@
+import cuatros from "../../../assets/cuatros.jpg"
+
 function MainHome() {
   return ( 
-    <h1>Main presentation</h1>
+    <img src={cuatros}/>
    );
 }
 
