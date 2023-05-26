@@ -1,11 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Players from "./pages/Players";
 import PlayerDetails from "./pages/PlayerDetails";
 import NewPlayer from "./pages/NewPlayer";
 import Games from "./pages/Games";
 import GameDetails from "./pages/GameDetails";
 import NewGame from "./pages/NewGame";
+import "./App.css"
 
 function App() {
   return (
