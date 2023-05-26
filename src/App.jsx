@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Players from "./pages/Players";
-import PlayerDetails from "./pages/PlayerDetails";
-import NewPlayer from "./pages/NewPlayer";
-import Games from "./pages/Games";
-import GameDetails from "./pages/GameDetails";
-import NewGame from "./pages/NewGame";
+import Home from "./pages/Home/Index";
+import Players from "./pages/Players/Players";
+import PlayerDetails from "./pages/PlayerDetails/PlayerDetails";
+import NewPlayer from "./pages/NewPlayer/NewPlayer";
+import Games from "./pages/Games/Games";
+import GameDetails from "./pages/GameDetails/GameDetails";
+import NewGame from "./pages/NewGame/NewGame";
 import "./App.css"
 
 function App() {

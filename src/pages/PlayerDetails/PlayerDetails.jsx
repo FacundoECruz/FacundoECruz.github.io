@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import api from "../utils/api-client.js";
+import api from "../../utils/api-client.js";
 
 function PlayerDetails() {
   const { id } = useParams();

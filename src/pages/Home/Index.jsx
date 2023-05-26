@@ -1,7 +1,7 @@
 import Navbar from "../../components/Navbar.jsx"
-import MainHome from "./components/MainHome.jsx"
-import Text from "./components/TextBody.jsx"
-import Faq from "./components/FAQ.jsx"
+import MainHome from "./MainHome.jsx"
+import Text from "./TextBody.jsx"
+import Faq from "./FAQ.jsx"
 import Footer from "../../components/Footer.jsx"
 import "../../stylesheets/Home.css"
 

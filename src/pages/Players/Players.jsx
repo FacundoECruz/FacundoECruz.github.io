@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../utils/api-client.js";
+import api from "../../utils/api-client.js";
 
 function Players() {
   const [players, setPlayers] = useState(null);

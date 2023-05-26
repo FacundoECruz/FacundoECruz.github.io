@@ -1,4 +1,4 @@
-import "../../../stylesheets/TextBody.css"
+import "../../stylesheets/TextBody.css"
 
 function TextBody() {
   return (

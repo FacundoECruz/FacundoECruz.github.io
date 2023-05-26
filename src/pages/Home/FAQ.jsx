@@ -1,4 +1,4 @@
-import "../../../stylesheets/Faq.css"
+import "../../stylesheets/Faq.css"
 
 function Faq() {
   return (
