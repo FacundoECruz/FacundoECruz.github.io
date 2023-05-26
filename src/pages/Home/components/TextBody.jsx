@@ -1,6 +1,8 @@
+import "../../../stylesheets/TextBody.css"
+
 function TextBody() {
   return (
-    <>
+    <div className="text-body-container">
       <h2>Altisima</h2>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, sequi
@@ -15,7 +17,7 @@ function TextBody() {
         expedita praesentium illum molestias aliquid non, possimus magnam?
         Error, magni omnis.
       </p>
-    </>
+    </div>
   );
 }
 
