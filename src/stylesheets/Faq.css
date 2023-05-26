@@ -1,0 +1,9 @@
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.faq-title{
+  align-self: center;
+}
