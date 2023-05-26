@@ -20,7 +20,7 @@ function Players() {
         ? players.map((p) => {
             return (
               <div key={p._id}>
-                <a href={`/player/${p._id}`}>
+                <a href={`/players/${p._id}`}>
                   <h3>{p.username}</h3>
                   <img
                     width="80"

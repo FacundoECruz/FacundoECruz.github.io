@@ -1,7 +1,9 @@
+import "../../../stylesheets/Faq.css"
+
 function Faq() {
   return (
-    <>
-      <h3>FAQ</h3>
+    <div className="faq-container">
+      <h3 className="faq-title">FAQ</h3>
       <p>¿Cuál ha sido tu experiencia de viaje más emocionante hasta ahora?</p>
       <p>¿Cuál es tu película favorita de todos los tiempos y por qué?</p>
       <p>
@@ -15,7 +17,7 @@ function Faq() {
         Si pudieras cenar con cualquier personaje histórico, vivo o muerto,
         ¿quién sería y qué le preguntarías?
       </p>
-    </>
+    </div>
   );
 }
 
