@@ -1,4 +1,4 @@
-import usersArray from "./playerSeeds.js";
+import usersArray from "./userSeeds.js";
 import Game from "../api/models/Game.js";
 
 // Funcion para tener numeros random
@@ -6,7 +6,8 @@ function getRandomNum(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-// Armar lista de jugadores en base a los que se generan en el otro seed
+// Armar lista de jugadores en la partida en 
+// base a los que se generan en el otro seed
 function generateFakePlayersList(arr) {
   let players = [];
   let playersQty = getRandomNum(3, 8);
