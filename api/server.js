@@ -2,7 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import path from "path"
 const __dirname = path.resolve();
-import {router as playersRouter} from "./routes/players.js";
+import {router as playersRouter} from "./routes/users.js";
 import {router as gamesRouter} from "./routes/games.js"
 
 const app = express();

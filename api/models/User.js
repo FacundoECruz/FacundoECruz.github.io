@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const PlayerSchema = new Schema({
+const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -30,6 +30,6 @@ const PlayerSchema = new Schema({
   },
 });
 
-const Player = mongoose.model("Player", PlayerSchema);
+const User = mongoose.model("User", UserSchema);
 
-export default Player;
+export default User;

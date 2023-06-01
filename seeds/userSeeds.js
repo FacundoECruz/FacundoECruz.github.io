@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Player from "../api/models/Player.js";
+import User from "../api/models/User.js";
 import { generateUsername } from "unique-username-generator";
 
 mongoose.connect('mongodb://localhost:27017/altisima', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,10 +22,10 @@ let usersArray = []
 for (let i = 0; i < 20; i++) {
   const username = generateUsername("-", 2, 14)
   usersArray.push(username)
-  const player = new Player({
+  const user = new User({
     username: username,
   })
-  player.save()
+  user.save()
     .then(p => {
       console.log(p)
     })
