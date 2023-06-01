@@ -1,0 +1,47 @@
+.player-grid-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  background-color: antiquewhite;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.player-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-history {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+}
+
+button {
+  width: 50%;
+  height: 30px;
+}
+
+.win {
+  color: green;
+}
+
+.lose {
+  color: red;
+}
