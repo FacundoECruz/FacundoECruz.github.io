@@ -1,7 +1,18 @@
+import { Button, Container, Typography, Box } from "@mui/material";
+
 function NewPlayer() {
-  return ( 
-    <h1>New Player page</h1>
-   );
+  return (
+    <Container maxWidth="sm">
+      <h1>New Player page</h1>
+      <Box sx={{ border: 1, boxShadow: 3, p: 1 }}>
+        <Typography color="primary" variant="h5" textAlign="center" m={4}>
+          Aca vas a poder crear un jugador
+        </Typography>
+        <Button variant="contained" sx={{m: 1}}>New</Button>
+        <Button variant="outlained" sx={{m: 1}}>Asociate</Button>
+      </Box>
+    </Container>
+  );
 }
 
 export default NewPlayer;
