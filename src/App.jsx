@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Index";
 import Players from "./pages/Players/Players";
 import PlayerDetails from "./pages/PlayerDetails/PlayerDetails";
-import NewPlayer from "./pages/NewPlayer/NewPlayer";
+import NewPlayer from "./pages/NewPlayer";
 import Games from "./pages/Games/Games";
 import GameDetails from "./pages/GameDetails/GameDetails";
 import NewGame from "./pages/NewGame/NewGame";
