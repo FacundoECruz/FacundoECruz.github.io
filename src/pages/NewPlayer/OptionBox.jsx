@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Button, Container, Typography, Box, Grid } from "@mui/material";
+import { Button, Typography, Box, Grid } from "@mui/material";
 
 function OptionBox(props) {
   const { message, buttonVariant, buttonText, icon, color } = props;
 
   return (
-    <Container maxWidth="sm">
       <Box sx={{ border: 1, boxShadow: 3, p: 1 }}>
         <Grid container direction="column" justifyContent="center" align="center">
           <Grid item>
@@ -25,7 +24,6 @@ function OptionBox(props) {
           </Grid>
         </Grid>
       </Box>
-    </Container>
   );
 }
 

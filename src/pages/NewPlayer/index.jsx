@@ -7,12 +7,12 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 function NewPlayer() {
   return (
     <>
-      <Typography textAlign="center" variant="h2" mb={5}>
+      <Typography textAlign="center" variant="h2" mb={5} mt={2}>
         Crear Jugador
       </Typography>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={4} direction="row" justifyContent="center">
+        <Grid item xs={11} md={4}>
           <OptionBox
             message="Crear nueva cuenta"
             buttonVariant="contained"
@@ -21,7 +21,7 @@ function NewPlayer() {
             color="primary"
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={11} md={4}>
           <OptionBox
             message="Asociar cuenta con jugador existente"
             buttonVariant="outlained"
@@ -29,7 +29,7 @@ function NewPlayer() {
             icon={<ConnectWithoutContactIcon />}
           />
         </Grid>
-        <Grid item xs={12} md={12}>
+        <Grid item xs={11} md={8}>
           <OptionBox
             message="Ver al brillan"
             buttonVariant="contained"
