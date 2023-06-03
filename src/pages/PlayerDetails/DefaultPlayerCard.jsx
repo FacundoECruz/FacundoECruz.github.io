@@ -1,4 +1,11 @@
-import { Container, Paper, Grid, Typography } from "@mui/material";
+import {
+  Container,
+  Paper,
+  Grid,
+  Typography,
+  Tooltip,
+  Button,
+} from "@mui/material";
 import styled from "@emotion/styled";
 
 function DefaultPlayerCard() {
@@ -32,6 +39,28 @@ function DefaultPlayerCard() {
           },
         ],
       },
+      {
+        id: "12343223245",
+        date: "23/2/2019",
+        results: [
+          {
+            player: "Messi",
+            score: 60,
+          },
+          {
+            player: "Diego",
+            score: 43,
+          },
+          {
+            player: "Barack Obama",
+            score: 35,
+          },
+          {
+            player: "Grondona",
+            score: 12,
+          },
+        ],
+      },
     ],
   };
 
@@ -59,19 +88,36 @@ function DefaultPlayerCard() {
             </Typography>
           </Paper>
         </Grid>
-        <Grid item xl={6}>
-          <Paper
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              overflow: "hidden",
-            }}
-          >
-            {player.games.map((game) => {
-              return <Typography key={game.id} variant="h5">{game.date}</Typography>
 
+        <Grid item xl={6} md={6}>
+          <Grid container display="flex" direction="row">
+            {player.games.map((game) => {
+              return (
+                <>
+                  <Grid item xl={6}>
+                    <Typography key={game.id} variant="p">
+                      {game.date}
+                    </Typography>
+                    <Grid container display="flex" direction="column">
+                      {game.results.map((player) => {
+                        return (
+                          <>
+                            <Grid item>
+                              <Tooltip title="View profile" arrow>
+                                <Button sx={{minHeight: "60px"}} variant="contained">
+                                  {player.player} {player.score}
+                                </Button>
+                              </Tooltip>
+                            </Grid>
+                          </>
+                        );
+                      })}
+                    </Grid>
+                  </Grid>
+                </>
+              );
             })}
-          </Paper>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
