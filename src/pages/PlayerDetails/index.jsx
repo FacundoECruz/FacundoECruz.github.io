@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
-import DefaultPlayerCard from "./DefaultPlayerCard.jsx";
+import DefaultPlayerCard from "./components/DefaultPlayerCard.jsx";
 
 function PlayerDetails() {
   const { id } = useParams();
