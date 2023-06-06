@@ -1,4 +1,3 @@
-import Navbar from "../../components/Navbar/Navbar.jsx";
 import MainHome from "./MainHome.jsx";
 import Text from "./TextBody.jsx";
 import Faq from "./FAQ.jsx";
@@ -9,7 +8,6 @@ import { Container } from "@mui/material";
 function Home() {
   return (
     <>
-      <Navbar />
       <Container sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <MainHome />
         <Text />

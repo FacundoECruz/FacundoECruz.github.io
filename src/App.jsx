@@ -6,10 +6,13 @@ import NewPlayer from "./pages/NewPlayer";
 import Games from "./pages/Games/Games";
 import GameDetails from "./pages/GameDetails/GameDetails";
 import NewGame from "./pages/NewGame/NewGame";
+import Navbar from "./components/Navbar/Navbar";
 import "./App.css"
 
 function App() {
   return (
+    <>
+    <Navbar />
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -21,6 +24,7 @@ function App() {
         <Route path="/games/new" element={<NewGame />} />
       </Routes>
     </Router>
+    </>
   );
 }
 
