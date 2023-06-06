@@ -31,7 +31,7 @@ const navLinks = [
   },
   {
     title: "Registrarse",
-    path: "/login",
+    path: "/register",
     icon: <DraftsIcon />,
   },
 ];

@@ -6,6 +6,8 @@ import NewPlayer from "./pages/NewPlayer";
 import Games from "./pages/Games/Games";
 import GameDetails from "./pages/GameDetails/GameDetails";
 import NewGame from "./pages/NewGame/NewGame";
+import Login from "./pages/Login"
+import Register from "./pages/Register"
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css"
 
@@ -22,6 +24,8 @@ function App() {
         <Route path="/games" element={<Games />} />
         <Route path="/games/:id" element={<GameDetails />} />
         <Route path="/games/new" element={<NewGame />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
     </>
