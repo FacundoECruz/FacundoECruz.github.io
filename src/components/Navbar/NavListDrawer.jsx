@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
-  Divider,
   List,
   ListItem,
   ListItemButton,
@@ -8,34 +8,19 @@ import {
   ListItemText,
 } from "@mui/material";
 
-function NavListDrawer() {
+function NavListDrawer({ navLinks }) {
   return (
     <Box sx={{ width: 250 }}>
       <nav>
         <List>
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="/players">
-              <ListItemIcon>#</ListItemIcon>
-              <ListItemText primary="Jugadores" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="/games">
-              <ListItemIcon>&</ListItemIcon>
-              <ListItemText primary="Partidas" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
-      <Divider />
-      <nav>
-        <List>
-          <ListItem>
-            <ListItemText primary="Reglas"/>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Algo más"/>
-          </ListItem>
+          {navLinks.map((item) => (
+            <ListItem disablePadding key={item.title}>
+              <ListItemButton component="a" href={item.path}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </nav>
     </Box>

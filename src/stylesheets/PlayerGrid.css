@@ -33,10 +33,17 @@
   flex-direction: row;
 }
 
+
+
+/* 
+
+De alguna forma esto choca con el resto de los botones de
+toda la aplicacion
+
 button {
   width: 50%;
   height: 30px;
-}
+} */
 
 .win {
   color: green;

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
 import DefaultPlayerCard from "./components/DefaultPlayerCard.jsx";
+import Navbar from "../../components/Navbar/Navbar.jsx";
 
 function PlayerDetails() {
   const { id } = useParams();
@@ -17,6 +18,7 @@ function PlayerDetails() {
 
   return (
     <>
+      <Navbar />
       {player ? (
         <div key={player._id}>
           <h1>{player.username}</h1>
@@ -29,7 +31,9 @@ function PlayerDetails() {
             <p>Average: {player.totalScore / player.gamesPlayed}</p>
           </div>
         </div>
-      ) : <DefaultPlayerCard />}
+      ) : (
+        <DefaultPlayerCard />
+      )}
     </>
   );
 }
