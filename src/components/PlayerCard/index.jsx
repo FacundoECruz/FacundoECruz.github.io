@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 function PlayerCard({image, username, level}) {
