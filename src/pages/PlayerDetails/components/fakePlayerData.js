@@ -1,10 +1,14 @@
+import userImage from "../../../assets/userImage.jpg"
+
 export const player = {
   id: "default",
-  username: "Barack Obama",
+  username: "Tucu",
   gamesPlayed: 15,
   gamesWon: 2,
   createdGames: 7,
   totalScore: 476,
+  level: 92,
+  image: userImage,
   games: [
     {
       id: "12343223768",
