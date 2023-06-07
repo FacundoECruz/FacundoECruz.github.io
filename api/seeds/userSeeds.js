@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "../api/models/User.js";
+import User from "../models/User.js";
 import { generateUsername } from "unique-username-generator";
 
 mongoose.connect('mongodb://localhost:27017/altisima', { useNewUrlParser: true, useUnifiedTopology: true })
