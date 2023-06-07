@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
+import { Box, Container, Typography } from "@mui/material";
+import PlayerCard from "../../components/PlayerCard";
+import { Link } from "react-router-dom";
 
 function Players() {
   const [players, setPlayers] = useState(null);
@@ -14,26 +17,25 @@ function Players() {
   }, []);
 
   return (
-    <>
-      <h1>All Players page</h1>
-      {players
-        ? players.map((p) => {
-            return (
-              <div key={p._id}>
-                <a href={`/players/${p._id}`}>
-                  <h3>{p.username}</h3>
-                  <img
-                    width="80"
-                    height="80"
-                    alt="player-image"
-                    src={p.image}
-                  />
-                </a>
-              </div>
-            );
-          })
-        : null}
-    </>
+    <Container>
+      <Typography variant="h3" sx={{ my: 3 }}>
+        Jugadores
+      </Typography>
+      <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
+        {players
+          ? players.map((p) => {
+              return (
+                <Link to={`/players/${p._id}`} key={p.username}>
+                <PlayerCard
+                  image={p.image}
+                  username={p.username}
+                />
+                </Link>
+              );
+            })
+          : null}
+      </Box>
+    </Container>
   );
 }
 
