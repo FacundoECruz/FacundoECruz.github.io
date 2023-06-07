@@ -11,18 +11,20 @@ import NavListDrawer from "./NavListDrawer";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/Inbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
+import PersonIcon from '@mui/icons-material/Person';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 const navLinks = [
   {
     title: "Jugadores",
     path: "/players",
-    icon: "^=^",
+    icon: <PersonIcon />,
   },
   {
     title: "Partidas",
     path: "/games",
-    icon: "O/",
+    icon: <SportsEsportsIcon />,
   },
   {
     title: "Home",
@@ -32,7 +34,7 @@ const navLinks = [
   {
     title: "Registrarse",
     path: "/register",
-    icon: <DraftsIcon />,
+    icon: <AppRegistrationIcon />,
   },
 ];
 
