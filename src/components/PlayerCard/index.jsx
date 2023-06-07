@@ -1,19 +1,18 @@
 /* eslint-disable react/prop-types */
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
-function PlayerCard({image, username, level}) {
+function PlayerCard({image, username}) {
   return (
-    <Card>
+    <Card sx={{ maxWidth: 150, mx: 1}}>
       <CardMedia
         image={image}
         title={username}
-        sx={{ height: 250, width: 250 }}
+        sx={{ height: 150, width: 150}}
       />
       <CardContent sx={{ display: "flex", flexDirection: "row" }}>
-        <Typography variant="h5" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6">
           {username}
         </Typography>
-        <Typography variant="h5">{level}</Typography>
       </CardContent>
     </Card>
   );

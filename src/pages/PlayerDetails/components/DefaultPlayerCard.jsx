@@ -15,7 +15,6 @@ function DefaultPlayerCard() {
               <PlayerCard
                 image={player.image}
                 username={player.username}
-                level={player.level}
               />
             ) : (
               <PlayerCardSkeleton />
