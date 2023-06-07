@@ -1,7 +1,6 @@
 import express from "express"
 import mongoose from "mongoose"
-import path from "path"
-const __dirname = path.resolve();
+import cors from "cors";
 import {router as playersRouter} from "./routes/users.js";
 import {router as gamesRouter} from "./routes/games.js"
 
@@ -18,18 +17,17 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
+const corsOptions = {
+  origin: 'http://127.0.0.1:5173'
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, 'dist')));
-
 app.use('/api/players', playersRouter)
 app.use('/api/games', gamesRouter)
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
 
 app.listen("3000", () => {
   console.log('ON 3000')

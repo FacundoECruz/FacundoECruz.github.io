@@ -12,7 +12,6 @@ function Login() {
 
   return (
     <>
-      <h1>Login</h1>
 
       <Button variant="contained" sx={{ mt: 2 }} onClick={handleClick}>
         Completar
