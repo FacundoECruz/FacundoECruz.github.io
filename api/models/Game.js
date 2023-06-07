@@ -6,6 +6,7 @@ const GameSchema = new Schema({
   duration: Number,
   date: String,
   rounds: Number,
+  usersId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 })
 
 const Game = mongoose.model("Game", GameSchema);
