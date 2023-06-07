@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Typography,
 } from "@mui/material";
 
 function NewGame() {
@@ -16,20 +17,19 @@ function NewGame() {
 
   async function handleChange(e) {
     setName(e.target.value);
-    // const allPlayers = await api.getPlayers()
-    // console.log(allPlayers)
+    const matchPlayers = await api.searchUser(name)
+    console.log(matchPlayers)
   }
 
   function addPlayer(e) {
     e.preventDefault();
     players.push(name);
     setName("");
-    console.log(players);
   }
 
   return (
     <>
-      <h1>New Game page</h1>
+      <Typography variant="h3" sx={{mx: 1, my: 3}}>Nueva Partida</Typography>
       <Box
         sx={{ display: "flex", flexDirection: "column" }}
         component="form"
