@@ -5,7 +5,7 @@ import PlayerDetails from "./pages/PlayerDetails";
 import NewPlayer from "./pages/NewPlayer";
 import Games from "./pages/Games/Games";
 import GameDetails from "./pages/GameDetails/GameDetails";
-import NewGame from "./pages/NewGame/NewGame";
+import NewGame from "./pages/NewGame";
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Navbar from "./components/Navbar/Navbar";
