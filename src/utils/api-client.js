@@ -1,12 +1,16 @@
 import axios from "axios";
 
+const server = axios.create({
+  baseURL: 'http://localhost:3000'
+});
+
 const api = {
-  getGame: () => axios.get("/api/games"),
-  createGame: (gameData) => axios.post("/api/games", gameData),
-  getGames: () => axios.get("/api/games"),
-  getPlayer: (id) => axios.get(`/api/players/${id}`),
-  createPlayer: (playerData) => axios.post("/api/players", playerData),
-  getPlayers: () => axios.get("/api/players"),
+  getGame: () => server.get("/api/games"),
+  createGame: (gameData) => server.post("/api/games", gameData),
+  getGames: () => server.get("/api/games"),
+  getPlayer: (id) => server.get(`/api/players/${id}`),
+  createPlayer: (playerData) => server.post("/api/players", playerData),
+  getPlayers: () => server.get("/api/players"),
 };
 
 export default api;
