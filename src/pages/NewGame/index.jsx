@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../../utils/api-client";
 import "../../stylesheets/NewGame.css";
 import { Box, Button, TextField } from "@mui/material";
 
@@ -6,11 +7,10 @@ function NewGame() {
   const [name, setName] = useState("");
   const [players, setPlayers] = useState([]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    players.push(name);
-    setName("");
-    console.log(players);
+  async function handleChange(e) {
+    setName(e.target.value)
+    // const allPlayers = await api.getPlayers()
+    // console.log(allPlayers)
   }
 
   return (
@@ -18,8 +18,6 @@ function NewGame() {
       <h1>New Game page</h1>
       <Box
         sx={{ display: "flex", flexDirection: "column" }}
-        component="form"
-        onSubmit={handleSubmit}
       >
         <TextField
           id="text"
@@ -28,11 +26,11 @@ function NewGame() {
           variant="outlined"
           required
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleChange}
           sx={{mx: 1}}
         />
         <Box sx={{my: 2, mx: 1}}>
-          <Button type="submit" variant="contained" sx={{ bgcolor: "green" }}>
+          <Button variant="contained" sx={{ bgcolor: "green" }}>
             Agregar
           </Button>
           <Button onClick={() => setPlayers([])} variant="contained">
