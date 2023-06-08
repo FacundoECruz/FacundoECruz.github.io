@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
 import "../../stylesheets/NewGame.css";
 import {
@@ -9,44 +9,65 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Autocomplete,
 } from "@mui/material";
 
 function NewGame() {
-  const [name, setName] = useState("");
+  const [player, setPlayer] = useState("");
   const [players, setPlayers] = useState([]);
+  const [options, setOptions] = useState([]);
 
-  async function handleChange(e) {
-    setName(e.target.value);
-    const matchPlayers = await api.searchUser(name)
-    console.log(matchPlayers)
+  function handleChange(e, newValue) {
+    setPlayer(newValue);
   }
 
-  function addPlayer(e) {
-    e.preventDefault();
-    players.push(name);
-    setName("");
+  useEffect(() => {
+    async function fetchOptions() {
+      try {
+        const response = await api.getPlayers();
+        setOptions(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchOptions();
+  }, []);
+
+  function addPlayer() {
+    players.push(player.username)
+    console.log(players)
+    setPlayer("")
   }
 
   return (
     <>
-      <Typography variant="h3" sx={{mx: 1, my: 3}}>Nueva Partida</Typography>
+      <Typography variant="h3" sx={{ mx: 1, my: 3 }}>
+        Nueva Partida
+      </Typography>
       <Box
         sx={{ display: "flex", flexDirection: "column" }}
-        component="form"
-        onSubmit={addPlayer}
       >
-        <TextField
-          id="text"
-          label="Nombre"
-          type="text"
-          variant="outlined"
-          required
-          value={name}
+        <Autocomplete
+          options={options}
+          value={player}
           onChange={handleChange}
-          sx={{ mx: 1 }}
+          getOptionLabel={(option) => (option ? option.username : "")}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              id="name"
+              label="Nombre"
+              type="text"
+              variant="outlined"
+              required
+              sx={{ mx: 1 }}
+            />
+          )}
         />
         <Box sx={{ my: 2, mx: 1 }}>
-          <Button type="submit" variant="contained" sx={{ bgcolor: "green" }}>
+          <Button onClick={addPlayer} variant="contained" sx={{ bgcolor: "green" }}>
             Agregar
           </Button>
           <Button onClick={() => setPlayers([])} variant="contained">
@@ -65,7 +86,7 @@ function NewGame() {
                 </ListItem>
               </List>
             );
-          })} 
+          })}
           <Button>Empezar</Button>
         </Box>
       ) : null}

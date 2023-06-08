@@ -11,7 +11,7 @@ const api = {
   getPlayer: (id) => server.get(`/api/players/${id}`),
   createPlayer: (playerData) => server.post("/api/players", playerData),
   getPlayers: () => server.get("/api/players"),
-  searchUser: (query) => server.get("/api/players/search", query)
+  // searchUser: (query) => server.get("/api/players/search", query)
 };
 
 export default api;

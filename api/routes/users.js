@@ -31,9 +31,9 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/search", async (req, res) => {
-  const query = req.body
-  res.send(query)
+// router.get("/search", async (req, res) => {
+//   const query = req.body
+//   res.send(query)
   // User.find({ username: { $regex: query, $options: 'i' } })
   //   .then((users) => {
   //     res.json(users);
@@ -42,6 +42,6 @@ router.get("/search", async (req, res) => {
   //     console.error('Error al buscar partidas:', error);
   //     res.status(500).json({ error: 'Error al buscar partidas' });
   //   });
-});
+// });
 
 export { router };
