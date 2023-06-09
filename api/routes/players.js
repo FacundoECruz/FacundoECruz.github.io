@@ -25,6 +25,7 @@ router.post("/", async (req, res) => {
   const player = new Player(req.body);
   try {
     await player.save();
+    console.log(player)
     res.status(201).redirect("/");
   } catch (err) {
     res.status(400).json(err.message);

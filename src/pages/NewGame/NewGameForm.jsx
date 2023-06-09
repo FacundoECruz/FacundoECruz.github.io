@@ -19,9 +19,11 @@ function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPl
   useEffect(() => {
     async function fetchOptions() {
       try {
-        const response = await api.getPlayers();
-        setOptions(response.data);
-        console.log(response.data);
+        const usersResponse = await api.getUsers();
+        const playersResponse = await api.getPlayers();
+        const options = usersResponse.data.concat(playersResponse.data)
+        setOptions(options);
+        console.log(options);
       } catch (error) {
         console.error(error);
       }
@@ -29,8 +31,6 @@ function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPl
 
     fetchOptions();
   }, []);
-
-  
 
   const filterOptions = (options, state) => {
     if (state.inputValue === '' || options.length === 0) {

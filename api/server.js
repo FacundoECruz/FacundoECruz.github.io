@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import cors from "cors";
 import {router as playersRouter} from "./routes/players.js";
 import {router as gamesRouter} from "./routes/games.js"
+import {router as usersRouter} from "./routes/users.js"
 
 const app = express();
 
