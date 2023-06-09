@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import cors from "cors";
-import {router as playersRouter} from "./routes/users.js";
+import {router as playersRouter} from "./routes/players.js";
 import {router as gamesRouter} from "./routes/games.js"
 
 const app = express();
@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/players', playersRouter)
 app.use('/api/games', gamesRouter)
+app.use('/api/users', usersRouter)
 
 app.listen("3000", () => {
   console.log('ON 3000')

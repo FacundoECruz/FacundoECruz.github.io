@@ -1,17 +1,21 @@
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3000/api'
 });
 
 const api = {
-  getGame: () => server.get("/api/games"),
-  createGame: (gameData) => server.post("/api/games", gameData),
-  getGames: () => server.get("/api/games"),
-  getPlayer: (id) => server.get(`/api/players/${id}`),
-  createPlayer: (playerData) => server.post("/api/players", playerData),
-  getPlayers: () => server.get("/api/players"),
-  // searchUser: (query) => server.get("/api/players/search", query)
+  getGame: () => server.get("/games"),
+  createGame: (gameData) => server.post("/games", gameData),
+  getGames: () => server.get("/games"),
+  getPlayer: (id) => server.get(`/players/${id}`),
+  createPlayer: (playerData) => server.post("/players", playerData),
+  getPlayers: () => server.get("/players"),
+  getUser: (id) => server.get(`/users/${id}`),
+  createUser: (userData) => server.post("api/users", userData),
+  getUsers: () => server.get("api/users"),
+  editUser: (id, userData) => server.patch(`/users/${id}`, userData),
+  deleteUser: (id) => server.delete(`/users/${id}`)
 };
 
 export default api;
