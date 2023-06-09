@@ -1,51 +1,11 @@
 import { useState } from "react";
-import "../../stylesheets/NewGame.css";
-import NewGameForm from "./NewGameForm";
-import PlayersList from "./PlayersList";
-import ControlButtons from "./ControlButtons";
-import AddPlayerToDb from "./AddPlayerToDb";
-import { Box, Grid, Typography } from "@mui/material";
+import GameForm from "./GameForm";
+import Scores from "./Scores"
 
 function NewGame() {
-  const [players, setPlayers] = useState([]);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
-  const [playerInputValue, setPlayerInputValue] = useState("");
+  const [gameState, setGameState] = useState("idle");
 
-  function addPlayer() {
-    if (selectedPlayer) {
-      setPlayers((prevPlayers) => [...prevPlayers, selectedPlayer.username]);
-      setSelectedPlayer(null);
-      setPlayerInputValue("");
-    }
-  }
-
-  return (
-    <Grid container spacing={4}>
-      <Grid item xl={8} sx={{display: "flex", alignItems: "center", flexDirection:"column", mt: 5}}>
-          <Typography variant="h3" sx={{ mx: 1, my: 3 }}>
-            Nueva Partida
-          </Typography>
-          <Typography variant="h5" sx={{ mx: 1, my: 3 }}>
-            Agregar Jugadores
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", width: "60%" }}>
-            <NewGameForm
-              selectedPlayer={selectedPlayer}
-              setSelectedPlayer={setSelectedPlayer}
-              playerInputValue={playerInputValue}
-              setPlayerInputValue={setPlayerInputValue}
-            />
-          </Box>
-
-        <ControlButtons addPlayer={addPlayer} setPlayers={setPlayers} />
-
-        {players.length ? <PlayersList players={players} /> : null}
-      </Grid>
-      <Grid item xl={3} sx={{mt: 5,}}>
-        <AddPlayerToDb />
-      </Grid>
-    </Grid>
-  );
+  return gameState === "idle" ? <GameForm setGameState={setGameState}/> : <Scores />;
 }
 
 export default NewGame;

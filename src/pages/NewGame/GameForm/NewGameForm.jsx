@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { TextField, Autocomplete } from "@mui/material";
-import api from "../../utils/api-client";
+import api from "../../../utils/api-client";
 
 function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPlayerInputValue}) {
 
   const [options, setOptions] = useState([]);
-
 
   function handleChange(event, newValue) {
     setSelectedPlayer(newValue);

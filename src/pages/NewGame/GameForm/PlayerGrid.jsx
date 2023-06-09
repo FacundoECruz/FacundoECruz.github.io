@@ -1,4 +1,3 @@
-import "../../stylesheets/PlayerGrid.css";
 
 function PlayerGrid() {
 

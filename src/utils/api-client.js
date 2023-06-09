@@ -12,8 +12,8 @@ const api = {
   createPlayer: (playerData) => server.post("/players", playerData),
   getPlayers: () => server.get("/players"),
   getUser: (id) => server.get(`/users/${id}`),
-  createUser: (userData) => server.post("api/users", userData),
-  getUsers: () => server.get("api/users"),
+  createUser: (userData) => server.post("/users", userData),
+  getUsers: () => server.get("/users"),
   editUser: (id, userData) => server.patch(`/users/${id}`, userData),
   deleteUser: (id) => server.delete(`/users/${id}`)
 };
