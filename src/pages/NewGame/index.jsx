@@ -21,8 +21,7 @@ function NewGame() {
 
   return (
     <Grid container spacing={4}>
-      <Grid item xl={8}>
-        <Box sx={{display: "flex", alignItems: "center", flexDirection:"column", border: "1px solid black"}}>
+      <Grid item xl={8} sx={{display: "flex", alignItems: "center", flexDirection:"column", mt: 5}}>
           <Typography variant="h3" sx={{ mx: 1, my: 3 }}>
             Nueva Partida
           </Typography>
@@ -41,9 +40,8 @@ function NewGame() {
         <ControlButtons addPlayer={addPlayer} setPlayers={setPlayers} />
 
         {players.length ? <PlayersList players={players} /> : null}
-        </Box>
       </Grid>
-      <Grid item xl={3}>
+      <Grid item xl={3} sx={{mt: 5,}}>
         <AddPlayerToDb />
       </Grid>
     </Grid>
