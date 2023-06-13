@@ -14,12 +14,24 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import PersonIcon from '@mui/icons-material/Person';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 
 const navLinks = [
+  {
+    title: "Home",
+    path: "/",
+    icon: <InboxIcon />,
+  },
   {
     title: "Jugadores",
     path: "/players",
     icon: <PersonIcon />,
+  },
+  {
+    title: "Nuevo Jugador",
+    path: "/players/new",
+    icon: <PersonAddIcon />,
   },
   {
     title: "Partidas",
@@ -27,9 +39,9 @@ const navLinks = [
     icon: <SportsEsportsIcon />,
   },
   {
-    title: "Home",
-    path: "/",
-    icon: <InboxIcon />,
+    title: "Nueva Partida",
+    path: "/games/new",
+    icon: <VideogameAssetIcon />,
   },
   {
     title: "Registrarse",
