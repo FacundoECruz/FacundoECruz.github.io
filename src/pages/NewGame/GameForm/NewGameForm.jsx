@@ -53,11 +53,11 @@ function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPl
         <TextField
           {...params}
           id="name"
-          label="Nombre"
+          // label="Nombre"
           type="text"
           variant="outlined"
           required
-          sx={{ mx: 1 }}
+          sx={{ mx: 1, bgcolor: "white" }}
         />
       )}
     />

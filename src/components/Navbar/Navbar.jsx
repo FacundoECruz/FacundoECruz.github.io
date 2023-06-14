@@ -11,11 +11,11 @@ import NavListDrawer from "./NavListDrawer";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/Inbox";
-import PersonIcon from '@mui/icons-material/Person';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
+import PersonIcon from "@mui/icons-material/Person";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 
 const navLinks = [
   {

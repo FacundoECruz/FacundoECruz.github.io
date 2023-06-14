@@ -36,13 +36,13 @@ function AddPlayerToDb() {
   }
 
   return (
-    <Card>
+    <Card sx={{bgcolor: "black"}}>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 14, color: "white" }} color="text.secondary" gutterBottom>
           Agregar jugador
         </Typography>
-        <Typography variant="h6">A la base de datos</Typography>
-        <Typography variant="p">
+        <Typography variant="h6" sx={{color: "white"}}>A la base de datos</Typography>
+        <Typography variant="p" sx={{color: "white"}}>
           Los jugadores deben estar en la base de datos para participar en las
           partidas
         </Typography>
