@@ -1,12 +1,10 @@
-import cuatros from "../../assets/cuatros.jpg";
-import messi from "../../assets/messi.jpg"
 import "../../stylesheets/MainHome.css"
+import ButtonBases from "./StartGameButton.jsx";
 
 function MainHome() {
   return (
     <main>
-      <img src={cuatros} />
-      <img src={messi}/>
+      <ButtonBases />
     </main>
   );
 }
