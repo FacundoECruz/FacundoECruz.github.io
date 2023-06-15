@@ -6,6 +6,7 @@ import ControlButtons from "./ControlButtons";
 import AddPlayerToDb from "./AddPlayerToDb";
 import { Box, Grid, Typography } from "@mui/material";
 
+
 function GameForm({ setGameState }) {
   const [players, setPlayers] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -19,12 +20,19 @@ function GameForm({ setGameState }) {
     }
   }
 
+  function removePlayer(player){
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers.filter((p) => p !== player);
+      return updatedPlayers;
+    });
+  }
+
   return (
     <div
       style={{
         position: "relative",
         background:
-          "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1686777876/hin-bong-yeung-jF946mh5QrA-unsplash_ccwnix.jpg')",
+          "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1686777876/hin-bong-yeung-jF946mh5QrA-unsplash_ccwnix.jpg')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "left",
@@ -58,7 +66,7 @@ function GameForm({ setGameState }) {
           <ControlButtons addPlayer={addPlayer} setPlayers={setPlayers} />
 
           {players.length ? (
-            <PlayersList players={players} setGameState={setGameState} />
+            <PlayersList players={players} setGameState={setGameState} removePlayer={removePlayer}/>
           ) : null}
         </Grid>
         <Grid item xl={3} xs={12} sx={{ mt: 5 }}>

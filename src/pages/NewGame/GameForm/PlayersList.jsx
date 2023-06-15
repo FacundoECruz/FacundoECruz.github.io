@@ -8,10 +8,17 @@ import {
   ListItemAvatar,
   Avatar,
   Typography,
+  IconButton,
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import CloseIcon from "@mui/icons-material/Close"
 
-function PlayersList({ players, setGameState }) {
+function PlayersList({ players, setGameState, removePlayer }) {
+
+  function handleRemovePlayer(player){
+    removePlayer(player);
+  }
+
   return (
     <Box sx={{ width: "50%" }}>
       {players.map((p) => {
@@ -32,6 +39,13 @@ function PlayersList({ players, setGameState }) {
                 }
                 sx={{ color: "white" }}
               />
+              <IconButton
+                edge="end"
+                aria-label="Eliminar"
+                onClick={() => handleRemovePlayer(p)}
+              >
+                <CloseIcon />
+              </IconButton>
             </ListItem>
           </List>
         );
