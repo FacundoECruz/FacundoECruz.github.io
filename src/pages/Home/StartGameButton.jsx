@@ -17,10 +17,10 @@ const images = [
     to: "/games/new",
   },
   {
-    url: "https://res.cloudinary.com/dfknsvqer/image/upload/v1686740176/altisima/hachazo_y2px3x.jpg ",
-    title: "Agregar Jugador",
+    url: "https://res.cloudinary.com/dfknsvqer/image/upload/v1686776553/zuza-galczynska-c5_eQi4rrjA-unsplash_gaz4ty.jpg",
+    title: "Partidas",
     width: "30%",
-    to: "/players/new",
+    to: "/games",
   },
 ];
 
