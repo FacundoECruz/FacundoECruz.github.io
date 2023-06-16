@@ -6,7 +6,7 @@ function PlayerCard({ image, username, stats }) {
     <Card sx={{ maxWidth: "150px", width: "30%", margin: "10px", bgcolor: "blue" }}>
       <CardMedia image={image} title={username} sx={{ height: "150px;" }} />
       <CardContent>
-        <Typography variant="h6" sx={{ marginBottom: 1 }}>
+        <Typography variant="h6" sx={{ marginBottom: 1, whiteSpace: "nowrap", fontSize: username.length > 15 ? "12px" : "inherit", }}>
           {username}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "space-between", flexDirection: "column", }}>

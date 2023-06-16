@@ -31,7 +31,7 @@ function Players() {
         sx={{
           display: "flex",
           flexDirection: "row",
-          flexWrap: "no-wrap",
+          flexWrap: "wrap",
           justifyContent: "center",
           alignItems: "center",
           height: "100%",
