@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import PlayerCard from "../../components/PlayerCard";
-import { Link } from "react-router-dom";
 
 function Players() {
   const [players, setPlayers] = useState(null);
@@ -20,33 +19,42 @@ function Players() {
     <div
       style={{
         position: "relative",
-        background: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1686776538/mike-perez-aslf3jEpDBI-unsplash_zee7cp.jpg')",
+        background:
+          "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1686776538/mike-perez-aslf3jEpDBI-unsplash_zee7cp.jpg')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         minHeight: "100vh",
       }}
     >
-      <Container
+      <Box
         sx={{
-          position: "relative",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
+          flexWrap: "no-wrap",
+          justifyContent: "center",
           alignItems: "center",
+          height: "100%",
+          padding: "20px",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-          {players
-            ? players.map((p) => {
-                return (
-                  <Link to={`/players/${p._id}`} key={p.username}>
-                    <PlayerCard image={p.image} username={p.username} />
-                  </Link>
-                );
-              })
-            : null}
-        </Box>
-      </Container>
+        {players
+          ? players.map((p) => {
+              return (
+                <PlayerCard
+                  key={p.username}
+                  image={p.image}
+                  username={p.username}
+                  stats={[
+                    { label: "Jugadas", value: p.gamesPlayed },
+                    { label: "Ganadas", value: p.gamesWon },
+                    { label: "Puntaje total", value: p.totalScore },
+                  ]}
+                />
+              );
+            })
+          : null}
+      </Box>
     </div>
   );
 }
