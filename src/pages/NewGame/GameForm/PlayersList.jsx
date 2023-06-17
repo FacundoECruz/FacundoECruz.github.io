@@ -11,11 +11,10 @@ import {
   IconButton,
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import CloseIcon from "@mui/icons-material/Close"
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 function PlayersList({ players, setGameState, removePlayer }) {
-
-  function handleRemovePlayer(player){
+  function handleRemovePlayer(player) {
     removePlayer(player);
   }
 
@@ -23,7 +22,18 @@ function PlayersList({ players, setGameState, removePlayer }) {
     <Box sx={{ width: "50%" }}>
       {players.map((p) => {
         return (
-          <List key={p} sx={{ bgcolor: "transparent" }}>
+          <List
+            key={p}
+            sx={{
+              bgcolor: "transparent",
+              border: "1px solid white",
+              my: "2px",
+              transition: "transform 0.3s",
+              "&:hover": {
+                transform: "translate(-5px, -5px)",
+              },
+            }}
+          >
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
@@ -31,27 +41,51 @@ function PlayersList({ players, setGameState, removePlayer }) {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={p}
+                primary={
+                  <Typography variant="body1" sx={{ fontSize: "20px" }}>
+                    {p}
+                  </Typography>
+                }
                 secondary={
-                  <Typography variant="body2" sx={{ color: "yellow" }}>
+                  <Typography
+                    variant="body1"
+                    sx={{ color: "yellow", fontSize: "20px" }}
+                  >
                     ***
                   </Typography>
                 }
-                sx={{ color: "white" }}
+                sx={{ color: "white", fontSize: "90px" }}
               />
               <IconButton
                 edge="end"
                 aria-label="Eliminar"
                 onClick={() => handleRemovePlayer(p)}
+                sx={{
+                  color: "white",
+                  "&:hover": {
+                    color: "orange",
+                  },
+                }}
               >
-                <CloseIcon />
+                <HighlightOffIcon />
               </IconButton>
             </ListItem>
           </List>
         );
       })}
       {players.length > 2 ? (
-        <Button sx={{color: "white"}} onClick={() => setGameState("inProgress")}>Empezar</Button>
+        <Button
+          sx={{
+            color: "white",
+            border: "1px solid green",
+            "&:hover": {
+              transform: "translate(-1px, -1px)",
+            },
+          }}
+          onClick={() => setGameState("inProgress")}
+        >
+          Empezar
+        </Button>
       ) : null}
     </Box>
   );
