@@ -36,7 +36,7 @@ function AddPlayerToDb() {
   }
 
   return (
-    <Card sx={{bgcolor: "black"}}>
+    <Card sx={{bgcolor: "black", borderRadius: "5%", mx: "5px", width: "90%"}}>
       <CardContent>
         <Typography sx={{ fontSize: 14, color: "white" }} color="text.secondary" gutterBottom>
           Agregar jugador

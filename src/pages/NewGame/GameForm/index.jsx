@@ -42,6 +42,7 @@ function GameForm({ setGameState }) {
       <Grid container>
         <Grid
           item
+          md={6}
           xl={8}
           xs={12}
           sx={{
@@ -69,7 +70,7 @@ function GameForm({ setGameState }) {
             <PlayersList players={players} setGameState={setGameState} removePlayer={removePlayer}/>
           ) : null}
         </Grid>
-        <Grid item xl={3} xs={12} sx={{ mt: 5 }}>
+        <Grid item md={6} xs={12} sm={12} sx={{ mt: 5, display: "flex", justifyContent: "center" }}>
           <AddPlayerToDb />
         </Grid>
       </Grid>
