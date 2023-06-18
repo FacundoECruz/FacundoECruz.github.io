@@ -43,10 +43,7 @@ export default function SignInSide() {
   const styles = {
     paperContainer: {
       background:
-        "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1687093391/patrick-tomasso-QMDap1TAu0g-unsplash_qvsjkn.jpg')",
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "right",
+        " url('https://res.cloudinary.com/dfknsvqer/image/upload/v1687094811/istockphoto-1212342896-612x612-1_dlvflo.jpg')",
     },
   };
 
@@ -83,14 +80,14 @@ export default function SignInSide() {
           <Avatar sx={{ m: 1, bgcolor: "green" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{color: "white"}}>
+          <Typography component="h1" variant="h5">
             Registrarse
           </Typography>
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 1, color: "white", }}
+            sx={{ mt: 1 }}
           >
             <TextField
               margin="normal"
@@ -101,7 +98,6 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
-              sx={{bgcolor: "white"}}
             />
             <TextField
               margin="normal"
@@ -112,9 +108,8 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
-              sx={{bgcolor: "white"}}
             />
-            <InputLabel htmlFor="image-upload" sx={{color: "white"}}>Seleccionar imagen</InputLabel>
+            <InputLabel htmlFor="image-upload">Seleccionar imagen</InputLabel>
             <OutlinedInput
               id="image-upload"
               type="file"
@@ -122,7 +117,7 @@ export default function SignInSide() {
               inputProps={{
                 accept: "image/*",
               }}
-              sx={{ ml: 2, color: "white" }}
+              sx={{ ml: 2 }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
