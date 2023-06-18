@@ -1,6 +1,5 @@
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,7 +9,6 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Copyright(props) {
   return (
@@ -25,10 +23,6 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
 export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,25 +33,19 @@ export default function Login() {
     });
   };
 
+  const styles = {
+    paperContainer: {
+      background:
+        "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1687094213/ryan-shumway--n5F3fH0lIY-unsplash_nkbtzn.jpg')",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+    },
+  };
+
   return (
-    <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://res.cloudinary.com/dfknsvqer/image/upload/v1686741351/altisima/cartas_hxxtow.jpg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={styles.paperContainer}>
           <Box
             sx={{
               my: 8,
@@ -123,6 +111,5 @@ export default function Login() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
   );
 }
