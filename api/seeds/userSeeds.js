@@ -24,6 +24,7 @@ for (let i = 0; i < 20; i++) {
   usersArray.push(username)
   const user = new User({
     username: username,
+    email: "fakeEmail@mail.com"
   })
   user.save()
     .then(p => {
