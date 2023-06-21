@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Button,
   Drawer,
   IconButton,
   Toolbar,
@@ -45,9 +44,8 @@ const navLinks = [
 ];
 
 // eslint-disable-next-line react/prop-types
-function Navbar({ user }) {
+function Navbar({ user, logout }) {
   const [open, setOpen] = useState(false);
-  console.log(user)
 
   return (
     <>
@@ -64,22 +62,17 @@ function Navbar({ user }) {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Altisima
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {user ? (
+          {user ? (
+            <Box sx={{ display: { sm: "block" } }}>
               <Typography>{user}</Typography>
-            ) : (
-              navLinks.map((item) => (
-                <Button
-                  color="inherit"
-                  key={item.title}
-                  component="a"
-                  href={item.path}
-                >
-                  {item.title}
-                </Button>
-              ))
-            )}
-          </Box>
+              <IconButton onClick={() => logout()}>Logout</IconButton>
+            </Box>
+          ) : (
+            <Box sx={{ display: { sm: "block" } }}>
+              <IconButton component="a" href="/login">Login</IconButton>
+              <IconButton component="a" href="/register">Register</IconButton>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
 

@@ -10,22 +10,19 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
 import { useState } from "react";
-import { useEffect } from "react";
 
 function App() {
+  const [user, setUser] = useState(window.localStorage.getItem("user") || null);
 
-  const [user, setUser] = useState(null)
+  console.log(user);
 
-  useEffect(() => {
-    const userInLocalStorage = window.localStorage.getItem("user")
-    if(userInLocalStorage){
-      setUser(userInLocalStorage)
-    }
-  }, [])
+  function logout() {
+    window.localStorage.removeItem("user");
+  }
 
   return (
     <>
-      <Navbar user={user}/>
+      <Navbar user={user} logout={logout} />
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -34,8 +31,8 @@ function App() {
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameDetails />} />
           <Route path="/games/new" element={<NewGame />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login user={user} />} />
+          <Route path="/register" element={<Register user={user} />} />
         </Routes>
       </Router>
     </>
