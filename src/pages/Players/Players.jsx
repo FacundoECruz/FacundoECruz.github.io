@@ -13,6 +13,14 @@ function Players() {
       .getPlayers()
       .then((response) => setPlayers(response.data))
       .catch((error) => console.log(error));
+    api
+      .getUsers()
+      .then((res) => setPlayers(prevPlayers => {
+        const usersPlayers = res.data;
+        const newState = usersPlayers.concat(prevPlayers)
+        return newState
+      }))
+      .catch((error) => console.log(error))
   }, []);
 
   return (
