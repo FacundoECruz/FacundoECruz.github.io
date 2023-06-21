@@ -1,16 +1,14 @@
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-// import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { InputLabel, OutlinedInput } from "@mui/material";
 import UploadWidget from "../../components/UploadWidget";
+import { Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -32,30 +30,15 @@ function Copyright(props) {
 
 export default function SignInSide() {
 
+  const [imageUrl, setImageUrl] = useState("")
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const {email, password} = e.target.elements;
+    const formData = {email: email.value, password: password.value, image: imageUrl}
+    console.log(formData)
   };
   
-  const handleImage = async(e) => {
-    e.preventDefault();
-    // const files = e.target.files;
-    // console.log(files[0])
-    // const data = new FormData();
-    // data.append("file", files[0])
-    // data.append("upload_preset", "altisimaUsers")
-    // setLoading(true)
-    // const res = await fetch(
-    //   "https://api.cloudinary.com/v1_1/dfknsvqer/image/upload",
-    //   {
-    //     method: "POST",
-    //     body: data,
-    //   }
-    // )
-    // const file = await res.json()
-    // setImage(file.secure_url)
-    // console.log(image)
-    // setLoading(false)
-  }
 
   const styles = {
     paperContainer: {
@@ -106,7 +89,7 @@ export default function SignInSide() {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            {/* <TextField
+            <TextField
               margin="normal"
               required
               fullWidth
@@ -125,23 +108,13 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
-            /> */}
-            {/* <InputLabel htmlFor="image-upload">Seleccionar imagen</InputLabel>
-            <OutlinedInput
-              id="image-upload"
-              type="file"
-              name="image"
-              inputProps={{
-                accept: "image/*",
-              }}
-              sx={{ ml: 2 }}
-              onChange={handleImage}
-            /> */}
-            <UploadWidget />
-            {/* <FormControlLabel
+            />
+            <UploadWidget setImageUrl={setImageUrl}/>
+            <br />
+            <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Recordar usuario"
-            /> */}
+            />
             <Button
               type="submit"
               fullWidth

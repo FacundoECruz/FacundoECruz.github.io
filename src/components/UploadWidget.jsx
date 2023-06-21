@@ -1,23 +1,30 @@
-import { useEffect, useRef } from 'react';
-import { Button } from '@mui/material';
+import { useEffect, useRef } from "react";
+import { Button } from "@mui/material";
 
-function UploadWidget() {
-
-  const cloudinaryRef = useRef()
-  const widgetRef = useRef()
+// eslint-disable-next-line react/prop-types
+function UploadWidget({ setImageUrl }) {
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
-    widgetRef.current = cloudinaryRef.current.createUploadWidget({
-      cloudName: "dfknsvqer",
-      uploadPreset: "oallf3bt",
-    })
-  }, [])
+    widgetRef.current = cloudinaryRef.current.createUploadWidget(
+      {
+        cloudName: "dfknsvqer",
+        uploadPreset: "oallf3bt",
+      },
+      function (error, res) {
+        if (res.info.url) {
+          setImageUrl(res.info.url);
+        }
+      }
+    );
+  }, [setImageUrl]);
 
   return (
-    <Button variant="contained" onClick={() => widgetRef.current.open()}>Subir Imagen</Button>
-  )
-
-  
+    <Button variant="contained" onClick={() => widgetRef.current.open()}>
+      Subir Imagen
+    </Button>
+  );
 }
 
 export default UploadWidget;
