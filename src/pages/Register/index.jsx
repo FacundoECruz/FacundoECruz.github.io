@@ -33,8 +33,8 @@ function Copyright(props) {
 // eslint-disable-next-line react/prop-types
 export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
-  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -54,6 +54,7 @@ export default function SignInSide() {
     try {
       api.createUser(formData);
       setIsLoggedIn(true);
+      window.localStorage.setItem("user", formData.username)
     } catch (error) {
       console.error(error);
     }

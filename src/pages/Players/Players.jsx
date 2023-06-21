@@ -6,8 +6,6 @@ import PlayerCard from "../../components/PlayerCard";
 function Players() {
   const [players, setPlayers] = useState(null);
 
-  console.log(players);
-
   useEffect(() => {
     api
       .getPlayers()

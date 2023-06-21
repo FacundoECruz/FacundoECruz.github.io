@@ -5,28 +5,39 @@ import PlayerDetails from "./pages/PlayerDetails";
 import Games from "./pages/Games/Games";
 import GameDetails from "./pages/GameDetails/GameDetails";
 import NewGame from "./pages/NewGame";
-import Login from "./pages/Login"
-import Register from "./pages/Register"
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Navbar from "./components/Navbar/Navbar";
-import "./App.css"
+import "./App.css";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function App() {
 
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const userInLocalStorage = window.localStorage.getItem("user")
+    if(userInLocalStorage){
+      setUser(userInLocalStorage)
+    }
+  }, [])
+
   return (
     <>
-    <Navbar />
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/players" element={<Players />} />
-        <Route path="/players/:id" element={<PlayerDetails />} />
-        <Route path="/games" element={<Games />} />
-        <Route path="/games/:id" element={<GameDetails />} />
-        <Route path="/games/new" element={<NewGame />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />}/>
-      </Routes>
-    </Router>
+      <Navbar user={user}/>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/players" element={<Players />} />
+          <Route path="/players/:id" element={<PlayerDetails />} />
+          <Route path="/games" element={<Games />} />
+          <Route path="/games/:id" element={<GameDetails />} />
+          <Route path="/games/new" element={<NewGame />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </Router>
     </>
   );
 }

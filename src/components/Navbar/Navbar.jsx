@@ -44,8 +44,10 @@ const navLinks = [
   },
 ];
 
-function Navbar() {
+// eslint-disable-next-line react/prop-types
+function Navbar({ user }) {
   const [open, setOpen] = useState(false);
+  console.log(user)
 
   return (
     <>
@@ -63,16 +65,20 @@ function Navbar() {
             Altisima
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navLinks.map((item) => (
-              <Button
-                color="inherit"
-                key={item.title}
-                component="a"
-                href={item.path}
-              >
-                {item.title}
-              </Button>
-            ))}
+            {user ? (
+              <Typography>{user}</Typography>
+            ) : (
+              navLinks.map((item) => (
+                <Button
+                  color="inherit"
+                  key={item.title}
+                  component="a"
+                  href={item.path}
+                >
+                  {item.title}
+                </Button>
+              ))
+            )}
           </Box>
         </Toolbar>
       </AppBar>
