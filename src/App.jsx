@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar/Navbar";
 import "./App.css"
 
 function App() {
+
   return (
     <>
     <Navbar />
@@ -23,7 +24,7 @@ function App() {
         <Route path="/games/:id" element={<GameDetails />} />
         <Route path="/games/new" element={<NewGame />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register />}/>
       </Routes>
     </Router>
     </>

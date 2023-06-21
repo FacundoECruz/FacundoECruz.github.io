@@ -8,8 +8,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import UploadWidget from "../../components/UploadWidget";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../../utils/api-client";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -29,8 +30,17 @@ function Copyright(props) {
   );
 }
 
+// eslint-disable-next-line react/prop-types
 export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [navigate, isLoggedIn]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,10 +51,11 @@ export default function SignInSide() {
       password: password.value,
       image: imageUrl,
     };
-    try{
-      api.createUser(formData)
-    } catch(error){
-      console.error(error)
+    try {
+      api.createUser(formData);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -114,7 +125,6 @@ export default function SignInSide() {
               label="Email"
               name="email"
               autoComplete="email"
-              autoFocus
             />
             <TextField
               margin="normal"
