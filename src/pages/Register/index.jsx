@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import UploadWidget from "../../components/UploadWidget";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useState } from "react";
+import api from "../../utils/api-client";
 
 function Copyright(props) {
   return (
@@ -29,16 +30,23 @@ function Copyright(props) {
 }
 
 export default function SignInSide() {
-
-  const [imageUrl, setImageUrl] = useState("")
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const {email, password} = e.target.elements;
-    const formData = {email: email.value, password: password.value, image: imageUrl}
-    console.log(formData)
+    e.preventDefault();
+    const { email, password, username } = e.target.elements;
+    const formData = {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      image: imageUrl,
+    };
+    try{
+      api.createUser(formData)
+    } catch(error){
+      console.error(error)
+    }
   };
-  
 
   const styles = {
     paperContainer: {
@@ -93,6 +101,15 @@ export default function SignInSide() {
               margin="normal"
               required
               fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               id="email"
               label="Email"
               name="email"
@@ -109,7 +126,7 @@ export default function SignInSide() {
               id="password"
               autoComplete="current-password"
             />
-            <UploadWidget setImageUrl={setImageUrl}/>
+            <UploadWidget setImageUrl={setImageUrl} />
             <br />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
