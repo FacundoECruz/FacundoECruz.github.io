@@ -1,5 +1,5 @@
 import usersArray from "./userSeeds.js";
-import Game from "../api/models/Game.js";
+import Game from "../models/Game.js";
 
 // Funcion para tener numeros random
 function getRandomNum(min, max) {
