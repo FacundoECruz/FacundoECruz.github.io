@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await User.findById(id);
+    const user = await User.findById(id); //
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving user", error });
@@ -23,45 +23,54 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  const { username, email } = req.body;
+  
+  const isUsernameRepeated = await User.exists({ username });
+  const isEmailRepeated = await User.exists({ email });
+
+  if (isUsernameRepeated || isEmailRepeated) {
+    return res.status(400).json("El nombre de usuario o correo electrónico ya están registrados");
+  }
+
   const user = new User(req.body);
   try {
     await user.save();
-    console.log(user)
-    res.status(201);
+    console.log(user);
+    return res.status(201).send();
   } catch (err) {
-    res.status(400).json(err.message);
+    return res.status(400).json(err.message);
   }
-}); 
+});
 
-router.patch("/:id", async(req, res) => {
+router.patch("/:id", async (req, res) => {
   const userId = req.params.id;
   const updatedUserData = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
-    return res.status(400).json({ message: 'Invalid user ID' });
+    return res.status(400).json({ message: "Invalid user ID" });
   }
   const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
-    new: true, 
+    new: true,
   });
   if (!updatedUser) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: "User not found" });
   }
 
   res.status(200).json(updatedUser);
-})
+});
 
-router.delete("/:id", async(req, res) => {
+router.delete("/:id", async (req, res) => {
   const userId = req.params.id;
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: 'Invalid user ID' });
-    }
-    const deletedUser = await User.findByIdAndDelete(userId);
-    if (!deletedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+  const deletedUser = await User.findByIdAndDelete(userId);
+  if (!deletedUser) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
-    res.status(200).json({ message: 'Successful deleted' });
-})
+  res.status(200).json({ message: "Successful deleted" });
+});
 
 export { router };
