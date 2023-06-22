@@ -69,8 +69,12 @@ function Navbar({ user, logout }) {
             </Box>
           ) : (
             <Box sx={{ display: { sm: "block" } }}>
-              <IconButton component="a" href="/login">Login</IconButton>
-              <IconButton component="a" href="/register">Register</IconButton>
+              <IconButton component="a" href="/login">
+                Login
+              </IconButton>
+              <IconButton component="a" href="/register">
+                Register
+              </IconButton>
             </Box>
           )}
         </Toolbar>

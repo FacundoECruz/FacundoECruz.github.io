@@ -34,13 +34,14 @@ function Copyright(props) {
 // eslint-disable-next-line react/prop-types
 export default function Login({user}) {
   const [error, setError] = useState("");
+  const [userState, setUserState] = useState(user)
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (userState) {
       navigate("/");
     }
-  }, [navigate, user]);
+  }, [navigate, userState]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,12 +52,13 @@ export default function Login({user}) {
       .then((allUsers) => {
         const selectedUser = allUsers.data.find(
           (el) => el.username === data.get("username")
-        );
+      );
         if (!selectedUser) {
           setError("Invalid Username or Password")}
           else{
           if (selectedUser.password === data.get("password")) {
             window.localStorage.setItem("user", selectedUser.username);
+            setUserState(selectedUser.username)
           } else {
             setError("Invalid Username or Password");
           }

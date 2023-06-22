@@ -33,13 +33,14 @@ function Copyright(props) {
 // eslint-disable-next-line react/prop-types
 export default function SignInSide({user}) {
   const [imageUrl, setImageUrl] = useState("");
+  const [userState, setUserState] = useState(user)
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (userState) {
       navigate("/");
     }
-  }, [navigate, user]);
+  }, [navigate, userState]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,6 +54,7 @@ export default function SignInSide({user}) {
     try {
       api.createUser(formData);
       window.localStorage.setItem("user", formData.username)
+      setUserState(formData.username)
     } catch (error) {
       console.error(error);
     }
