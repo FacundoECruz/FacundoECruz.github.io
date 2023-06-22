@@ -9,8 +9,9 @@ import Typography from "@mui/material/Typography";
 import UploadWidget from "../../components/UploadWidget";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
-import api from "../../utils/api-client";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../utils/AuthContext";
 
 function Copyright(props) {
   return (
@@ -31,16 +32,16 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function SignInSide({user}) {
+export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
-  const [userState, setUserState] = useState(user)
   const navigate = useNavigate();
+  const {user, register, error} = useContext(AuthContext)
 
   useEffect(() => {
-    if (userState) {
+    if (user) {
       navigate("/");
     }
-  }, [navigate, userState]);
+  }, [navigate, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,13 +52,8 @@ export default function SignInSide({user}) {
       password: password.value,
       image: imageUrl,
     };
-    try {
-      api.createUser(formData);
-      window.localStorage.setItem("user", formData.username)
-      setUserState(formData.username)
-    } catch (error) {
-      console.error(error);
-    }
+
+    register(formData)
   };
 
   const styles = {
@@ -143,6 +139,7 @@ export default function SignInSide({user}) {
               control={<Checkbox value="remember" color="primary" />}
               label="Recordar usuario"
             />
+            {error ? <Typography sx={{color: "red"}}>{error}</Typography> : null}
             <Button
               type="submit"
               fullWidth

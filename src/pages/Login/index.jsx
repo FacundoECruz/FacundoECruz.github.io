@@ -9,9 +9,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import api from "../../utils/api-client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../utils/AuthContext";
 
 function Copyright(props) {
   return (
@@ -32,41 +33,21 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function Login({user}) {
-  const [error, setError] = useState("");
-  const [userState, setUserState] = useState(user)
+export default function Login(  ) {
   const navigate = useNavigate();
+  const {user, login, error} = useContext(AuthContext)
 
   useEffect(() => {
-    if (userState) {
+    if (user) {
       navigate("/");
     }
-  }, [navigate, userState]);
+  }, [navigate, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
 
-    api
-      .getUsers()
-      .then((allUsers) => {
-        const selectedUser = allUsers.data.find(
-          (el) => el.username === data.get("username")
-      );
-        if (!selectedUser) {
-          setError("Invalid Username or Password")}
-          else{
-          if (selectedUser.password === data.get("password")) {
-            window.localStorage.setItem("user", selectedUser.username);
-            setUserState(selectedUser.username)
-          } else {
-            setError("Invalid Username or Password");
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    login(data)
   };
 
   const styles = {

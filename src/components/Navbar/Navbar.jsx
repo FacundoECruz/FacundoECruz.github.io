@@ -14,6 +14,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import { useContext } from "react";
+import { AuthContext } from "../../utils/AuthContext"; 
 
 const navLinks = [
   {
@@ -44,8 +46,9 @@ const navLinks = [
 ];
 
 // eslint-disable-next-line react/prop-types
-function Navbar({ user, logout }) {
+function Navbar() {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <>
