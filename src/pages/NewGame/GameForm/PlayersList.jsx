@@ -4,7 +4,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Button,
   ListItemAvatar,
   Avatar,
   Typography,
@@ -13,7 +12,7 @@ import {
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-function PlayersList({ players, setGameState, removePlayer }) {
+function PlayersList({ players, removePlayer }) {
   function handleRemovePlayer(player) {
     removePlayer(player);
   }
@@ -73,21 +72,6 @@ function PlayersList({ players, setGameState, removePlayer }) {
           </List>
         );
       })}
-      {players.length > 2 ? (
-        <Button
-          sx={{
-            width: "200px",
-            color: "green",
-            border: "1px solid green",
-            "&:hover": {
-              transform: "translate(-1px, -1px)",
-            },
-          }}
-          onClick={() => setGameState("inProgress")}
-        >
-          Empezar
-        </Button>
-      ) : null}
     </Box>
   );
 }

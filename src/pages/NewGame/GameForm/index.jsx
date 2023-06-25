@@ -4,8 +4,8 @@ import NewGameForm from "./NewGameForm";
 import PlayersList from "./PlayersList";
 import ControlButtons from "./ControlButtons";
 import AddPlayerToDb from "./AddPlayerToDb";
-import { Box, Grid, Typography } from "@mui/material";
-
+import { Box, Button, Grid, Typography } from "@mui/material";
+import api from "../../../utils/api-client";
 
 function GameForm({ setGameState, players, setPlayers }) {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -19,10 +19,20 @@ function GameForm({ setGameState, players, setPlayers }) {
     }
   }
 
-  function removePlayer(player){
+  function removePlayer(player) {
     setPlayers((prevPlayers) => {
       const updatedPlayers = prevPlayers.filter((p) => p !== player);
       return updatedPlayers;
+    });
+  }
+
+  function handleStartGame() {
+    setGameState("inProgress");
+    const playersForBackend = players.map((p) => {
+      return { username: p, score: 0, bid: 0, bidsLost: 0 };
+    });
+    api.createGame(playersForBackend).then((res) => {
+      console.log(res);
     });
   }
 
@@ -65,10 +75,34 @@ function GameForm({ setGameState, players, setPlayers }) {
           <ControlButtons addPlayer={addPlayer} setPlayers={setPlayers} />
 
           {players.length ? (
-            <PlayersList players={players} setGameState={setGameState} removePlayer={removePlayer}/>
+            <PlayersList
+              players={players}
+              setGameState={setGameState}
+              removePlayer={removePlayer}
+            />
+          ) : null}
+          {players.length > 2 ? (
+            <Button
+              sx={{
+                width: "200px",
+                color: "green",
+                border: "1px solid green",
+                "&:hover": {
+                  transform: "translate(-1px, -1px)",
+                },
+              }}
+              onClick={handleStartGame}
+            >
+              Empezar
+            </Button>
           ) : null}
         </Grid>
-        <Grid item md={6} sm={12} sx={{ mt: 5, display: "flex", justifyContent: "center" }}>
+        <Grid
+          item
+          md={6}
+          sm={12}
+          sx={{ mt: 5, display: "flex", justifyContent: "center" }}
+        >
           <AddPlayerToDb />
         </Grid>
       </Grid>

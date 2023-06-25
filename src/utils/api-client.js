@@ -6,7 +6,7 @@ const server = axios.create({
 
 const api = {
   getGame: () => server.get("/games"),
-  createGame: (gameData) => server.post("/games", gameData),
+  createGame: (players) => server.post("/games", players),
   getGames: () => server.get("/games"),
   getPlayer: (username) => server.get(`/players/${username}`),
   createPlayer: (playerData) => server.post("/players", playerData),

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import GameForm from "./GameForm";
 import Scores from "./Scores";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 function NewGame() {
   const [players, setPlayers] = useState(() => {
@@ -21,10 +21,10 @@ function NewGame() {
     }
   })
 
-  useEffect(() => {
-    console.log(players)
-      console.log(gameState)
-  }, [gameState, players]);
+  // useEffect(() => {
+  //   console.log(players)
+  //   console.log(gameState)
+  // }, [gameState, players]);  
 
   return gameState === "idle" ? (
     <GameForm

@@ -1,12 +1,16 @@
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
 const GameSchema = new Schema({
+  cardsPerRound: Array,
   results: Array,
   date: String,
-  rounds: Number,
-  usersId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-})
+  round: Number,
+  players: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    { type: mongoose.Schema.Types.ObjectId, ref: "Player" },
+  ],
+});
 
 const Game = mongoose.model("Game", GameSchema);
 
