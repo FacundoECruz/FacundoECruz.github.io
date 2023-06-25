@@ -58,7 +58,7 @@ function Navbar() {
             color="inherit"
             size="large"
             onClick={() => setOpen(true)}
-            sx={{ display: { xs: "flex", sm: "none" } }}
+            sx={{ display: "flex" }}
           >
             <MenuIcon />
           </IconButton>
@@ -87,7 +87,7 @@ function Navbar() {
         open={open}
         anchor="left"
         onClose={() => setOpen(false)}
-        sx={{ display: { xs: "flex", sm: "none" } }}
+        sx={{ display: "flex" }}
       >
         <NavListDrawer navLinks={navLinks} />
       </Drawer>
