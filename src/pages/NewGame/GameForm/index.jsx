@@ -42,10 +42,8 @@ function GameForm({ setGameState }) {
       <Grid container>
         <Grid
           item
-          md={6}
-          xl={8}
-          sm={12}
           xs={12}
+          md={6}
           sx={{
             display: "flex",
             alignItems: "center",
