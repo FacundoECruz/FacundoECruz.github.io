@@ -22,7 +22,6 @@ function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPl
         const playersResponse = await api.getPlayers();
         const options = usersResponse.data.concat(playersResponse.data)
         setOptions(options);
-        console.log(options);
       } catch (error) {
         console.error(error);
       }

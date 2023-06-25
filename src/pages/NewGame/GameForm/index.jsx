@@ -7,8 +7,7 @@ import AddPlayerToDb from "./AddPlayerToDb";
 import { Box, Grid, Typography } from "@mui/material";
 
 
-function GameForm({ setGameState }) {
-  const [players, setPlayers] = useState([]);
+function GameForm({ setGameState, players, setPlayers }) {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [playerInputValue, setPlayerInputValue] = useState("");
 

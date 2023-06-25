@@ -76,7 +76,8 @@ function PlayersList({ players, setGameState, removePlayer }) {
       {players.length > 2 ? (
         <Button
           sx={{
-            color: "white",
+            width: "200px",
+            color: "green",
             border: "1px solid green",
             "&:hover": {
               transform: "translate(-1px, -1px)",
