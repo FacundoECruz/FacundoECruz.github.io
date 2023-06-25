@@ -34,6 +34,7 @@ function GameForm({ setGameState, players, setPlayers }) {
     api.createGame(playersForBackend).then((res) => {
       console.log(res.data);
       window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent)
+      window.localStorage.setItem("gameId", res.data.id)
     });
   }
 

@@ -60,9 +60,16 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.put("/", async(req, res) => {
-//   const game = Game.findById(req.body.id)
-//   const updates = req.body.update
-// })
+router.patch("/", async(req, res) => {
+  const game = Game.findById(req.body.gameId)
+  const roundResults = req.body.playersRound
+  
+  const response = {
+    id: "id",
+    cardsInCurrent: 2,
+    scores: []
+  };
+  res.json(response)
+})
 
 export { router };

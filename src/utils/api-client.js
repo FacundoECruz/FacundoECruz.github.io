@@ -15,8 +15,8 @@ const api = {
   createUser: (userData) => server.post("/users", userData),
   getUsers: () => server.get("/users"),
   editUser: (id, userData) => server.patch(`/users/${id}`, userData),
-  deleteUser: (id) => server.delete(`/users/${id}`)
-  //startGame: (arrayDeUsernames) => server.post("/start", arrayDeUsernames)
+  deleteUser: (id) => server.delete(`/users/${id}`),
+  nextRound: (playersRound, gameId) => server.patch("/games", {playersRound: playersRound, gameId: gameId})
   //nextRound: (playerRound
   // PlayerRound{
   //   name*	string

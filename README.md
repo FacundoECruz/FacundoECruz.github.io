@@ -7,9 +7,6 @@ App developed with React for the frontend, Express for the backend and MongoDB.
 
 ## TODO
 
-- el id tendria que ser el mail. La llamada a la base de datos la voy a filtrar por le mail.
-- el frontend no deberia tener el id.
-- en los player usar el username, no el id.
 
 ## Asociar jugador
 - Si el mail del usuario ya esta registrado devolves 400

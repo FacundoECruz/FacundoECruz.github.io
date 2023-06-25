@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Typography, Button, Box } from "@mui/material";
 
-const PlayerDash = ({ player }) => {
+const PlayerDash = ({ player, setPlayersRound, index }) => {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ const PlayerDash = ({ player }) => {
       }}
     >
       <Typography variant="h2" sx={{ mb: 2, color: "white", fontFamily: "'Bodoni Moda', serif", fontSize: "30px" }}>
-        {player}
+        {player.name}
       </Typography>
       <Box
         sx={{
@@ -32,6 +32,7 @@ const PlayerDash = ({ player }) => {
           <Button
             id="bid-button"
             variant="contained"
+            onClick={setPlayersRound(prevState => prevState[index].bid += 1)}
             sx={{
               bgcolor: "green",
               "&:hover": {
@@ -41,7 +42,7 @@ const PlayerDash = ({ player }) => {
               },
             }}
           >
-            0
+            {player.bid}
           </Button>
           <Button
             sx={{
@@ -67,7 +68,7 @@ const PlayerDash = ({ player }) => {
               },
             }}
           >
-            0
+            {player.bidsLost}
           </Button>
           <Button
             sx={{
