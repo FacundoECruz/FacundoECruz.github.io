@@ -32,7 +32,8 @@ function GameForm({ setGameState, players, setPlayers }) {
       return { username: p, score: 0, bid: 0, bidsLost: 0 };
     });
     api.createGame(playersForBackend).then((res) => {
-      console.log(res);
+      console.log(res.data);
+      window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent)
     });
   }
 

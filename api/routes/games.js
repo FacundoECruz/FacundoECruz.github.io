@@ -50,7 +50,8 @@ router.post("/", async (req, res) => {
     const savedGame = await game.save();
     const response = {
       id: savedGame._id,
-      cardsPerRound: cardsPerRound
+      round: game.round,
+      cardsInCurrent: cardsPerRound[game.round]
     };
     console.log(savedGame)
     res.status(200).json(response);

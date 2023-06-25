@@ -6,18 +6,18 @@ import Scores from "./Scores";
 function NewGame() {
   const [players, setPlayers] = useState(() => {
     const storedPlayers = JSON.parse(window.localStorage.getItem("players"));
-    if(storedPlayers.length){
-      return storedPlayers
-    } else {
+    if(storedPlayers === null){
       return []
+    } else {
+      return storedPlayers
     }
   });
   const [gameState, setGameState] = useState(() => {
     const storedPlayers = JSON.parse(window.localStorage.getItem("players"));
-    if(storedPlayers.length) {
-      return "inProgress"
-    } else{
+    if(storedPlayers === null) {
       return "idle"
+    } else {
+      return "inProgress"
     }
   })
 
