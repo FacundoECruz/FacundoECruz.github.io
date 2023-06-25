@@ -21,6 +21,7 @@ function Scores({ players, setGameState }) {
 
       <Button
         onClick={() => {
+          window.localStorage.removeItem("players")
           setPlayersNames([]);
           setGameState("idle");
         }}

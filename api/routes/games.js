@@ -38,13 +38,13 @@ router.post("/", async (req, res) => {
   const cardsPerRound = [4, 6, 3, 6, 7, 8, 4, 3, 7]
 
   const game = new Game(
-    cardsPerRound,
-    players,
-    new Date(),
-    0,
-    playersIds.map((id) => {
-      return new mongoose.Types.ObjectId(id);
-    })
+    {
+      cardsPerRound,
+      results: [],
+      date: new Date(),
+      round: 0,
+      players: playersIds.map((id) => new mongoose.Types.ObjectId(id))
+    }
   );
   try {
     const savedGame = await game.save();
@@ -52,6 +52,7 @@ router.post("/", async (req, res) => {
       id: savedGame._id,
       cardsPerRound: cardsPerRound
     };
+    console.log(savedGame)
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json(err.message);

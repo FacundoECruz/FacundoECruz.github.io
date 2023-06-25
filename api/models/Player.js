@@ -28,3 +28,4 @@ const PlayerSchema = new Schema({
 const Player = mongoose.model("Player", PlayerSchema);
 
 export default Player;
+  
