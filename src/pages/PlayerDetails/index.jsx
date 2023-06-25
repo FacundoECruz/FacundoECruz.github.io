@@ -10,16 +10,20 @@ import PolylineIcon from '@mui/icons-material/Polyline';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
 function PlayerDetails() {
-  const { id } = useParams();
+  const { username } = useParams();
 
   const [player, setPlayer] = useState(null);
 
   useEffect(() => {
+    console.log(player)
     api
-      .getPlayer(id)
-      .then((response) => setPlayer(response.data))
+      .getPlayer(username)
+      .then((response) => {
+        const [player] = response.data
+        setPlayer(player)
+      })
       .catch((error) => console.log(error));
-  }, [id]);
+  }, [username, player]);
 
   return (
     <>

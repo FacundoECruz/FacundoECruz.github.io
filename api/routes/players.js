@@ -11,10 +11,15 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:username", async (req, res) => {
   try {
-    const id = req.params.id;
-    const player = await Player.findById(id);
+    const {username} = req.params;
+    const player = await Player.find({username: username});
+
+    if (player.length === 0) {
+      return res.status(404).json({ message: "Jugador no encontrado" });
+    }
+
     res.json(player);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving player", error });
