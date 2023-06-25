@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
+import Player from "../models/Player.js";
 import mongoose from "mongoose";
 const router = express.Router();
 
@@ -33,13 +34,16 @@ router.post("/", async (req, res) => {
   }
 
   const user = new User(req.body);
+  const player = new Player(req.body);
   try {
     await user.save();
+    await player.save()
     console.log(user);
     return res.status(201).send();
   } catch (err) {
     return res.status(400).json(err.message);
   }
+
 });
 
 router.patch("/:id", async (req, res) => {

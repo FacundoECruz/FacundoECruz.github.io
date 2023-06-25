@@ -6,10 +6,7 @@ const GameSchema = new Schema({
   results: Array,
   date: String,
   round: Number,
-  players: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    { type: mongoose.Schema.Types.ObjectId, ref: "Player" },
-  ],
+  players: [{ type: mongoose.Schema.Types.ObjectId, ref: "Player" }],
 });
 
 const Game = mongoose.model("Game", GameSchema);

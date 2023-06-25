@@ -1,7 +1,6 @@
 import express from "express";
 import Game from "../models/Game.js";
 import Player from "../models/Player.js";
-import User from "../models/User.js";
 import mongoose from "mongoose";
 const router = express.Router();
 
@@ -30,8 +29,7 @@ router.post("/", async (req, res) => {
     players.map(async (p) => {
       try {
         const dbPlayer = await Player.findOne({ username: p.username });
-        const dbUser = await User.findOne({ username: p.username });
-        return dbPlayer !== null ? dbPlayer._id : dbUser._id;
+        return dbPlayer
       } catch (error) {
         console.log(error);
       }
