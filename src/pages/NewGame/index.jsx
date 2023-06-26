@@ -23,8 +23,7 @@ function NewGame() {
 
   // useEffect(() => {
   //   console.log(players)
-  //   console.log(gameState)
-  // }, [gameState, players]);  
+  // }, [players]);  
 
   return gameState === "idle" ? (
     <GameForm

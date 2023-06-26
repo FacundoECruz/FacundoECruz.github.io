@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Typography, Button, Box } from "@mui/material";
 
-const PlayerDash = ({ player, setPlayersRound, index }) => {
+const PlayerDash = ({ player, index, dispatch, types }) => {
   return (
     <Box
       sx={{
@@ -15,8 +15,16 @@ const PlayerDash = ({ player, setPlayersRound, index }) => {
         bgcolor: "black",
       }}
     >
-      <Typography variant="h2" sx={{ mb: 2, color: "white", fontFamily: "'Bodoni Moda', serif", fontSize: "30px" }}>
-        {player.name}
+      <Typography
+        variant="h2"
+        sx={{
+          mb: 2,
+          color: "white",
+          fontFamily: "'Bodoni Moda', serif",
+          fontSize: "30px",
+        }}
+      >
+        {player.username}
       </Typography>
       <Box
         sx={{
@@ -26,13 +34,13 @@ const PlayerDash = ({ player, setPlayersRound, index }) => {
         }}
       >
         <Box sx={{ mb: 2, mt: 2 }}>
-          <Typography variant="h6" sx={{ color: "white", fontSize: "16px", }}>
+          <Typography variant="h6" sx={{ color: "white", fontSize: "16px" }}>
             Apuesta
           </Typography>
           <Button
             id="bid-button"
             variant="contained"
-            onClick={setPlayersRound(prevState => prevState[index].bid += 1)}
+            onClick={() => dispatch({ type: types.addBid, index: index })}
             sx={{
               bgcolor: "green",
               "&:hover": {
@@ -45,6 +53,7 @@ const PlayerDash = ({ player, setPlayersRound, index }) => {
             {player.bid}
           </Button>
           <Button
+            onClick={() => dispatch({ type: types.resetBid, index: index })}
             sx={{
               "&:hover": {
                 color: "white",
@@ -55,10 +64,13 @@ const PlayerDash = ({ player, setPlayersRound, index }) => {
           </Button>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Typography variant="h6" sx={{ color: "white", fontSize: "16px" }}>Pierde</Typography>
+          <Typography variant="h6" sx={{ color: "white", fontSize: "16px" }}>
+            Pierde
+          </Typography>
           <Button
             id="lost-button"
             variant="contained"
+            onClick={() => dispatch({ type: types.addLost, index: index })}
             sx={{
               bgcolor: "red",
               "&:hover": {
@@ -71,6 +83,7 @@ const PlayerDash = ({ player, setPlayersRound, index }) => {
             {player.bidsLost}
           </Button>
           <Button
+            onClick={() => dispatch({ type: types.resetLost, index: index })}
             sx={{
               "&:hover": {
                 color: "white",
