@@ -18,10 +18,8 @@ function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPl
   useEffect(() => {
     async function fetchOptions() {
       try {
-        const usersResponse = await api.getUsers();
         const playersResponse = await api.getPlayers();
-        const options = usersResponse.data.concat(playersResponse.data)
-        setOptions(options);
+        setOptions(playersResponse.data);
       } catch (error) {
         console.error(error);
       }

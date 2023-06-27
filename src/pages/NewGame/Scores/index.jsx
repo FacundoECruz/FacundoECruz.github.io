@@ -52,45 +52,47 @@ function reducer(state, action) {
     }
     case types.nextRound: {
       let newState = action.newState;
-      return newState; 
-    } 
+      return newState;
+    }
     default:
       return state;
   }
 }
 
-function Scores({ players, setGameState }) {
-  const [cardsInCurrent, setCardsInCurrent] = useState(() => window.localStorage.getItem("cardsInCurrent") || null);
-  const [round, setRound] = useState(() => window.localStorage.getItem("round"));
-  const [playersRound, dispatch] = useReducer(reducer, [...players]);
+function Scores({ setGameState }) {
+  const [cardsInCurrent, setCardsInCurrent] = useState([]);
+  const [round, setRound] = useState(null);
+  const [playersRound, dispatch] = useReducer(reducer, null,() => JSON.parse(window.localStorage.getItem("players")));
   const dashBoardWidth = "40%";
 
-  // useEffect(() => {
-  //   console.log("***Scores > round***")
-  //   console.log(round)
-  //   console.log("***Scores > cardsInCurrent***")
-  //   console.log(cardsInCurrent)
-  //   console.log("*********")
-  // }, [round, cardsInCurrent]);
+  useEffect(() => {
+    const currentRound = window.localStorage.getItem("round");
+    setRound(currentRound);
 
-  // useEffect(() => {
-  //   console.log("***Scores>playersRound***")
-  //   console.log(playersRound)
-  //   console.log("******")
-  // }, [playersRound]);
+    const roundCards = window.localStorage.getItem("cardsInCurrent");
+    setCardsInCurrent(roundCards);
+  }, [round, cardsInCurrent]);
+
+  useEffect(() => {
+    console.log("***Scores>playersRound***")
+    console.log(playersRound)
+    console.log("******")
+  }, [playersRound]);
 
   function nextRound() {
     const gameId = window.localStorage.getItem("gameId");
 
     api
       .nextRound(playersRound, gameId, round)
-      .then((res)=>{
-        console.log(res)
-        dispatch({ type: types.nextRound, newState: res.data.newRoundState })
-        window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent)
-        window.localStorage.setItem("round", res.data.round)
+      .then((res) => {
+        console.log(res);
+        dispatch({ type: types.nextRound, newState: res.data.newRoundState });
+        window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent);
+        window.localStorage.setItem("round", res.data.round);
       })
-      .catch((err) => {console.log(err)})
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -113,7 +115,14 @@ function Scores({ players, setGameState }) {
           );
         })}
       </Box>
-      <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", width: dashBoardWidth}}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: dashBoardWidth,
+        }}
+      >
         <Button
           variant="contained"
           sx={{ bgcolor: "lightblue" }}

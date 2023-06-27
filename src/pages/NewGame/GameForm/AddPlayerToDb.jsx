@@ -31,7 +31,10 @@ function AddPlayerToDb() {
   };
 
   const savePlayer = async () => {
-    api.createPlayer({username: inputValue})
+    api
+      .createPlayer({username: inputValue})
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
     setOpen(false)
   }
 

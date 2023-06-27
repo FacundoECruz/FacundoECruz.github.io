@@ -27,16 +27,16 @@ function GameForm({ setGameState, players, setPlayers }) {
   }
 
   function handleStartGame() {
-    setGameState("inProgress");
     const playersForBackend = players.map((p) => {
       return { username: p, score: 0, bid: 0, bidsLost: 0 };
     });
-    window.localStorage.setItem("players", JSON.stringify(playersForBackend))
     api.createGame(playersForBackend).then((res) => {
       console.log(res.data);
       window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent)
       window.localStorage.setItem("gameId", res.data.id)
       window.localStorage.setItem("round", res.data.round)
+      window.localStorage.setItem("players", JSON.stringify(playersForBackend))
+      setGameState("inProgress");
     });
   }
 

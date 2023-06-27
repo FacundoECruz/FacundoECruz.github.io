@@ -32,7 +32,7 @@ function NewGame() {
       setGameState={setGameState}
     />
   ) : (
-    <Scores players={players} setGameState={setGameState}/>
+    <Scores setGameState={setGameState}/>
   );
 }
 
