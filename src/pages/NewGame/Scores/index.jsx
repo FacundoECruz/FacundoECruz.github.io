@@ -61,7 +61,7 @@ function reducer(state, action) {
 
 function Scores({ players, setGameState }) {
   const [cardsInCurrent, setCardsInCurrent] = useState(() => window.localStorage.getItem("cardsInCurrent") || null);
-  const [round, setRound] = useState(() => window.localStorage.getItem("round") || 0);
+  const [round, setRound] = useState(() => window.localStorage.getItem("round"));
   const [playersRound, dispatch] = useReducer(reducer, [...players]);
   const dashBoardWidth = "40%";
 
