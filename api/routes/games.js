@@ -50,8 +50,8 @@ router.post("/", async (req, res) => {
     const savedGame = await game.save();
     const response = {
       id: savedGame._id,
-      round: game.round,
-      cardsInCurrent: cardsPerRound[game.round]
+      round: savedGame.round,
+      cardsInCurrent: cardsPerRound[savedGame.round]
     };
     console.log(savedGame)
     res.status(200).json(response);
@@ -61,15 +61,37 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/", async(req, res) => {
-  const game = Game.findById(req.body.gameId)
+  const game = await Game.findById(req.body.gameId)
   const roundResults = req.body.playersRound
+  let round = parseInt(req.body.round)
   
-  const response = {
-    id: "id",
-    cardsInCurrent: 2,
-    scores: []
-  };
-  res.json(response)
+  const resultsForDb = roundResults.map((player, index) => {
+    if(player.bidsLost === 0)
+    player.score = game.results[round][index] + 5 + player.bid;
+    else
+    player.score = game.results[round][index] - player.bidsLost;
+    return player
+  })
+  
+  const newRoundState = resultsForDb.map(player => {
+    return {username: player.username, score: player.score, bid: 0, bidsLost: 0}
+  })
+  
+  game.results.push(resultsForDb)
+  try {
+    const savedGame = await game.save();
+    const response = {
+      id: game._id,
+      round: round += 1,
+      cardsInCurrent: game.cardsPerRound[round],
+      newRoundState: newRoundState,
+    };
+    console.log("***savedGame***")
+    console.log(savedGame)
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(400).json(err.message);
+  }  
 })
 
 export { router };

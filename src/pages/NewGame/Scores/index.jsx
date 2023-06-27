@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
@@ -8,7 +9,6 @@ import api from "../../../utils/api-client";
 import { types } from "../../../utils/reducer";
 
 function reducer(state, action) {
-  console.log(state);
   switch (action.type) {
     case types.addBid: {
       let newState = [...state];
@@ -50,61 +50,91 @@ function reducer(state, action) {
       });
       return newState;
     }
+    case types.nextRound: {
+      let newState = action.newState;
+      return newState; 
+    } 
     default:
       return state;
   }
 }
 
 function Scores({ players, setGameState }) {
-  const [cardsInCurrent, setCardsInCurrent] = useState(0);
-  const [round, setRound] = useState(0);
+  const [cardsInCurrent, setCardsInCurrent] = useState(() => window.localStorage.getItem("cardsInCurrent") || null);
+  const [round, setRound] = useState(() => window.localStorage.getItem("round") || 0);
   const [playersRound, dispatch] = useReducer(reducer, [...players]);
+  const dashBoardWidth = "40%";
 
-  useEffect(() => {
-    const cards = window.localStorage.getItem("cardsInCurrent");
-    const round = window.localStorage.getItem("round");
-    setCardsInCurrent(cards);
-    setRound(round);
-  }, []);
+  // useEffect(() => {
+  //   console.log("***Scores > round***")
+  //   console.log(round)
+  //   console.log("***Scores > cardsInCurrent***")
+  //   console.log(cardsInCurrent)
+  //   console.log("*********")
+  // }, [round, cardsInCurrent]);
 
-  useEffect(() => {
-    console.log(playersRound)
-  }, [playersRound]);
+  // useEffect(() => {
+  //   console.log("***Scores>playersRound***")
+  //   console.log(playersRound)
+  //   console.log("******")
+  // }, [playersRound]);
 
   function nextRound() {
     const gameId = window.localStorage.getItem("gameId");
 
-    api.nextRound(gameId, playersRound);
+    api
+      .nextRound(playersRound, gameId, round)
+      .then((res)=>{
+        console.log(res)
+        dispatch({ type: types.nextRound, newState: res.data.newRoundState })
+        window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent)
+        window.localStorage.setItem("round", res.data.round)
+      })
+      .catch((err) => {console.log(err)})
   }
 
   return (
     <>
-      <Typography variant="h4">Ronda {round + 1}</Typography>
-      <Typography variant="h4">Cartas {cardsInCurrent}</Typography>
-      {playersRound.map((p, i) => {
-        return (
-          <PlayerDash
-            player={p}
-            key={i}
-            index={i}
-            dispatch={dispatch}
-            types={types}
-          />
-        );
-      })}
-
-      <Button onClick={() => dispatch({ type: types.clean })}>Limpiar</Button>
-
-      <Button onClick={nextRound}>Siguiente Ronda</Button>
-
-      <Button
-        onClick={() => {
-          window.localStorage.removeItem("players");
-          setGameState("idle");
-        }}
-      >
-        Terminar partida
-      </Button>
+      <Box>
+        <Typography variant="h4">Ronda {parseInt(round) + 1}</Typography>
+        <Typography variant="h4">Cartas {cardsInCurrent}</Typography>
+      </Box>
+      <Box>
+        {playersRound.map((p, i) => {
+          return (
+            <PlayerDash
+              player={p}
+              key={i}
+              index={i}
+              dispatch={dispatch}
+              types={types}
+              width={dashBoardWidth}
+            />
+          );
+        })}
+      </Box>
+      <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", width: dashBoardWidth}}>
+        <Button
+          variant="contained"
+          sx={{ bgcolor: "lightblue" }}
+          onClick={() => dispatch({ type: types.clean })}
+        >
+          Limpiar
+        </Button>
+        <Button onClick={nextRound}>Siguiente Ronda</Button>
+        <Button
+          onClick={() => {
+            window.localStorage.removeItem("players");
+            window.localStorage.removeItem("gameId");
+            window.localStorage.removeItem("cardsInCurrent");
+            window.localStorage.removeItem("round");
+            setGameState("idle");
+          }}
+          sx={{ color: "red" }}
+        >
+          Terminar partida
+        </Button>
+      </Box>
     </>
   );
 }
