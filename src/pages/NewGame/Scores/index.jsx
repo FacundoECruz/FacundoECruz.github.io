@@ -60,24 +60,31 @@ function reducer(state, action) {
 }
 
 function Scores({ setGameState }) {
-  const [cardsInCurrent, setCardsInCurrent] = useState([]);
+  const [cardsInCurrent, setCardsInCurrent] = useState(null);
   const [round, setRound] = useState(null);
-  const [playersRound, dispatch] = useReducer(reducer, null,() => JSON.parse(window.localStorage.getItem("players")));
+  const [status, setStatus] = useState(null);
+  const [playersRound, dispatch] = useReducer(reducer, null, () =>
+    JSON.parse(window.localStorage.getItem("players"))
+  );
   const dashBoardWidth = "40%";
 
   useEffect(() => {
-    const currentRound = window.localStorage.getItem("round");
-    setRound(currentRound);
-
-    const roundCards = window.localStorage.getItem("cardsInCurrent");
-    setCardsInCurrent(roundCards);
-  }, [round, cardsInCurrent]);
+    setCardsInCurrent(
+      JSON.parse(window.localStorage.getItem("cardsInCurrent"))
+    );
+    setRound(JSON.parse(window.localStorage.getItem("round")));
+    setStatus(window.localStorage.getItem("status"));
+  }, [playersRound]);
 
   useEffect(() => {
-    console.log("***Scores>playersRound***")
-    console.log(playersRound)
-    console.log("******")
-  }, [playersRound]);
+    console.log("******RONDAAAAAA********");
+    console.log("***round***");
+    console.log(round);
+    console.log("***cardsInCurrent***");
+    console.log(cardsInCurrent);
+    console.log("***status***");
+    console.log(status);
+  }, [cardsInCurrent, round, status]);
 
   function nextRound() {
     const gameId = window.localStorage.getItem("gameId");
@@ -86,9 +93,17 @@ function Scores({ setGameState }) {
       .nextRound(playersRound, gameId, round)
       .then((res) => {
         console.log(res);
-        dispatch({ type: types.nextRound, newState: res.data.newRoundState });
-        window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent);
-        window.localStorage.setItem("round", res.data.round);
+        if (res.data.status !== "finished") {
+          dispatch({ type: types.nextRound, newState: res.data.newRoundState });
+          window.localStorage.setItem(
+            "cardsInCurrent",
+            res.data.cardsInCurrent
+          );
+          window.localStorage.setItem("round", res.data.round);
+        } else {
+          dispatch({ type: types.nextRound, newState: res.data.newRoundState });
+          window.localStorage.setItem("status", res.data.status);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -97,10 +112,17 @@ function Scores({ setGameState }) {
 
   return (
     <>
-      <Box>
-        <Typography variant="h4">Ronda {parseInt(round) + 1}</Typography>
-        <Typography variant="h4">Cartas {cardsInCurrent}</Typography>
-      </Box>
+      {status === "finished" ? (
+        <Box>
+          <Typography>Partida terminada</Typography>
+        </Box>
+      ) : (
+        <Box>
+          <Typography variant="h4">Ronda {parseInt(round) + 1}</Typography>
+          <Typography variant="h4">Cartas {cardsInCurrent}</Typography>
+        </Box>
+      )}
+
       <Box>
         {playersRound.map((p, i) => {
           return (
@@ -130,13 +152,19 @@ function Scores({ setGameState }) {
         >
           Limpiar
         </Button>
-        <Button onClick={nextRound}>Siguiente Ronda</Button>
+
+        {status === "in progress" ? (
+          <Button onClick={nextRound}>
+            {round < 8 ? "Siguiente Ronda" : "Finalizar"}
+          </Button>
+        ) : null}
         <Button
           onClick={() => {
             window.localStorage.removeItem("players");
             window.localStorage.removeItem("gameId");
             window.localStorage.removeItem("cardsInCurrent");
             window.localStorage.removeItem("round");
+            window.localStorage.removeItem("status");
             setGameState("idle");
           }}
           sx={{ color: "red" }}
