@@ -35,13 +35,14 @@ router.post("/", async (req, res) => {
       }
     })
   );
+  //Esto tiene que generarse aleatoriamente
   const cardsPerRound = [4, 6, 3, 6, 7, 8, 4, 3, 7];
 
   const game = new Game({
     cardsPerRound,
     results: [players],
     date: new Date(),
-    round: 0,
+    round: 1,
     players: playersIds.map((id) => new mongoose.Types.ObjectId(id)),
   });
   try {
@@ -49,7 +50,7 @@ router.post("/", async (req, res) => {
     const response = {
       id: savedGame._id,
       round: savedGame.round,
-      cardsInCurrent: cardsPerRound[savedGame.round],
+      cardsPerRound: cardsPerRound,
       status: "in progress",
     };
     console.log("***Game Created***");
@@ -60,18 +61,18 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.patch("/", async (req, res) => {
+router.patch("/next", async (req, res) => {
   const game = await Game.findById(req.body.gameId);
   const roundResults = req.body.playersRound;
-  let round = parseInt(req.body.round);
+  const round = game.round;
 
   const resultsForDb = roundResults.map((player, index) => {
     if (player.bidsLost === 0)
       player.score =
-        parseInt(game.results[round][index].score) + 5 + player.bid;
+        parseInt(game.results[round - 1][index].score) + 5 + player.bid;
     else
       player.score =
-        parseInt(game.results[round][index].score) - player.bidsLost;
+        parseInt(game.results[round - 1][index].score) - player.bidsLost;
     return player;
   });
 
@@ -88,37 +89,67 @@ router.patch("/", async (req, res) => {
   game.results.push(resultsForDb);
   try {
     const savedGame = await game.save();
-    const inProgressResponse = {
-      id: game._id,
+    const response = {
       round: savedGame.round,
-      cardsInCurrent: game.cardsPerRound[savedGame.round],
       newRoundState: newRoundState,
       status: "in progress",
     };
-    const finishedResponse = {
-      id: game._id,
-      newRoundState: newRoundState,
-      status: "finished",
-    };
-    console.log("***Game saved in Patch route***");
+    console.log("***Round data saved***");
     console.log(savedGame);
-    if (savedGame.round < 9) {
-      res.status(200).json(inProgressResponse);
-    } else {
-      const winner = savedGame.results.reduce((maxObject, currentObject) => {
-        if (currentObject.score > maxObject.score) {
-          return currentObject;
-        } else {
-          return maxObject;
-        }
-      });
-      console.log("***winner***")
-      console.log(winner)
-      res.status(200).json(finishedResponse);
-    }
+
+    res.status(200).json(response);
   } catch (err) {
     res.status(400).json(err.message);
   }
 });
 
+router.patch("/finish", async (req, res) => {
+  const game = await Game.findById(req.body.gameId);
+  const roundResults = req.body.playersRound;
+  const round = game.round;
+
+  const resultsForDb = roundResults.map((player, index) => {
+    if (player.bidsLost === 0)
+      player.score =
+        parseInt(game.results[round - 1][index].score) + 5 + player.bid;
+    else
+      player.score =
+        parseInt(game.results[round - 1][index].score) - player.bidsLost;
+    return player;
+  });
+
+  game.results.push(resultsForDb);
+
+  const newRoundState = resultsForDb.map((player) => {
+    return {
+      username: player.username,
+      score: player.score,
+      bid: 0,
+      bidsLost: 0,
+    };
+  });
+
+    
+  try {
+    const savedGame = await game.save();
+    const response = {
+      newRoundState: newRoundState,
+      status: "finished",
+    };  
+    console.log("***Game data saved***");
+    console.log(savedGame);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
+  // const winner = savedGame.results.reduce((maxObject, currentObject) => {
+  //   if (currentObject.score > maxObject.score) {
+  //     return currentObject;
+  //   } else {
+  //     return maxObject;
+  //   }
+
+  // console.log("***winner***")
+  // console.log(winner)
+});
 export { router };

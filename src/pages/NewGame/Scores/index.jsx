@@ -60,7 +60,7 @@ function reducer(state, action) {
 }
 
 function Scores({ setGameState }) {
-  const [cardsInCurrent, setCardsInCurrent] = useState(null);
+  const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
   const [playersRound, dispatch] = useReducer(reducer, null, () =>
@@ -69,9 +69,7 @@ function Scores({ setGameState }) {
   const dashBoardWidth = "40%";
 
   useEffect(() => {
-    setCardsInCurrent(
-      JSON.parse(window.localStorage.getItem("cardsInCurrent"))
-    );
+    setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
     setRound(JSON.parse(window.localStorage.getItem("round")));
     setStatus(window.localStorage.getItem("status"));
   }, [playersRound]);
@@ -81,33 +79,41 @@ function Scores({ setGameState }) {
     console.log("***round***");
     console.log(round);
     console.log("***cardsInCurrent***");
-    console.log(cardsInCurrent);
+    console.log(cardsPerRound[round - 1]);
     console.log("***status***");
     console.log(status);
-  }, [cardsInCurrent, round, status]);
+  }, [cardsPerRound, round, status]);
 
   function nextRound() {
     const gameId = window.localStorage.getItem("gameId");
 
     api
-      .nextRound(playersRound, gameId, round)
+      .nextRound(playersRound, gameId)
       .then((res) => {
         console.log(res);
-        if (res.data.status !== "finished") {
-          dispatch({ type: types.nextRound, newState: res.data.newRoundState });
-          window.localStorage.setItem(
-            "cardsInCurrent",
-            res.data.cardsInCurrent
-          );
-          window.localStorage.setItem("round", res.data.round);
-        } else {
-          dispatch({ type: types.nextRound, newState: res.data.newRoundState });
-          window.localStorage.setItem("status", res.data.status);
-        }
+        dispatch({ type: types.nextRound, newState: res.data.newRoundState });
+        window.localStorage.setItem("round", res.data.round);
+        window.localStorage.setItem("status", JSON.parse(res.data.status));
+        window.localStorage.setItem("players", JSON.stringify(res.data.newRoundState));
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function finishGame() {
+    const gameId = window.localStorage.getItem("gameId")
+
+    api
+      .finishGame(playersRound, gameId)
+      .then((res) => {
+        console.log(res)
+        dispatch({ type: types.nextRound, newState: res.data.newRoundState });
+        window.localStorage.setItem("status", res.data.status)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   return (
@@ -118,8 +124,10 @@ function Scores({ setGameState }) {
         </Box>
       ) : (
         <Box>
-          <Typography variant="h4">Ronda {parseInt(round) + 1}</Typography>
-          <Typography variant="h4">Cartas {cardsInCurrent}</Typography>
+          <Typography variant="h4">Ronda {parseInt(round)}</Typography>
+          <Typography variant="h4">
+            Cartas {cardsPerRound[round - 1]}
+          </Typography>
         </Box>
       )}
 
@@ -145,24 +153,31 @@ function Scores({ setGameState }) {
           width: dashBoardWidth,
         }}
       >
-        <Button
-          variant="contained"
-          sx={{ bgcolor: "lightblue" }}
-          onClick={() => dispatch({ type: types.clean })}
-        >
-          Limpiar
-        </Button>
-
         {status === "in progress" ? (
-          <Button onClick={nextRound}>
-            {round < 8 ? "Siguiente Ronda" : "Finalizar"}
+          <Button
+            variant="contained"
+            sx={{ bgcolor: "lightblue" }}
+            onClick={() => dispatch({ type: types.clean })}
+          >
+            Limpiar
           </Button>
-        ) : null}
+        ) : (
+          <Button onClick={() => console.log("Volver a inicio")}>
+            Volver a inicio
+          </Button>
+        )}
+
+        {round < 9 ? (<Button onClick={nextRound}>
+            Siguiente Ronda
+          </Button>) : (<Button onClick={finishGame}>
+            Finalizar
+          </Button>)}
+
         <Button
           onClick={() => {
             window.localStorage.removeItem("players");
             window.localStorage.removeItem("gameId");
-            window.localStorage.removeItem("cardsInCurrent");
+            window.localStorage.removeItem("cardsPerRound");
             window.localStorage.removeItem("round");
             window.localStorage.removeItem("status");
             setGameState("idle");

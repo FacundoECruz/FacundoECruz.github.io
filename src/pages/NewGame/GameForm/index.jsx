@@ -32,12 +32,12 @@ function GameForm({ setGameState, players, setPlayers }) {
     });
     api.createGame(playersForBackend).then((res) => {
       console.log(res.data);
-      window.localStorage.setItem("cardsInCurrent", res.data.cardsInCurrent)
+      window.localStorage.setItem("cardsPerRound", JSON.stringify(res.data.cardsPerRound))
       window.localStorage.setItem("gameId", res.data.id)
       window.localStorage.setItem("round", res.data.round)
-      window.localStorage.setItem("status", res.data.status)
+      window.localStorage.setItem("status", JSON.stringify(res.data.status))
       window.localStorage.setItem("players", JSON.stringify(playersForBackend))
-      setGameState("inProgress");
+      setGameState("in progress");
     });
   }
 

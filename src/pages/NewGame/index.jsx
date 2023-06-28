@@ -17,7 +17,7 @@ function NewGame() {
     if(storedPlayers === null) {
       return "idle"
     } else {
-      return "inProgress"
+      return "in progress"
     }
   })
 
