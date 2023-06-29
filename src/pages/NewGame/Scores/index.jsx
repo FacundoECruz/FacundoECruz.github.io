@@ -127,7 +127,7 @@ function Scores({ setGameState }) {
         console.log(res);
         const { newRoundState, winner } = res.data;
         dispatch({ type: types.nextRound, newState: newRoundState });
-        window.localStorage.setItem("status", res.data.status);
+        window.localStorage.setItem("status", JSON.stringify(res.data.status));
       })
       .catch((err) => {
         console.log(err);

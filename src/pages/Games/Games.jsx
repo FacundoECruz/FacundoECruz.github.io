@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import EngineeringIcon from "@mui/icons-material/Engineering";
 
 function Games() {
   return (
@@ -11,9 +12,15 @@ function Games() {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <Typography variant="h5" sx={{color: "white"}}>Partidas Jugadas</Typography>
+      <Typography variant="h5" sx={{ color: "white" }}>
+        Proximamente...
+      </Typography>
+      <EngineeringIcon fontSize="large" sx={{color: "white"}}/>
     </div>
   );
 }
