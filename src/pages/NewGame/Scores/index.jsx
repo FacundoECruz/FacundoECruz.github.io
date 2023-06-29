@@ -64,7 +64,9 @@ function Scores({ setGameState }) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
-  const [table, setTable] = useState(() => JSON.parse(window.localStorage.getItem("table")) || []);
+  const [table, setTable] = useState(
+    () => JSON.parse(window.localStorage.getItem("table")) || []
+  );
   const [playersRound, dispatch] = useReducer(reducer, null, () =>
     JSON.parse(window.localStorage.getItem("players"))
   );
@@ -74,7 +76,7 @@ function Scores({ setGameState }) {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
     setRound(JSON.parse(window.localStorage.getItem("round")));
     setStatus(JSON.parse(window.localStorage.getItem("status")));
-    setTable(JSON.parse(window.localStorage.getItem("table")))
+    setTable(JSON.parse(window.localStorage.getItem("table")));
   }, [playersRound]);
 
   useEffect(() => {
@@ -109,7 +111,7 @@ function Scores({ setGameState }) {
           return { username: username, score: score, image: image };
         });
         uiTable.sort((a, b) => b.score - a.score);
-        window.localStorage.setItem("table", JSON.stringify(uiTable))
+        window.localStorage.setItem("table", JSON.stringify(uiTable));
         setTable(uiTable);
       })
       .catch((err) => {
@@ -125,7 +127,7 @@ function Scores({ setGameState }) {
       .finishGame(playersRound, gameId, user)
       .then((res) => {
         console.log(res);
-        const { newRoundState, winner } = res.data;
+        const { newRoundState } = res.data;
         dispatch({ type: types.nextRound, newState: newRoundState });
         window.localStorage.setItem("status", JSON.stringify(res.data.status));
       })
@@ -135,14 +137,13 @@ function Scores({ setGameState }) {
   }
 
   return (
-    <Box sx={{display: "flex", flexDirection: "row"}}>
+    <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Box sx={{ width: "40%" }}>
         {status === "finished" ? (
           <Box>
             <Typography>Partida terminada</Typography>
             <Typography>
-              Gana {table[0].username} con {table[0].score}{" "}
-              puntos!
+              Gana {table[0].username} con {table[0].score} puntos!
             </Typography>
           </Box>
         ) : (
@@ -191,8 +192,12 @@ function Scores({ setGameState }) {
 
           {round < 9 ? (
             <Button onClick={nextRound}>Siguiente Ronda</Button>
-          ) : (
+          ) : round === 9 && status === "in progress" ? (
             <Button onClick={finishGame}>Finalizar</Button>
+          ) : (
+            <Button onClick={() => console.log("jugar de nuevo")}>
+              Jugar de nuevo
+            </Button>
           )}
 
           <Button
