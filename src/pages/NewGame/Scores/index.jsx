@@ -64,7 +64,7 @@ function Scores({ setGameState }) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
-  const [table, setTable] = useState([]);
+  const [table, setTable] = useState(() => JSON.parse(window.localStorage.getItem("table")) || []);
   const [playersRound, dispatch] = useReducer(reducer, null, () =>
     JSON.parse(window.localStorage.getItem("players"))
   );
@@ -73,7 +73,8 @@ function Scores({ setGameState }) {
   useEffect(() => {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
     setRound(JSON.parse(window.localStorage.getItem("round")));
-    setStatus(window.localStorage.getItem("status"));
+    setStatus(JSON.parse(window.localStorage.getItem("status")));
+    setTable(JSON.parse(window.localStorage.getItem("table")))
   }, [playersRound]);
 
   useEffect(() => {
@@ -108,6 +109,7 @@ function Scores({ setGameState }) {
           return { username: username, score: score, image: image };
         });
         uiTable.sort((a, b) => b.score - a.score);
+        window.localStorage.setItem("table", JSON.stringify(uiTable))
         setTable(uiTable);
       })
       .catch((err) => {
@@ -138,10 +140,8 @@ function Scores({ setGameState }) {
         {status === "finished" ? (
           <Box>
             <Typography>Partida terminada</Typography>
-            {/* Arreglar esto porque displayea el primero del array por ahora, no el primero 
-          de la tabla, igual no va a hacer falta una vez que este la tabla */}
             <Typography>
-              Gana {playersRound[0].username} con {playersRound[0].score}{" "}
+              Gana {table[0].username} con {table[0].score}{" "}
               puntos!
             </Typography>
           </Box>
@@ -202,6 +202,7 @@ function Scores({ setGameState }) {
               window.localStorage.removeItem("cardsPerRound");
               window.localStorage.removeItem("round");
               window.localStorage.removeItem("status");
+              window.localStorage.removeItem("table");
               setGameState("idle");
             }}
             sx={{ color: "red" }}
@@ -211,7 +212,7 @@ function Scores({ setGameState }) {
         </Box>
       </Box>
 
-      {table !== [] ? (
+      {table ? (
         <Box sx={{ width: "40%" }}>
           <ScoreBoard table={table} />
         </Box>
