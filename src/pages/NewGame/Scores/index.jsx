@@ -63,6 +63,7 @@ function Scores({ setGameState }) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
+  const [table, setTable] = useState([])
   const [playersRound, dispatch] = useReducer(reducer, null, () =>
     JSON.parse(window.localStorage.getItem("players"))
   );
@@ -82,7 +83,10 @@ function Scores({ setGameState }) {
     console.log(cardsPerRound[round - 1]);
     console.log("***status***");
     console.log(status);
-  }, [cardsPerRound, round, status]);
+    console.log("***table***");
+    console.log(table);
+
+  }, [cardsPerRound, round, status, table]);
 
   function nextRound() {
     const gameId = window.localStorage.getItem("gameId");
@@ -95,6 +99,13 @@ function Scores({ setGameState }) {
         window.localStorage.setItem("round", res.data.round);
         window.localStorage.setItem("status", JSON.stringify(res.data.status));
         window.localStorage.setItem("players", JSON.stringify(res.data.newRoundState));
+        const table = res.data.newRoundState
+        const uiTable = table.map(p => {
+          const {username, score} = p;
+          return {username: username, score: score}
+        })
+        uiTable.sort((a, b) => b.score - a.score);
+        setTable(uiTable)
       })
       .catch((err) => {
         console.log(err);
