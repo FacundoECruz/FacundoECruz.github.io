@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Typography, Button, Box } from "@mui/material";
 
-const PlayerDash = ({ player, index, dispatch, types, width }) => {
+const PlayerDash = ({ player, index, dispatch, types }) => {
   return (
     <Box
       sx={{
@@ -10,7 +10,6 @@ const PlayerDash = ({ player, index, dispatch, types, width }) => {
         alignItems: "center",
         justifyContent: "space-between",
         border: "1px solid blue",
-        width: { md: width },
         maxHeight: "150px",
         bgcolor: "black",
       }}

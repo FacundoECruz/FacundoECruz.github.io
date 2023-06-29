@@ -7,6 +7,7 @@ import { useReducer } from "react";
 import PlayerDash from "./PlayerDash";
 import api from "../../../utils/api-client";
 import { types } from "../../../utils/reducer";
+import ScoreBoard from "./ScoreBoard";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -63,7 +64,7 @@ function Scores({ setGameState }) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
-  const [table, setTable] = useState([])
+  const [table, setTable] = useState([]);
   const [playersRound, dispatch] = useReducer(reducer, null, () =>
     JSON.parse(window.localStorage.getItem("players"))
   );
@@ -85,7 +86,6 @@ function Scores({ setGameState }) {
     console.log(status);
     console.log("***table***");
     console.log(table);
-
   }, [cardsPerRound, round, status, table]);
 
   function nextRound() {
@@ -98,14 +98,17 @@ function Scores({ setGameState }) {
         dispatch({ type: types.nextRound, newState: res.data.newRoundState });
         window.localStorage.setItem("round", res.data.round);
         window.localStorage.setItem("status", JSON.stringify(res.data.status));
-        window.localStorage.setItem("players", JSON.stringify(res.data.newRoundState));
-        const table = res.data.newRoundState
-        const uiTable = table.map(p => {
-          const {username, score} = p;
-          return {username: username, score: score}
-        })
+        window.localStorage.setItem(
+          "players",
+          JSON.stringify(res.data.newRoundState)
+        );
+        const table = res.data.newRoundState;
+        const uiTable = table.map((p) => {
+          const { username, score, image } = p;
+          return { username: username, score: score, image: image };
+        });
         uiTable.sort((a, b) => b.score - a.score);
-        setTable(uiTable)
+        setTable(uiTable);
       })
       .catch((err) => {
         console.log(err);
@@ -113,97 +116,107 @@ function Scores({ setGameState }) {
   }
 
   function finishGame() {
-    const gameId = window.localStorage.getItem("gameId")
-    const user = window.localStorage.getItem("user")
+    const gameId = window.localStorage.getItem("gameId");
+    const user = window.localStorage.getItem("user");
 
     api
       .finishGame(playersRound, gameId, user)
       .then((res) => {
-        console.log(res)
-        const {newRoundState, winner} = res.data;
-        dispatch({ type: types.nextRound, newState: newRoundState,});
-        window.localStorage.setItem("status", res.data.status)
+        console.log(res);
+        const { newRoundState, winner } = res.data;
+        dispatch({ type: types.nextRound, newState: newRoundState });
+        window.localStorage.setItem("status", res.data.status);
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   return (
-    <>
-      {status === "finished" ? (
-        <Box>
-          <Typography>Partida terminada</Typography>
-          {/* Arreglar esto porque displayea el primero del array por ahora, no el primero 
+    <Box sx={{display: "flex", flexDirection: "row"}}>
+      <Box sx={{ width: "40%" }}>
+        {status === "finished" ? (
+          <Box>
+            <Typography>Partida terminada</Typography>
+            {/* Arreglar esto porque displayea el primero del array por ahora, no el primero 
           de la tabla, igual no va a hacer falta una vez que este la tabla */}
-          <Typography>Gana {playersRound[0].username} con {playersRound[0].score} puntos!</Typography>
-        </Box>
-      ) : (
-        <Box>
-          <Typography variant="h4">Ronda {parseInt(round)}</Typography>
-          <Typography variant="h4">
-            Cartas {cardsPerRound[round - 1]}
-          </Typography>
-        </Box>
-      )}
-
-      <Box>
-        {playersRound.map((p, i) => {
-          return (
-            <PlayerDash
-              player={p}
-              key={i}
-              index={i}
-              dispatch={dispatch}
-              types={types}
-              width={dashBoardWidth}
-            />
-          );
-        })}
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          width: dashBoardWidth,
-        }}
-      >
-        {status === "in progress" ? (
-          <Button
-            variant="contained"
-            sx={{ bgcolor: "lightblue" }}
-            onClick={() => dispatch({ type: types.clean })}
-          >
-            Limpiar
-          </Button>
+            <Typography>
+              Gana {playersRound[0].username} con {playersRound[0].score}{" "}
+              puntos!
+            </Typography>
+          </Box>
         ) : (
-          <Button onClick={() => console.log("Volver a inicio")}>
-            Volver a inicio
-          </Button>
+          <Box>
+            <Typography variant="h4">Ronda {parseInt(round)}</Typography>
+            <Typography variant="h4">
+              Cartas {cardsPerRound[round - 1]}
+            </Typography>
+          </Box>
         )}
 
-        {round < 9 ? (<Button onClick={nextRound}>
-            Siguiente Ronda
-          </Button>) : (<Button onClick={finishGame}>
-            Finalizar
-          </Button>)}
-
-        <Button
-          onClick={() => {
-            window.localStorage.removeItem("players");
-            window.localStorage.removeItem("gameId");
-            window.localStorage.removeItem("cardsPerRound");
-            window.localStorage.removeItem("round");
-            window.localStorage.removeItem("status");
-            setGameState("idle");
+        <Box>
+          {playersRound.map((p, i) => {
+            return (
+              <PlayerDash
+                player={p}
+                key={i}
+                index={i}
+                dispatch={dispatch}
+                types={types}
+                width={dashBoardWidth}
+              />
+            );
+          })}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
-          sx={{ color: "red" }}
         >
-          Terminar partida
-        </Button>
+          {status === "in progress" ? (
+            <Button
+              variant="contained"
+              sx={{ bgcolor: "lightblue" }}
+              onClick={() => dispatch({ type: types.clean })}
+            >
+              Limpiar
+            </Button>
+          ) : (
+            <Button onClick={() => console.log("Volver a inicio")}>
+              Volver a inicio
+            </Button>
+          )}
+
+          {round < 9 ? (
+            <Button onClick={nextRound}>Siguiente Ronda</Button>
+          ) : (
+            <Button onClick={finishGame}>Finalizar</Button>
+          )}
+
+          <Button
+            onClick={() => {
+              window.localStorage.removeItem("players");
+              window.localStorage.removeItem("gameId");
+              window.localStorage.removeItem("cardsPerRound");
+              window.localStorage.removeItem("round");
+              window.localStorage.removeItem("status");
+              setGameState("idle");
+            }}
+            sx={{ color: "red" }}
+          >
+            Terminar partida
+          </Button>
+        </Box>
       </Box>
-    </>
+
+      {table !== [] ? (
+        <Box sx={{ width: "40%" }}>
+          <ScoreBoard table={table} />
+        </Box>
+      ) : null}
+    </Box>
   );
 }
 

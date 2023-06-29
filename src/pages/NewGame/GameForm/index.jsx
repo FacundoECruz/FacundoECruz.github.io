@@ -36,7 +36,7 @@ function GameForm({ setGameState, players, setPlayers }) {
       window.localStorage.setItem("gameId", res.data.id)
       window.localStorage.setItem("round", res.data.round)
       window.localStorage.setItem("status", JSON.stringify(res.data.status))
-      window.localStorage.setItem("players", JSON.stringify(playersForBackend))
+      window.localStorage.setItem("players", JSON.stringify(res.data.players))
       setGameState("in progress");
     });
   }

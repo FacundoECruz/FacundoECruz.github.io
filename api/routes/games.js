@@ -39,6 +39,16 @@ router.post("/", async (req, res) => {
   //Esto tiene que generarse aleatoriamente
   const cardsPerRound = [4, 6, 3, 6, 7, 8, 4, 3, 7];
 
+  const playersImgs = await Promise.all(playersIds.map(async id => {
+    const player = await Player.findOne(id)
+    return player.image;
+  }))
+
+  const playersWithImages = players.map((player, index) => ({
+    ...player,
+    image: playersImgs[index]
+  }));
+
   const game = new Game({
     cardsPerRound,
     results: [players],
@@ -53,6 +63,7 @@ router.post("/", async (req, res) => {
       round: savedGame.round,
       cardsPerRound: cardsPerRound,
       status: "in progress",
+      players: playersWithImages,
     };
     console.log("***Game Created***");
     console.log(savedGame);
@@ -83,6 +94,7 @@ router.patch("/next", async (req, res) => {
       score: player.score,
       bid: 0,
       bidsLost: 0,
+      image: player.image,
     };
   });
 
