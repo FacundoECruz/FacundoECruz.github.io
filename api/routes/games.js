@@ -1,6 +1,7 @@
 import express from "express";
 import Game from "../models/Game.js";
 import Player from "../models/Player.js";
+import User from "../models/User.js";
 import mongoose from "mongoose";
 const router = express.Router();
 
@@ -107,6 +108,7 @@ router.patch("/finish", async (req, res) => {
   const game = await Game.findById(req.body.gameId);
   const roundResults = req.body.playersRound;
   const round = game.round;
+  const { user } = req.body;
 
   const resultsForDb = roundResults.map((player, index) => {
     if (player.bidsLost === 0)
@@ -129,27 +131,71 @@ router.patch("/finish", async (req, res) => {
     };
   });
 
-    
   try {
+    //LOGICA DEL GANADOR
+    const winner = newRoundState.reduce((maxObject, currentObject) => {
+      if (currentObject.score > maxObject.score) {
+        return currentObject;
+      } else {
+        return maxObject;
+      }
+    });
+    const winnerFilter = { username: winner.username };
+    const winnerUpdate = { $inc: { gamesWon: 1 } };
+    const updatedWinner = await Player.findOneAndUpdate(
+      winnerFilter,
+      winnerUpdate,
+      {
+        new: true,
+      }
+    );
+    console.log("***Updated Winner***");
+    console.log(updatedWinner);
+
+    //LOGICA DE PARTIDAS JUGADAS
+    const playerIds = game.players;
+    const gamesPlayedUpdate = { $inc: { gamesPlayed: 1 } };
+    const gamesPlayedUpdateResult = await Player.updateMany(
+      { _id: { $in: playerIds } },
+      gamesPlayedUpdate
+    );
+    console.log("***Updated Games Played***");
+    console.log(gamesPlayedUpdateResult);
+    //LOGICA DE SUMA DE PUNTOS
+    playerIds.map(async (id, index) => {
+      const scoreFilter = { _id: id };
+      const scoreUpdate = { $inc: { totalScore: newRoundState[index].score } };
+      const updatedScore = await Player.findOneAndUpdate(
+        scoreFilter,
+        scoreUpdate,
+        {
+          new: true,
+        }
+      );
+      console.log("***Updated Score***");
+      console.log(updatedScore);
+    });
+    //LOGICA DEL CREADOR
+    const hostFilter = { username: user };
+    const hostUpdate = { $inc: { createdGames: 1 } };
+    const updatedHost = await User.findOneAndUpdate(hostFilter, hostUpdate, {
+      new: true,
+    });
+    console.log("***Updated Host***");
+    console.log(updatedHost);
+
     const savedGame = await game.save();
+
     const response = {
       newRoundState: newRoundState,
       status: "finished",
-    };  
+    };
     console.log("***Game data saved***");
     console.log(savedGame);
+
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json(err.message);
   }
-  // const winner = savedGame.results.reduce((maxObject, currentObject) => {
-  //   if (currentObject.score > maxObject.score) {
-  //     return currentObject;
-  //   } else {
-  //     return maxObject;
-  //   }
-
-  // console.log("***winner***")
-  // console.log(winner)
 });
 export { router };

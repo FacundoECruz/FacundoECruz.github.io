@@ -37,6 +37,8 @@ const UserSchema = new Schema({
   },
 });
 
+//ACA HAY QUE BORRAR LOS ATRIBUTOS QUE VAMOS A MANEJAR EN PLAYERS///
+
 const User = mongoose.model("User", UserSchema);
 
 export default User;

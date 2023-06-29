@@ -93,7 +93,7 @@ function Scores({ setGameState }) {
         console.log(res);
         dispatch({ type: types.nextRound, newState: res.data.newRoundState });
         window.localStorage.setItem("round", res.data.round);
-        window.localStorage.setItem("status", JSON.parse(res.data.status));
+        window.localStorage.setItem("status", JSON.stringify(res.data.status));
         window.localStorage.setItem("players", JSON.stringify(res.data.newRoundState));
       })
       .catch((err) => {
@@ -103,12 +103,14 @@ function Scores({ setGameState }) {
 
   function finishGame() {
     const gameId = window.localStorage.getItem("gameId")
+    const user = window.localStorage.getItem("user")
 
     api
-      .finishGame(playersRound, gameId)
+      .finishGame(playersRound, gameId, user)
       .then((res) => {
         console.log(res)
-        dispatch({ type: types.nextRound, newState: res.data.newRoundState });
+        const {newRoundState, winner} = res.data;
+        dispatch({ type: types.nextRound, newState: newRoundState,});
         window.localStorage.setItem("status", res.data.status)
       })
       .catch((err) => {
@@ -121,6 +123,9 @@ function Scores({ setGameState }) {
       {status === "finished" ? (
         <Box>
           <Typography>Partida terminada</Typography>
+          {/* Arreglar esto porque displayea el primero del array por ahora, no el primero 
+          de la tabla, igual no va a hacer falta una vez que este la tabla */}
+          <Typography>Gana {playersRound[0].username} con {playersRound[0].score} puntos!</Typography>
         </Box>
       ) : (
         <Box>
