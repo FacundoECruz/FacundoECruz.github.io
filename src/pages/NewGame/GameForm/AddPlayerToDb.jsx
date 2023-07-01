@@ -17,6 +17,7 @@ import api from "../../../utils/api-client";
 function AddPlayerToDb() {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [error, setError] = useState(null)
 
   function handleInputChange(event) {
     setInputValue(event.target.value);
@@ -33,9 +34,13 @@ function AddPlayerToDb() {
   const savePlayer = async () => {
     api
       .createPlayer({username: inputValue})
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
-    setOpen(false)
+      .then(res => {
+        console.log(res.data)
+        setOpen(false)
+      })
+      .catch(err => {
+        setError(err.response.data)
+      })
   }
 
   return (
@@ -76,6 +81,7 @@ function AddPlayerToDb() {
             onChange={handleInputChange}
           />
         </DialogContent>
+        {error ? <Typography sx={{color: "red"}}>{error}</Typography> : null }
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
           <Button onClick={savePlayer}>Agregar</Button>

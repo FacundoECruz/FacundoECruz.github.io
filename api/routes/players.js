@@ -13,8 +13,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:username", async (req, res) => {
   try {
-    const {username} = req.params;
-    const player = await Player.find({username: username});
+    const { username } = req.params;
+    const player = await Player.find({ username: username });
 
     if (player.length === 0) {
       return res.status(404).json({ message: "Jugador no encontrado" });
@@ -27,15 +27,22 @@ router.get("/:username", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const player = new Player(req.body);
-  try {
-    await player.save();
-    console.log(player)
-    res.status(201).json(player);
-  } catch (err) {
-    res.status(400).json(err.message);
+  const playerData = req.body.username;
+  const isPlayerNameRepeated = await Player.exists({ username: playerData });
+  if (isPlayerNameRepeated) {
+    return res
+      .status(400)
+      .json("El nombre de usuario ya está registrado papu");
+  } else {
+    const player = new Player(req.body)
+    try {
+      await player.save();
+      console.log(player);
+      res.status(201).json(player);
+    } catch (err) {
+      res.status(400).json(err.message);
+    }
   }
 });
-
 
 export { router };
