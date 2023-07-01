@@ -28,8 +28,9 @@ router.post("/", async (req, res) => {
   
   const isUsernameRepeated = await User.exists({ username });
   const isEmailRepeated = await User.exists({ email });
+  const isPlayerNameRepeated = await Player.exists({ username })
 
-  if (isUsernameRepeated || isEmailRepeated) {
+  if (isUsernameRepeated || isEmailRepeated || isPlayerNameRepeated) {
     return res.status(400).json("El nombre de usuario o correo electrónico ya están registrados");
   }
 
