@@ -60,7 +60,7 @@ function reducer(state, action) {
   }
 }
 
-function Scores({ setGameState }) {
+function Scores({ setGameState, playAgain, backToForm }) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
@@ -76,7 +76,6 @@ function Scores({ setGameState }) {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
     setRound(JSON.parse(window.localStorage.getItem("round")));
     setStatus(JSON.parse(window.localStorage.getItem("status")));
-    setTable(JSON.parse(window.localStorage.getItem("table")));
   }, [playersRound]);
 
   useEffect(() => {
@@ -136,6 +135,7 @@ function Scores({ setGameState }) {
       });
   }
 
+
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Box sx={{ width: "40%" }}>
@@ -185,8 +185,8 @@ function Scores({ setGameState }) {
               Limpiar
             </Button>
           ) : (
-            <Button onClick={() => console.log("Volver a inicio")}>
-              Volver a inicio
+            <Button onClick={() => backToForm()}>
+              Volver al form
             </Button>
           )}
 
@@ -195,12 +195,12 @@ function Scores({ setGameState }) {
           ) : round === 9 && status === "in progress" ? (
             <Button onClick={finishGame}>Finalizar</Button>
           ) : (
-            <Button onClick={() => console.log("jugar de nuevo")}>
+            <Button onClick={() => playAgain()}>
               Jugar de nuevo
             </Button>
           )}
 
-          <Button
+          {/* <Button
             onClick={() => {
               window.localStorage.removeItem("players");
               window.localStorage.removeItem("gameId");
@@ -213,7 +213,7 @@ function Scores({ setGameState }) {
             sx={{ color: "red" }}
           >
             Terminar partida
-          </Button>
+          </Button> */}
         </Box>
       </Box>
 

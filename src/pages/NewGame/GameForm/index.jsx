@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import NewGameForm from "./NewGameForm";
@@ -7,7 +8,7 @@ import AddPlayerToDb from "./AddPlayerToDb";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import api from "../../../utils/api-client";
 
-function GameForm({ setGameState, players, setPlayers }) {
+function GameForm({ players, setPlayers, gameState, setGameState, handleStartGame }) {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [playerInputValue, setPlayerInputValue] = useState("");
 
@@ -26,20 +27,6 @@ function GameForm({ setGameState, players, setPlayers }) {
     });
   }
 
-  function handleStartGame() {
-    const playersForBackend = players.map((p) => {
-      return { username: p, score: 0, bid: 0, bidsLost: 0 };
-    });
-    api.createGame(playersForBackend).then((res) => {
-      console.log(res.data);
-      window.localStorage.setItem("cardsPerRound", JSON.stringify(res.data.cardsPerRound))
-      window.localStorage.setItem("gameId", res.data.id)
-      window.localStorage.setItem("round", res.data.round)
-      window.localStorage.setItem("status", JSON.stringify(res.data.status))
-      window.localStorage.setItem("players", JSON.stringify(res.data.players))
-      setGameState("in progress");
-    });
-  }
 
   return (
     <div

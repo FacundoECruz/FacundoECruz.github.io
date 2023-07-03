@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
     })
   );
   //Esto tiene que generarse aleatoriamente
-  const cardsPerRound = [4, 6, 3, 6, 7, 8, 4, 3, 7];
+  const cardsPerRound = [6, 5, 3, 6, 7, 8, 4, 7, 8];
 
   const playersImgs = await Promise.all(playersIds.map(async id => {
     const player = await Player.findOne(id)

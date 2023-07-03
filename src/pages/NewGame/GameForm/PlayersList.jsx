@@ -22,7 +22,7 @@ function PlayersList({ players, removePlayer }) {
       {players.map((p) => {
         return (
           <List
-            key={p}
+            key={p.username}
             sx={{
               bgcolor: "transparent",
               border: "1px solid white",
@@ -42,7 +42,7 @@ function PlayersList({ players, removePlayer }) {
               <ListItemText
                 primary={
                   <Typography variant="body1" sx={{ fontSize: "20px" }}>
-                    {p}
+                    {p.username}
                   </Typography>
                 }
                 secondary={
