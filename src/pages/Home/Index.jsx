@@ -12,7 +12,7 @@ function Home() {
           flexDirection: "column",
           alignItems: "center",
           backgroundImage:
-            'url("https://res.cloudinary.com/dfknsvqer/image/upload/v1686775105/krzysztof-hepner-aD3_Zf5tfr4-unsplash_ee8pwi.jpg")',
+            'url("https://res.cloudinary.com/dfknsvqer/image/upload/v1688502718/chris-burgett-YzTLqYMASFw-unsplash_m1h8lr.jpg")',
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "bottom",
