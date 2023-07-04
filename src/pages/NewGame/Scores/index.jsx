@@ -60,7 +60,7 @@ function reducer(state, action) {
   }
 }
 
-function Scores({ setGameState, handleStartGame, backToForm }) {
+function Scores({ setGameState, playAgain, backToForm }) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
@@ -78,17 +78,17 @@ function Scores({ setGameState, handleStartGame, backToForm }) {
     setStatus(JSON.parse(window.localStorage.getItem("status")));
   }, [playersRound]);
 
-  useEffect(() => {
-    console.log("******RONDAAAAAA********");
-    console.log("***round***");
-    console.log(round);
-    console.log("***cardsInCurrent***");
-    console.log(cardsPerRound[round - 1]);
-    console.log("***status***");
-    console.log(status);
-    console.log("***table***");
-    console.log(table);
-  }, [cardsPerRound, round, status, table]);
+  // useEffect(() => {
+  //   console.log("******RONDAAAAAA********");
+  //   console.log("***round***");
+  //   console.log(round);
+  //   console.log("***cardsInCurrent***");
+  //   console.log(cardsPerRound[round - 1]);
+  //   console.log("***status***");
+  //   console.log(status);
+  //   console.log("***table***");
+  //   console.log(table);
+  // }, [cardsPerRound, round, status, table]);
 
   function nextRound() {
     const gameId = window.localStorage.getItem("gameId");
@@ -96,7 +96,6 @@ function Scores({ setGameState, handleStartGame, backToForm }) {
     api
       .nextRound(playersRound, gameId)
       .then((res) => {
-        console.log(res);
         dispatch({ type: types.nextRound, newState: res.data.newRoundState });
         window.localStorage.setItem("round", res.data.round);
         window.localStorage.setItem("status", JSON.stringify(res.data.status));
@@ -125,7 +124,6 @@ function Scores({ setGameState, handleStartGame, backToForm }) {
     api
       .finishGame(playersRound, gameId, user)
       .then((res) => {
-        console.log(res);
         const { newRoundState } = res.data;
         dispatch({ type: types.nextRound, newState: newRoundState });
         window.localStorage.setItem("status", JSON.stringify(res.data.status));
@@ -195,7 +193,7 @@ function Scores({ setGameState, handleStartGame, backToForm }) {
           ) : round === 9 && status === "in progress" ? (
             <Button onClick={finishGame}>Finalizar</Button>
           ) : (
-            <Button onClick={() => handleStartGame()}>
+            <Button onClick={() => playAgain()}>
               Jugar de nuevo
             </Button>
           )}

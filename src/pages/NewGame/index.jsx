@@ -2,7 +2,7 @@ import { useState } from "react";
 import GameForm from "./GameForm";
 import Scores from "./Scores";
 import api from "../../utils/api-client";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 
 function NewGame() {
   const [players, setPlayers] = useState(() => {
@@ -24,9 +24,10 @@ function NewGame() {
     }
   });
 
-  // useEffect(() => {
-  //   console.log(players)
-  // }, [players]);
+  useEffect(() => {
+    console.log(players)
+    console.log(gameState)
+  }, [players, gameState]);
 
   function handleStartGame() {
     const table = window.localStorage.getItem("table");
@@ -50,12 +51,13 @@ function NewGame() {
     });
   }
 
-  // function playAgain() {
-
-  // }
+  function playAgain() {
+    setGameState("finished")
+    handleStartGame()
+  }
 
   function backToForm() {
-    console.log("Back To Form");
+    setGameState("finished")
   }
 
   return gameState === "idle" || gameState === "finished" ? (
@@ -69,7 +71,7 @@ function NewGame() {
   ) : (
     <Scores
       setGameState={setGameState}
-      handleStartGame={handleStartGame}
+      playAgain={playAgain}
       backToForm={backToForm}
     />
   );
