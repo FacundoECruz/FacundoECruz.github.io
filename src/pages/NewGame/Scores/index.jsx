@@ -60,7 +60,7 @@ function reducer(state, action) {
   }
 }
 
-function Scores({ setGameState, playAgain, backToForm }) {
+function Scores({ setGameState, handleStartGame, backToForm }) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
@@ -195,7 +195,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
           ) : round === 9 && status === "in progress" ? (
             <Button onClick={finishGame}>Finalizar</Button>
           ) : (
-            <Button onClick={() => playAgain()}>
+            <Button onClick={() => handleStartGame()}>
               Jugar de nuevo
             </Button>
           )}
