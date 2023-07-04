@@ -25,8 +25,8 @@ function NewGame() {
   });
 
   useEffect(() => {
-    console.log(players)
-    console.log(gameState)
+    console.log(players);
+    console.log(gameState);
   }, [players, gameState]);
 
   function handleStartGame() {
@@ -46,18 +46,22 @@ function NewGame() {
       window.localStorage.setItem("gameId", res.data.id);
       window.localStorage.setItem("round", res.data.round);
       window.localStorage.setItem("status", JSON.stringify(res.data.status));
+      const players = window.localStorage.getItem("players");
+      if (players) {
+        window.localStorage.removeItem("players");
+      }
       window.localStorage.setItem("players", JSON.stringify(res.data.players));
       setGameState("in progress");
     });
   }
 
   function playAgain() {
-    setGameState("finished")
-    handleStartGame()
+    setGameState("finished");
+    handleStartGame();
   }
 
   function backToForm() {
-    setGameState("finished")
+    setGameState("finished");
   }
 
   return gameState === "idle" || gameState === "finished" ? (
