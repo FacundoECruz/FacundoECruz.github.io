@@ -76,6 +76,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
     setRound(JSON.parse(window.localStorage.getItem("round")));
     setStatus(JSON.parse(window.localStorage.getItem("status")));
+    console.log(playersRound);
   }, [playersRound]);
 
   // useEffect(() => {
@@ -91,30 +92,43 @@ function Scores({ setGameState, playAgain, backToForm }) {
   // }, [cardsPerRound, round, status, table]);
 
   function nextRound() {
-    const gameId = window.localStorage.getItem("gameId");
+    const playersLost = playersRound.map((p) => {
+      return p.bidsLost;
+    });
+    const invalidRoundData = playersLost.every((p) => p === 0);
+    if (invalidRoundData) {
+      alert(
+        "No pueden ganar todos en una misma ronda, alguien tiene que perder!"
+      );
+    } else {
+      const gameId = window.localStorage.getItem("gameId");
 
-    api
-      .nextRound(playersRound, gameId)
-      .then((res) => {
-        dispatch({ type: types.nextRound, newState: res.data.newRoundState });
-        window.localStorage.setItem("round", res.data.round);
-        window.localStorage.setItem("status", JSON.stringify(res.data.status));
-        window.localStorage.setItem(
-          "players",
-          JSON.stringify(res.data.newRoundState)
-        );
-        const table = res.data.newRoundState;
-        const uiTable = table.map((p) => {
-          const { username, score, image } = p;
-          return { username: username, score: score, image: image };
+      api
+        .nextRound(playersRound, gameId)
+        .then((res) => {
+          dispatch({ type: types.nextRound, newState: res.data.newRoundState });
+          window.localStorage.setItem("round", res.data.round);
+          window.localStorage.setItem(
+            "status",
+            JSON.stringify(res.data.status)
+          );
+          window.localStorage.setItem(
+            "players",
+            JSON.stringify(res.data.newRoundState)
+          );
+          const table = res.data.newRoundState;
+          const uiTable = table.map((p) => {
+            const { username, score, image } = p;
+            return { username: username, score: score, image: image };
+          });
+          uiTable.sort((a, b) => b.score - a.score);
+          window.localStorage.setItem("table", JSON.stringify(uiTable));
+          setTable(uiTable);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        uiTable.sort((a, b) => b.score - a.score);
-        window.localStorage.setItem("table", JSON.stringify(uiTable));
-        setTable(uiTable);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }
   }
 
   function finishGame() {
@@ -205,20 +219,18 @@ function Scores({ setGameState, playAgain, backToForm }) {
             <Button onClick={() => playAgain()}>Jugar de nuevo</Button>
           )}
 
-          {/* <Button
+          <Button
             onClick={() => {
-              window.localStorage.removeItem("players");
-              window.localStorage.removeItem("gameId");
+              setGameState("finished");
               window.localStorage.removeItem("cardsPerRound");
+              window.localStorage.removeItem("gameId");
               window.localStorage.removeItem("round");
-              window.localStorage.removeItem("status");
-              window.localStorage.removeItem("table");
-              setGameState("idle");
+              window.localStorage.setItem("status", JSON.stringify("finished"));
             }}
             sx={{ color: "red" }}
           >
             Terminar partida
-          </Button> */}
+          </Button>
         </Box>
       </Box>
 

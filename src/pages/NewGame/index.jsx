@@ -13,7 +13,7 @@ function NewGame() {
       let players = [];
       storedPlayers.map(p => {
         return p.username;
-      })
+      })  
       return players;
     }
   });
