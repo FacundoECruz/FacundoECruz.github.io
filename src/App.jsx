@@ -10,8 +10,10 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
 import { AuthProvider } from "./utils/AuthContext";
+import RequireAuth from "./utils/requireAuth";
 
 function App() {
+
   return (
     <>
       <AuthProvider>
@@ -23,12 +25,16 @@ function App() {
             <Route path="/players/:username" element={<PlayerDetails />} />
             <Route path="/games" element={<Games />} />
             <Route path="/games/:id" element={<GameDetails />} />
-            <Route path="/games/new" element={<NewGame />} />
             <Route
-              path="/login"
-              element={<Login />}
+              path="/games/new"
+              element={
+                <RequireAuth>
+                  <NewGame />
+                </RequireAuth>
+              }
             />
-          <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Router>
       </AuthProvider>
