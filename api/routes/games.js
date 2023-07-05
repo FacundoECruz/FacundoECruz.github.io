@@ -140,6 +140,7 @@ router.patch("/finish", async (req, res) => {
       score: player.score,
       bid: 0,
       bidsLost: 0,
+      image: player.image,
     };
   });
 

@@ -127,12 +127,23 @@ function Scores({ setGameState, playAgain, backToForm }) {
         const { newRoundState } = res.data;
         dispatch({ type: types.nextRound, newState: newRoundState });
         window.localStorage.setItem("status", JSON.stringify(res.data.status));
+        window.localStorage.setItem(
+          "players",
+          JSON.stringify(res.data.newRoundState)
+        );
+        const table = res.data.newRoundState;
+        const uiTable = table.map((p) => {
+          const { username, score, image } = p;
+          return { username: username, score: score, image: image };
+        });
+        uiTable.sort((a, b) => b.score - a.score);
+        window.localStorage.setItem("table", JSON.stringify(uiTable));
+        setTable(uiTable);
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -183,9 +194,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
               Limpiar
             </Button>
           ) : (
-            <Button onClick={() => backToForm()}>
-              Volver al form
-            </Button>
+            <Button onClick={() => backToForm()}>Volver al form</Button>
           )}
 
           {round < 9 ? (
@@ -193,9 +202,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
           ) : round === 9 && status === "in progress" ? (
             <Button onClick={finishGame}>Finalizar</Button>
           ) : (
-            <Button onClick={() => playAgain()}>
-              Jugar de nuevo
-            </Button>
+            <Button onClick={() => playAgain()}>Jugar de nuevo</Button>
           )}
 
           {/* <Button
