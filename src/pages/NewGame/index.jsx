@@ -2,7 +2,7 @@ import { useState } from "react";
 import GameForm from "./GameForm";
 import Scores from "./Scores";
 import api from "../../utils/api-client";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 function NewGame() {
   const [players, setPlayers] = useState(() => {
@@ -27,10 +27,10 @@ function NewGame() {
     }
   });
 
-  useEffect(() => {
-    console.log("Players en el estado de NewGame")
-    console.log(players);
-  }, [players, gameState]);
+  // useEffect(() => {
+  //   console.log("Players en el estado de NewGame")
+  //   console.log(players);
+  // }, [players, gameState]);
 
   function handleStartGame() {
     const table = window.localStorage.getItem("table");

@@ -76,7 +76,6 @@ function Scores({ setGameState, playAgain, backToForm }) {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
     setRound(JSON.parse(window.localStorage.getItem("round")));
     setStatus(JSON.parse(window.localStorage.getItem("status")));
-    console.log(playersRound);
   }, [playersRound]);
 
   // useEffect(() => {
@@ -131,6 +130,15 @@ function Scores({ setGameState, playAgain, backToForm }) {
     }
   }
 
+  function prevRound() {
+    const gameId = window.localStorage.getItem("gameId");
+    const currentRound = window.localStorage.getItem("round")
+    api
+      .prevRound(currentRound, gameId)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
+  
   function finishGame() {
     const gameId = window.localStorage.getItem("gameId");
     const user = window.localStorage.getItem("user");
@@ -158,6 +166,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
         console.log(err);
       });
   }
+
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -231,6 +240,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
           >
             Terminar partida
           </Button>
+          <Button variant="contained" sx={{bgcolor: "purple"}} onClick={() => prevRound()}>Volver</Button>
         </Box>
       </Box>
 

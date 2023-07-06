@@ -39,14 +39,16 @@ router.post("/", async (req, res) => {
   //Esto tiene que generarse aleatoriamente
   const cardsPerRound = [6, 5, 3, 6, 7, 8, 4, 7, 8];
 
-  const playersImgs = await Promise.all(playersIds.map(async id => {
-    const player = await Player.findOne(id)
-    return player.image;
-  }))
+  const playersImgs = await Promise.all(
+    playersIds.map(async (id) => {
+      const player = await Player.findOne(id);
+      return player.image;
+    })
+  );
 
   const playersWithImages = players.map((player, index) => ({
     ...player,
-    image: playersImgs[index]
+    image: playersImgs[index],
   }));
 
   const game = new Game({
@@ -114,6 +116,16 @@ router.patch("/next", async (req, res) => {
   } catch (err) {
     res.status(400).json(err.message);
   }
+});
+
+router.post("/prev", async (req, res) => {
+  const game = await Game.findById(req.body.gameId);
+  const currentRound = req.body.currentRound;
+
+  console.log(game)
+  console.log(currentRound)
+  
+  res.json(currentRound)
 });
 
 router.patch("/finish", async (req, res) => {
