@@ -14,6 +14,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -38,19 +39,19 @@ router.post("/", async (req, res) => {
   );
   //Esto tiene que generarse aleatoriamente
   const cardsPerRound = [6, 5, 3, 6, 7, 8, 4, 7, 8];
-
+  
   const playersImgs = await Promise.all(
     playersIds.map(async (id) => {
       const player = await Player.findOne(id);
       return player.image;
     })
-  );
-
-  const playersWithImages = players.map((player, index) => ({
+    );
+    
+    const playersWithImages = players.map((player, index) => ({
     ...player,
     image: playersImgs[index],
   }));
-
+  
   const game = new Game({
     cardsPerRound,
     results: [players],
@@ -79,17 +80,17 @@ router.patch("/next", async (req, res) => {
   const game = await Game.findById(req.body.gameId);
   const roundResults = req.body.playersRound;
   const round = game.round;
-
+  
   const resultsForDb = roundResults.map((player, index) => {
     if (player.bidsLost === 0)
-      player.score =
-        parseInt(game.results[round - 1][index].score) + 5 + player.bid;
+    player.score =
+    parseInt(game.results[round - 1][index].score) + 5 + player.bid;
     else
-      player.score =
+    player.score =
         parseInt(game.results[round - 1][index].score) - player.bidsLost;
     return player;
   });
-
+  
   const newRoundState = resultsForDb.map((player) => {
     return {
       username: player.username,
@@ -111,21 +112,25 @@ router.patch("/next", async (req, res) => {
     };
     console.log("***Round data saved***");
     console.log(savedGame);
-
+    
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json(err.message);
   }
 });
 
-router.post("/prev", async (req, res) => {
+router.patch("/prev", async (req, res) => {
   const game = await Game.findById(req.body.gameId);
   const currentRound = req.body.currentRound;
+  const prevRound = game.results.pop()
+  const response = {
+    round: currentRound - 1,
+    newRoundState: prevRound,
+    status: "in progress",
+  };
+  console.log(prevRound)  
 
-  console.log(game)
-  console.log(currentRound)
-  
-  res.json(currentRound)
+  res.status(200).json(response)
 });
 
 router.patch("/finish", async (req, res) => {
