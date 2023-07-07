@@ -70,6 +70,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
   const [playersRound, dispatch] = useReducer(reducer, null, () =>
     JSON.parse(window.localStorage.getItem("players"))
   );
+  const [varCheck, setVarCheck] = useState(false);
   const dashBoardWidth = "40%";
 
   useEffect(() => {
@@ -92,6 +93,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
   // }, [cardsPerRound, round, status, table]);
 
   function nextRound() {
+    setVarCheck(false);
     const playersLost = playersRound.map((p) => {
       return p.bidsLost;
     });
@@ -132,6 +134,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
   }
 
   function prevRound() {
+    setVarCheck(true);
     const gameId = window.localStorage.getItem("gameId");
     const currentRound = window.localStorage.getItem("round");
     api
@@ -195,11 +198,28 @@ function Scores({ setGameState, playAgain, backToForm }) {
             </Typography>
           </Box>
         ) : (
-          <Box>
-            <Typography variant="h4">Ronda {parseInt(round)}</Typography>
-            <Typography variant="h4">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Typography variant="h4" sx={{ width: "45%" }}>
+              Ronda {parseInt(round)}
+            </Typography>
+            <Typography variant="h4" sx={{ width: "45%" }}>
               Cartas {cardsPerRound[round - 1]}
             </Typography>
+            {varCheck ? (
+              <Box sx={{ width: "25%" }}>
+                <img
+                  src="https://res.cloudinary.com/dfknsvqer/image/upload/v1688731292/var_babqf8.jpg"
+                  alt="pitana-var"
+                  style={{ width: "50px", height: "50px" }}
+                />
+              </Box>
+            ) : null}
           </Box>
         )}
 
@@ -260,6 +280,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
             variant="contained"
             sx={{ bgcolor: "purple" }}
             onClick={() => prevRound()}
+            disabled={round === 1}
           >
             Volver
           </Button>
