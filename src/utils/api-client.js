@@ -17,7 +17,7 @@ const api = {
   editUser: (id, userData) => server.patch(`/users/${id}`, userData),
   deleteUser: (id) => server.delete(`/users/${id}`),
   nextRound: (playersRound, gameId) => server.patch("/games/next", {playersRound: playersRound, gameId: gameId,}),
-  prevRound: (currentRound, gameId) => server.post("/games/prev", {currentRound: currentRound, gameId: gameId,}),
+  prevRound: (currentRound, gameId) => server.patch("/games/prev", {currentRound: currentRound, gameId: gameId,}),
   finishGame: (playersRound, gameId, user) => server.patch("/games/finish", {playersRound: playersRound, gameId: gameId, user: user,})
 };
 

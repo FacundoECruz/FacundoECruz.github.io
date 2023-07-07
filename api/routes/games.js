@@ -121,16 +121,24 @@ router.patch("/next", async (req, res) => {
 
 router.patch("/prev", async (req, res) => {
   const game = await Game.findById(req.body.gameId);
-  const currentRound = req.body.currentRound;
+  // const currentRound = req.body.currentRound;
   const prevRound = game.results.pop()
-  const response = {
-    round: currentRound - 1,
-    newRoundState: prevRound,
-    status: "in progress",
-  };
-  console.log(prevRound)  
+  game.round = game.round - 1; 
 
-  res.status(200).json(response)
+  try {
+    const savedGame = await game.save();
+    const response = {
+      round: savedGame.round,
+      newRoundState: prevRound,
+      status: "in progress",
+    };
+    console.log("***Round data saved with prevRound request***");
+    console.log(savedGame);
+    
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
 });
 
 router.patch("/finish", async (req, res) => {
