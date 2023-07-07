@@ -1,5 +1,4 @@
 import MainHome from "./MainHome.jsx";
-import Footer from "../../components/Footer.jsx";
 import "../../stylesheets/Home.css";
 import { Container } from "@mui/material";
 
@@ -21,7 +20,6 @@ function Home() {
         }}
       >
         <MainHome />
-        <Footer />
       </Container>
     </>
   );
