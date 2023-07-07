@@ -8,7 +8,7 @@ function ControlButtons({addPlayer, setPlayers}) {
         Agregar
       </Button>
       <Button onClick={() => setPlayers([])} variant="contained">
-        Clean
+        Limpiar
       </Button>
     </Box>
   );
