@@ -110,10 +110,17 @@ function Scores({ setGameState, playAgain, backToForm }) {
         .then((res) => {
           dispatch({ type: types.nextRound, newState: res.data.newRoundState });
           window.localStorage.setItem("round", res.data.round);
-          window.localStorage.setItem(
-            "status",
-            JSON.stringify(res.data.status)
-          );
+          if (res.data.round < 10) {
+            window.localStorage.setItem(
+              "status",
+              JSON.stringify(res.data.status)
+            );
+          } else {
+            window.localStorage.setItem(
+              "status",
+              JSON.stringify("finished")
+            );
+          }
           window.localStorage.setItem(
             "players",
             JSON.stringify(res.data.newRoundState)
@@ -136,9 +143,8 @@ function Scores({ setGameState, playAgain, backToForm }) {
   function prevRound() {
     setVarCheck(true);
     const gameId = window.localStorage.getItem("gameId");
-    const currentRound = window.localStorage.getItem("round");
     api
-      .prevRound(currentRound, gameId)
+      .prevRound(gameId)
       .then((res) => {
         dispatch({ type: types.nextRound, newState: res.data.newRoundState });
         window.localStorage.setItem("round", res.data.round);
@@ -159,38 +165,10 @@ function Scores({ setGameState, playAgain, backToForm }) {
       .catch((err) => console.log(err));
   }
 
-  function finishGame() {
-    const gameId = window.localStorage.getItem("gameId");
-    const user = window.localStorage.getItem("user");
-
-    api
-      .finishGame(playersRound, gameId, user)
-      .then((res) => {
-        const { newRoundState } = res.data;
-        dispatch({ type: types.nextRound, newState: newRoundState });
-        window.localStorage.setItem("status", JSON.stringify(res.data.status));
-        window.localStorage.setItem(
-          "players",
-          JSON.stringify(res.data.newRoundState)
-        );
-        const table = res.data.newRoundState;
-        const uiTable = table.map((p) => {
-          const { username, score, image } = p;
-          return { username: username, score: score, image: image };
-        });
-        uiTable.sort((a, b) => b.score - a.score);
-        window.localStorage.setItem("table", JSON.stringify(uiTable));
-        setTable(uiTable);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Box sx={{ width: "40%" }}>
-        {status === "finished" ? (
+        {round > 9 ? (
           <Box>
             <Typography>Partida terminada</Typography>
             <Typography>
@@ -244,7 +222,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
             justifyContent: "space-between",
           }}
         >
-          {status === "in progress" ? (
+          {round < 10 ? (
             <Button
               variant="contained"
               sx={{ bgcolor: "lightblue" }}
@@ -259,23 +237,29 @@ function Scores({ setGameState, playAgain, backToForm }) {
           {round < 9 ? (
             <Button onClick={nextRound}>Siguiente Ronda</Button>
           ) : round === 9 && status === "in progress" ? (
-            <Button onClick={finishGame}>Finalizar</Button>
+            <Button onClick={nextRound}>Finalizar</Button>
           ) : (
             <Button onClick={() => playAgain()}>Jugar de nuevo</Button>
           )}
 
-          <Button
-            onClick={() => {
-              setGameState("finished");
-              window.localStorage.removeItem("cardsPerRound");
-              window.localStorage.removeItem("gameId");
-              window.localStorage.removeItem("round");
-              window.localStorage.setItem("status", JSON.stringify("finished"));
-            }}
-            sx={{ color: "red" }}
-          >
-            Terminar partida
-          </Button>
+          {round < 10 ? (
+            <Button
+              onClick={() => {
+                setGameState("finished");
+                window.localStorage.removeItem("cardsPerRound");
+                window.localStorage.removeItem("gameId");
+                window.localStorage.removeItem("round");
+                window.localStorage.setItem(
+                  "status",
+                  JSON.stringify("finished")
+                );
+              }}
+              sx={{ color: "red" }}
+            >
+              Terminar partida
+            </Button>
+          ) : null}
+
           <Button
             variant="contained"
             sx={{ bgcolor: "purple" }}

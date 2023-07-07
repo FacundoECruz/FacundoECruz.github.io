@@ -14,7 +14,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -26,11 +25,12 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const players = req.body;
-  const playersIds = await Promise.all(
-    players.map(async (p) => {
+  const playersDto = req.body;
+  const players = await Promise.all(
+    playersDto.map(async (p) => {
       try {
         const dbPlayer = await Player.findOne({ username: p.username });
+        console.log(dbPlayer)
         return dbPlayer;
       } catch (error) {
         console.log(error);
@@ -39,25 +39,25 @@ router.post("/", async (req, res) => {
   );
   //Esto tiene que generarse aleatoriamente
   const cardsPerRound = [6, 5, 3, 6, 7, 8, 4, 7, 8];
-  
+
   const playersImgs = await Promise.all(
-    playersIds.map(async (id) => {
-      const player = await Player.findOne(id);
-      return player.image;
+    players.map(async (player) => {
+      const dbPlayer = await Player.findOne({username: player.username});
+      return dbPlayer.image;
     })
-    );
-    
-    const playersWithImages = players.map((player, index) => ({
+  );
+
+  const playersWithImages = playersDto.map((player, index) => ({
     ...player,
     image: playersImgs[index],
   }));
-  
+
   const game = new Game({
     cardsPerRound,
-    results: [players],
+    results: [playersDto],
     date: new Date(),
     round: 1,
-    players: playersIds.map((id) => new mongoose.Types.ObjectId(id)),
+    players: players.map((id) => new mongoose.Types.ObjectId(id)),
   });
   try {
     const savedGame = await game.save();
@@ -80,72 +80,6 @@ router.patch("/next", async (req, res) => {
   const game = await Game.findById(req.body.gameId);
   const roundResults = req.body.playersRound;
   const round = game.round;
-  
-  const resultsForDb = roundResults.map((player, index) => {
-    if (player.bidsLost === 0)
-    player.score =
-    parseInt(game.results[round - 1][index].score) + 5 + player.bid;
-    else
-    player.score =
-        parseInt(game.results[round - 1][index].score) - player.bidsLost;
-    return player;
-  });
-  
-  const newRoundState = resultsForDb.map((player) => {
-    return {
-      username: player.username,
-      score: player.score,
-      bid: 0,
-      bidsLost: 0,
-      image: player.image,
-    };
-  });
-
-  game.round = game.round + 1;
-  game.results.push(resultsForDb);
-  try {
-    const savedGame = await game.save();
-    const response = {
-      round: savedGame.round,
-      newRoundState: newRoundState,
-      status: "in progress",
-    };
-    console.log("***Round data saved***");
-    console.log(savedGame);
-    
-    res.status(200).json(response);
-  } catch (err) {
-    res.status(400).json(err.message);
-  }
-});
-
-router.patch("/prev", async (req, res) => {
-  const game = await Game.findById(req.body.gameId);
-  // const currentRound = req.body.currentRound;
-  const prevRound = game.results.pop()
-  game.round = game.round - 1; 
-
-  try {
-    const savedGame = await game.save();
-    const response = {
-      round: savedGame.round,
-      newRoundState: prevRound,
-      status: "in progress",
-    };
-    console.log("***Round data saved with prevRound request***");
-    console.log(savedGame);
-    
-    res.status(200).json(response);
-  } catch (err) {
-    res.status(400).json(err.message);
-  }
-});
-
-router.patch("/finish", async (req, res) => {
-  const game = await Game.findById(req.body.gameId);
-  const roundResults = req.body.playersRound;
-  const round = game.round;
-  const { user } = req.body;
 
   const resultsForDb = roundResults.map((player, index) => {
     if (player.bidsLost === 0)
@@ -157,8 +91,6 @@ router.patch("/finish", async (req, res) => {
     return player;
   });
 
-  game.results.push(resultsForDb);
-
   const newRoundState = resultsForDb.map((player) => {
     return {
       username: player.username,
@@ -169,16 +101,55 @@ router.patch("/finish", async (req, res) => {
     };
   });
 
+  game.round = game.round + 1;
+
+  game.results.push(resultsForDb);
+  try {
+    const savedGame = await game.save();
+    const response = {
+      round: savedGame.round,
+      newRoundState: newRoundState,
+      status: "in progress",
+    };
+    console.log("***Round data saved***");
+    console.log(savedGame);
+
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
+});
+
+router.patch("/prev", async (req, res) => {
+  const game = await Game.findById(req.body.gameId);
+  const prevRound = game.results.pop();
+  game.round = game.round - 1;
+
+  try {
+    const savedGame = await game.save();
+    const response = {
+      round: savedGame.round,
+      newRoundState: prevRound,
+      status: "in progress",
+    };
+    console.log("***Round data saved with prevRound request***");
+    console.log(savedGame);
+
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
+});
+
+router.patch("/finish", async (req, res) => {
+  const game = await Game.findById(req.body.gameId);
+  const { user, winner, players } = req.body;
+  
+  console.log("***players***")
+  console.log(players)
   try {
     //LOGICA DEL GANADOR
-    const winner = newRoundState.reduce((maxObject, currentObject) => {
-      if (currentObject.score > maxObject.score) {
-        return currentObject;
-      } else {
-        return maxObject;
-      }
-    });
-    const winnerFilter = { username: winner.username };
+    const winnerFilter = { username: winner };
     const winnerUpdate = { $inc: { gamesWon: 1 } };
     const updatedWinner = await Player.findOneAndUpdate(
       winnerFilter,
@@ -202,7 +173,7 @@ router.patch("/finish", async (req, res) => {
     //LOGICA DE SUMA DE PUNTOS
     playerIds.map(async (id, index) => {
       const scoreFilter = { _id: id };
-      const scoreUpdate = { $inc: { totalScore: newRoundState[index].score } };
+      const scoreUpdate = { $inc: { totalScore: players[index].score } };
       const updatedScore = await Player.findOneAndUpdate(
         scoreFilter,
         scoreUpdate,
@@ -225,8 +196,7 @@ router.patch("/finish", async (req, res) => {
     const savedGame = await game.save();
 
     const response = {
-      newRoundState: newRoundState,
-      status: "finished",
+      savedGame: savedGame
     };
     console.log("***Game data saved***");
     console.log(savedGame);

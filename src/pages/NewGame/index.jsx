@@ -58,12 +58,31 @@ function NewGame() {
     });
   }
 
+  function finishGame() {
+    const gameId = window.localStorage.getItem("gameId");
+    const user = window.localStorage.getItem("user");
+    const table = JSON.parse(window.localStorage.getItem("table"))
+    const players = JSON.parse(window.localStorage.getItem("players"))
+    const winner = table[0].username;
+
+    api
+      .finishGame(players, gameId, user, winner)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function playAgain() {
+    finishGame()
     setGameState("finished");
     handleStartGame();
   }
 
   function backToForm() {
+    finishGame()
     setGameState("finished");
   }
 
