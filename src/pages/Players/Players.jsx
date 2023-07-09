@@ -46,7 +46,7 @@ function Players() {
                   stats={[
                     { label: "Jugadas", value: p.gamesPlayed },
                     { label: "Ganadas", value: p.gamesWon },
-                    { label: "Puntaje total", value: p.totalScore },
+                    { label: "Puntaje", value: p.totalScore },
                   ]}
                   width="30%"
                   margin="10px"

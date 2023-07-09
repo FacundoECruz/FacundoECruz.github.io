@@ -2,6 +2,7 @@ import {
   AppBar,
   Avatar,
   Box,
+  Button,
   Drawer,
   IconButton,
   Menu,
@@ -68,31 +69,36 @@ function Navbar() {
 
   const handleMenuItemClick = () => {
     logout();
-    setUserData(null)
-    setAnchorEl(null)
+    setUserData(null);
+    setAnchorEl(null);
   };
 
   useEffect(() => {
-    if(user){
-    api
-      .getUser(user)
-      .then((res) => {
-        const { username, image, createdGames } = res.data[0];
-        return { username, image, createdGames };
-      })
-      .then((userObj) => {
-        api
-          .getPlayer(user)
-          .then((res) => {
-            const { gamesPlayed, gamesWon, totalScore } = res.data[0];
-            const userData = { ...userObj, gamesPlayed, gamesWon, totalScore };
-            setUserData(userData);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
+    if (user) {
+      api
+        .getUser(user)
+        .then((res) => {
+          const { username, image, createdGames } = res.data[0];
+          return { username, image, createdGames };
+        })
+        .then((userObj) => {
+          api
+            .getPlayer(user)
+            .then((res) => {
+              const { gamesPlayed, gamesWon, totalScore } = res.data[0];
+              const userData = {
+                ...userObj,
+                gamesPlayed,
+                gamesWon,
+                totalScore,
+              };
+              setUserData(userData);
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
     } else {
-      return
+      return;
     }
   }, [user]);
 
@@ -138,7 +144,16 @@ function Navbar() {
               vertical: "top",
               horizontal: "right",
             }}
-            sx={{ boxSizing: "border-box" }}
+            PaperProps={{
+              sx: {
+                width: "200px",
+                backgroundImage: `url('https://res.cloudinary.com/dfknsvqer/image/upload/v1688915528/fondo-blanco-menu_snkiu9.jpg')`,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "1px solid black",
+              },
+            }}
           >
             {userData ? (
               <PlayerCard
@@ -150,12 +165,12 @@ function Navbar() {
                   { label: "Ganadas", value: userData.gamesWon },
                   { label: "Puntaje", value: userData.totalScore },
                 ]}
-                width="95%"
+                width="100%"
                 margin="3px"
               />
             ) : null}
             <MenuItem onClick={() => handleMenuItemClick()}>
-              Salir
+              <Button variant="contained" sx={{bgcolor: "purple"}}>Salir</Button>
             </MenuItem>
           </Menu>
         </Toolbar>

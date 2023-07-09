@@ -3,7 +3,7 @@ import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 
 function PlayerCard({ image, username, stats, width, margin }) {
   return (
-    <Card sx={{ maxWidth: "150px", width: width, margin: margin, bgcolor: "blue" }}>
+    <Card sx={{ maxWidth: "200px", width: width, margin: margin, bgcolor: "blue" }}>
       <CardMedia image={image} title={username} sx={{ height: "150px;" }} />
       <CardContent>
         <Typography variant="h6" sx={{ marginBottom: 1, whiteSpace: "nowrap", fontSize: username.length > 15 ? "12px" : "inherit", }}>
