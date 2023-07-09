@@ -1,8 +1,11 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Drawer,
   IconButton,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -16,6 +19,9 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import { useContext } from "react";
 import { AuthContext } from "../../utils/AuthContext";
+import { useEffect } from "react";
+import api from "../../utils/api-client";
+import PlayerCard from "../PlayerCard";
 
 const navLinks = [
   {
@@ -49,6 +55,46 @@ const navLinks = [
 function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
+  const [userData, setUserData] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuItemClick = () => {
+    logout();
+    setUserData(null)
+    setAnchorEl(null)
+  };
+
+  useEffect(() => {
+    if(user){
+    api
+      .getUser(user)
+      .then((res) => {
+        const { username, image, createdGames } = res.data[0];
+        return { username, image, createdGames };
+      })
+      .then((userObj) => {
+        api
+          .getPlayer(user)
+          .then((res) => {
+            const { gamesPlayed, gamesWon, totalScore } = res.data[0];
+            const userData = { ...userObj, gamesPlayed, gamesWon, totalScore };
+            setUserData(userData);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+    } else {
+      return
+    }
+  }, [user]);
 
   return (
     <>
@@ -63,15 +109,12 @@ function Navbar() {
             <MenuIcon />
           </IconButton>
           <IconButton component="a" href="/" sx={{ flexGrow: 1 }}>
-            <Typography variant="h6" >
-              Altisima
-            </Typography>
+            <Typography variant="h6">Altisima</Typography>
           </IconButton>
-          {user ? (
-            <Box sx={{ display: { sm: "block" } }}>
-              <Typography>{user}</Typography>
-              <IconButton onClick={() => logout()}>Logout</IconButton>
-            </Box>
+          {userData ? (
+            <IconButton color="inherit" onClick={handleMenuOpen}>
+              <Avatar src={userData.image} alt="User Avatar" />
+            </IconButton>
           ) : (
             <Box sx={{ display: { sm: "block" } }}>
               <IconButton component="a" href="/login">
@@ -82,6 +125,39 @@ function Navbar() {
               </IconButton>
             </Box>
           )}
+          {/* Menú desplegable */}
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            sx={{ boxSizing: "border-box" }}
+          >
+            {userData ? (
+              <PlayerCard
+                image={userData.image}
+                username={userData.username}
+                stats={[
+                  { label: "Creadas", value: userData.createdGames },
+                  { label: "Jugadas", value: userData.gamesPlayed },
+                  { label: "Ganadas", value: userData.gamesWon },
+                  { label: "Puntaje", value: userData.totalScore },
+                ]}
+                width="95%"
+                margin="3px"
+              />
+            ) : null}
+            <MenuItem onClick={() => handleMenuItemClick()}>
+              Salir
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
 

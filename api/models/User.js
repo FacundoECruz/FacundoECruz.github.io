@@ -19,25 +19,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  gamesWon: {
-    type: Number,
-    default: 0,
-  },
-  gamesPlayed: {
-    type: Number,
-    default: 0,
-  },
   createdGames: {
     type: Number,
     default: 0,
   },
-  totalScore: {
-    type: Number,
-    default: 0,
-  },
 });
-
-//ACA HAY QUE BORRAR LOS ATRIBUTOS QUE VAMOS A MANEJAR EN PLAYERS///
 
 const User = mongoose.model("User", UserSchema);
 
