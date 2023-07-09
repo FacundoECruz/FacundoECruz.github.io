@@ -15,7 +15,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import { useContext } from "react";
-import { AuthContext } from "../../utils/AuthContext"; 
+import { AuthContext } from "../../utils/AuthContext";
 
 const navLinks = [
   {
@@ -62,9 +62,11 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Altisima
-          </Typography>
+          <IconButton component="a" href="/" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" >
+              Altisima
+            </Typography>
+          </IconButton>
           {user ? (
             <Box sx={{ display: { sm: "block" } }}>
               <Typography>{user}</Typography>
