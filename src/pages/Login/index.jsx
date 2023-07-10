@@ -23,7 +23,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://www.youtube.com/watch?v=mzMPcl7vhQo">
         Altisima
       </Link>{" "}
       {new Date().getFullYear()}
@@ -138,7 +138,7 @@ export default function Login(  ) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/games" variant="body2">
                   Olvide mi contraseña
                 </Link>
               </Grid>
