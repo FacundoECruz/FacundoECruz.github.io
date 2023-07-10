@@ -9,7 +9,10 @@ function Players() {
   useEffect(() => {
     api
       .getPlayers()
-      .then((response) => setPlayers(response.data))
+      .then((response) => {
+        const sortedPlayers = response.data.sort((a, b) => b.gamesPlayed - a.gamesPlayed) 
+        setPlayers(sortedPlayers);
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -46,7 +49,7 @@ function Players() {
                   stats={[
                     { label: "Jugadas", value: p.gamesPlayed },
                     { label: "Ganadas", value: p.gamesWon },
-                    { label: "Puntaje", value: p.totalScore },
+                    { label: "PPP", value: p.totalScore / p.gamesPlayed },
                   ]}
                   width="30%"
                   margin="10px"
