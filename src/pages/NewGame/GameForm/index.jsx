@@ -77,15 +77,19 @@ function GameForm({ players, setPlayers, gameState, setGameState, handleStartGam
             <Button
               sx={{
                 width: "200px",
-                color: "green",
+                color: "white",
+                bgcolor: "green",
                 border: "1px solid green",
                 "&:hover": {
                   transform: "translate(-1px, -1px)",
+                  bgcolor: "white",
+                  color: "black",
                 },
               }}
+              variant="contained"
               onClick={handleStartGame}
             >
-              Empezar
+              Comenzar
             </Button>
           ) : null}
         </Grid>
