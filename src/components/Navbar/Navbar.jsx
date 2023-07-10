@@ -115,19 +115,65 @@ function Navbar() {
             <MenuIcon />
           </IconButton>
           <IconButton component="a" href="/" sx={{ flexGrow: 1 }}>
-            <Typography variant="h6">Altisima</Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "white",
+                padding: "6px",
+                borderRadius: "25%",
+                transition: "background 0.3s ease",
+                "&:hover": {
+                  bgcolor: "white",
+                  color: "black",
+                },
+              }}
+            >
+              Altisima
+            </Typography>
           </IconButton>
           {userData ? (
             <IconButton color="inherit" onClick={handleMenuOpen}>
               <Avatar src={userData.image} alt="User Avatar" />
             </IconButton>
           ) : (
-            <Box sx={{ display: { sm: "block" } }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                maxHeight: "40px",
+              }}
+            >
               <IconButton component="a" href="/login">
-                Login
+                <Typography
+                  sx={{
+                    color: "white",
+                    padding: "6px",
+                    borderRadius: "25%",
+                    transition: "background 0.3s ease",
+                    "&:hover": {
+                      bgcolor: "white",
+                      color: "black",
+                    },
+                  }}
+                >
+                  Login
+                </Typography>
               </IconButton>
               <IconButton component="a" href="/register">
-                Register
+                <Typography
+                  sx={{
+                    color: "white",
+                    padding: "6px",
+                    borderRadius: "25%",
+                    transition: "background 0.3s ease",
+                    "&:hover": {
+                      bgcolor: "white",
+                      color: "black",
+                    },
+                  }}
+                >
+                  Register
+                </Typography>
               </IconButton>
             </Box>
           )}
@@ -170,7 +216,9 @@ function Navbar() {
               />
             ) : null}
             <MenuItem onClick={() => handleMenuItemClick()}>
-              <Button variant="contained" sx={{bgcolor: "purple"}}>Salir</Button>
+              <Button variant="contained" sx={{ bgcolor: "purple" }}>
+                Salir
+              </Button>
             </MenuItem>
           </Menu>
         </Toolbar>
