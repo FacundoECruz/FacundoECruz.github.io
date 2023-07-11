@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
 import { Box } from "@mui/material";
-import PlayerCard from "../../components/PlayerCard";
+import PlayerCard from "../../components/playerCard/index.jsx";
 
 function Players() {
   const [players, setPlayers] = useState(null);
@@ -46,9 +46,9 @@ function Players() {
                   key={p.username}
                   image={p.image}
                   username={p.username}
+                  winned={p.gamesWon}
                   stats={[
                     { label: "Jugadas", value: p.gamesPlayed },
-                    { label: "Ganadas", value: p.gamesWon },
                     { label: "PPP", value: p.totalScore / p.gamesPlayed },
                   ]}
                   width="30%"

@@ -1,11 +1,20 @@
 /* eslint-disable react/prop-types */
-import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Box,
+  useMediaQuery,
+} from "@mui/material";
+import Stars from "../Stars.jsx";
 
-function PlayerCard({ image, username, stats, width, margin }) {
+function PlayerCard({ image, username, winned, stats, width, margin }) {
+  const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   return (
     <Card
       sx={{
-        maxWidth: "200px",
+        maxWidth: isMdScreen ? "120px" : "150px",
         width: width,
         margin: margin,
         bgcolor: "blue",
@@ -15,7 +24,13 @@ function PlayerCard({ image, username, stats, width, margin }) {
         },
       }}
     >
-      <CardMedia image={image} title={username} sx={{ height: "150px;" }} />
+      <CardMedia
+        image={image}
+        title={username}
+        sx={{
+          height: "150px",
+        }}
+      />
       <CardContent>
         <Typography
           variant="h6"
@@ -34,6 +49,9 @@ function PlayerCard({ image, username, stats, width, margin }) {
             flexDirection: "column",
           }}
         >
+          <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+            <Stars value={winned} />
+          </Box>
           {stats.map((stat, index) => (
             <Typography key={index} variant="body2" sx={{ fontWeight: "bold" }}>
               {stat.label}: {isNaN(stat.value) ? "-" : stat.value}

@@ -22,7 +22,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import { useEffect } from "react";
 import api from "../../utils/api-client";
-import PlayerCard from "../PlayerCard";
+import PlayerCard from "../playerCard";
 
 const navLinks = [
   {
