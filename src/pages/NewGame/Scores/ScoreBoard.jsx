@@ -12,7 +12,7 @@ function ScoreBoard({ table }) {
     <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
       {table.map((player) => {
         return (
-          <ListItem key={player.username}>
+          <ListItem key={player.username} sx={{border: "1px solid black"}}>
             <ListItemAvatar>
               <Avatar alt={player.username} src={player.image} />
             </ListItemAvatar>

@@ -10,7 +10,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
         alignItems: "center",
         justifyContent: "space-between",
         border: "1px solid blue",
-        maxHeight: "150px",
+        maxHeight: "120px",
         bgcolor: "black",
       }}
     >
@@ -20,7 +20,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
           mb: 2,
           color: "white",
           fontFamily: "'Bodoni Moda', serif",
-          fontSize: "30px",
+          fontSize: player.username.length > 9 ? "20px" : "25px",
         }}
       >
         {player.username}
@@ -30,6 +30,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "flex-end",
+          maxHeight: "80px"
         }}
       >
         <Box sx={{ mb: 2, mt: 2 }}>

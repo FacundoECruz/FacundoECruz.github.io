@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Index";
 import Players from "./pages/players/Players";
-import PlayerDetails from "./pages/PlayerDetails";
+import PlayerDetails from "./pages/playerDetails";
 import Games from "./pages/games/Games";
 import GameDetails from "./pages/gameDetails/GameDetails";
-import NewGame from "./pages/NewGame";
+import NewGame from "./pages/newGame";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Navbar from "./components/navbar/Navbar";
