@@ -49,7 +49,7 @@ function Players() {
                   winned={p.gamesWon}
                   stats={[
                     { label: "Jugadas", value: p.gamesPlayed },
-                    { label: "PPP", value: p.totalScore / p.gamesPlayed },
+                    { label: "PPP", value: (p.totalScore / p.gamesPlayed).toFixed(1) },
                   ]}
                   width="30%"
                   margin="10px"
