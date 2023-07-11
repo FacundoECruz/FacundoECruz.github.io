@@ -8,7 +8,7 @@ import PlayerDash from "./PlayerDash";
 import api from "../../../utils/api-client";
 import { types } from "../../../utils/reducer";
 import ScoreBoard from "./ScoreBoard";
-import UndoIcon from '@mui/icons-material/Undo';
+import UndoIcon from "@mui/icons-material/Undo";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -164,12 +164,24 @@ function Scores({ setGameState, playAgain, backToForm }) {
   }
 
   return (
-    <Grid container spacing={2}>
+    <Grid
+      container
+      spacing={2}
+      sx={{ bgcolor: "black", mt: "1px", padding: "5px", pb: 6 }}
+    >
       <Grid item xs={12} md={6}>
         {round > 9 ? (
-          <Box>
-            <Typography>Partida terminada</Typography>
-            <Typography>
+          <Box
+            sx={{
+              height: "60px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
+            <Typography sx={{ color: "white" }}>Partida terminada</Typography>
+            <Typography sx={{ color: "white" }}>
               Gana {table[0].username} con {table[0].score} puntos!
             </Typography>
           </Box>
@@ -184,10 +196,10 @@ function Scores({ setGameState, playAgain, backToForm }) {
               boxSizing: "border-box",
             }}
           >
-            <Typography variant="h4" mr={2}>
+            <Typography variant="h4" mr={2} sx={{ color: "white" }}>
               Ronda {parseInt(round)}
             </Typography>
-            <Typography variant="h4" mr={3}>
+            <Typography variant="h4" mr={2} sx={{ color: "white" }}>
               Cartas {cardsPerRound[round - 1]}
             </Typography>
             {varCheck ? (
@@ -200,22 +212,28 @@ function Scores({ setGameState, playAgain, backToForm }) {
               </Box>
             ) : null}
             {round < 10 ? (
-            <Button
-              onClick={() => {
-                setGameState("finished");
-                window.localStorage.removeItem("cardsPerRound");
-                window.localStorage.removeItem("gameId");
-                window.localStorage.removeItem("round");
-                window.localStorage.setItem(
-                  "status",
-                  JSON.stringify("finished")
-                );
-              }}
-              sx={{ color: "red", width: "30px", height: "30px", fontSize: "8px", border: "1px solid red"}}
-            >
-              Terminar partida
-            </Button>
-          ) : null}
+              <Button
+                onClick={() => {
+                  setGameState("finished");
+                  window.localStorage.removeItem("cardsPerRound");
+                  window.localStorage.removeItem("gameId");
+                  window.localStorage.removeItem("round");
+                  window.localStorage.setItem(
+                    "status",
+                    JSON.stringify("finished")
+                  );
+                }}
+                sx={{
+                  color: "red",
+                  width: "30px",
+                  height: "30px",
+                  fontSize: "8px",
+                  border: "1px solid red",
+                }}
+              >
+                Terminar partida
+              </Button>
+            ) : null}
           </Box>
         )}
 
@@ -243,32 +261,84 @@ function Scores({ setGameState, playAgain, backToForm }) {
           {round < 10 ? (
             <Button
               variant="contained"
-              sx={{ bgcolor: "lightblue", color: "black" }}
+              sx={{
+                bgcolor: "lightblue",
+                color: "black",
+                "&:hover": {
+                  bgcolor: "white",
+                },
+              }}
               onClick={() => dispatch({ type: types.clean })}
             >
               Limpiar
             </Button>
           ) : (
-            <Button onClick={() => backToForm()}>Volver al form</Button>
+            <Button
+              onClick={() => backToForm()}
+              sx={{
+                "&:hover": {
+                  color: "white",
+                },
+              }}
+            >
+              Volver al form
+            </Button>
           )}
 
           {round < 9 ? (
-            <Button onClick={nextRound} variant="contained">Siguiente Ronda</Button>
+            <Button
+              onClick={nextRound}
+              variant="contained"
+              sx={{
+                color: "white",
+                "&:hover": {
+                  color: "black",
+                  bgcolor: "white",
+                },
+              }}
+            >
+              Siguiente Ronda
+            </Button>
           ) : round === 9 && status === "in progress" ? (
-            <Button onClick={nextRound}>Finalizar</Button>
+            <Button
+              onClick={nextRound}
+              sx={{
+                color: "white",
+                border: "1px solid blue",
+                padding: "8px",
+                "&:hover": {
+                  color: "black",
+                  bgcolor: "white",
+                },
+              }}
+            >
+              Finalizar
+            </Button>
           ) : (
-            <Button onClick={() => playAgain()}>Jugar de nuevo</Button>
+            <Button
+              onClick={() => playAgain()}
+              sx={{
+                "&:hover": {
+                  color: "white",
+                },
+              }}
+            >
+              Jugar de nuevo
+            </Button>
           )}
-
-          
 
           <Button
             variant="contained"
-            sx={{ bgcolor: "purple" }}
+            sx={{
+              bgcolor: "purple",
+              "&:hover": {
+                bgcolor: "white",
+              },
+            }}
             onClick={() => prevRound()}
             disabled={round === 1}
           >
-            <UndoIcon />
+            <UndoIcon sx={{ color: "black" }} />
           </Button>
         </Box>
       </Grid>

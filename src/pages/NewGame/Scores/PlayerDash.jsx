@@ -18,6 +18,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
         variant="h2"
         sx={{
           mb: 2,
+          ml: 1,
           color: "white",
           fontFamily: "'Bodoni Moda', serif",
           fontSize: player.username.length > 9 ? "20px" : "25px",
