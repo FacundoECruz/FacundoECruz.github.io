@@ -7,7 +7,9 @@ import {router as usersRouter} from "./routes/users.js"
 
 const app = express();
 
-mongoose.connect("mongodb://localhost:27017/altisima", {
+//Esto va a un .env
+// mongodb://localhost:27017/altisima
+mongoose.connect(import.meta.env.VITE_DATABASE_LINK, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -18,15 +20,15 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
-const corsOptions = {
-  origin: 'http://127.0.0.1:5173'
-};
-
-app.use(cors(corsOptions));
-
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+ 
 app.use('/api/players', playersRouter)
 app.use('/api/games', gamesRouter)
 app.use('/api/users', usersRouter)
