@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Index.jsx";
 import Players from "./pages/Players/Players.jsx";
 import PlayerDetails from "./pages/PlayerDetails/index.jsx";
@@ -13,7 +13,6 @@ import { AuthProvider } from "./utils/AuthContext";
 import RequireAuth from "./utils/requireAuth";
 
 function App() {
-
   return (
     <>
       <AuthProvider>
