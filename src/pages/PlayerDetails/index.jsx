@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
-import PlayerCard from "../../components/playerCard/index.jsx";
+import PlayerCard from "../../components/PlayerCard/index.jsx";
 import { Box } from "@mui/material";
 import PlayerStatics from "./components/PlayerStatics.jsx";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
