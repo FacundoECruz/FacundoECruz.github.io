@@ -1,12 +1,11 @@
 import axios from "axios";
 
 const host = import.meta.env.VITE_BACKEND_HOST;
-const port = import.meta.env.VITE_BACKEND_PORT;
 const protocol = import.meta.env.VITE_BACKEND_PROTOCOL;
 
 
 const server = axios.create({
-  baseURL: `${protocol}://${host}:${port}/api`,
+  baseURL: `${protocol}://${host}/api`,
 });
 
 const api = {
