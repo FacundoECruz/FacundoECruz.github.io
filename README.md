@@ -7,20 +7,6 @@ App developed with React for the frontend, Express for the backend and MongoDB.
 
 ## TODO
 
-- Evitar que se repita username y email cuando se van a registrar. backend
-- Displayear ui y cablear todo lo de "asociar jugador".  backend/frontend
-- Encriptar contraseñas. backend
-- Cablear los botones del anotador con el global state de cada ronda. frontend
-	- Una vez terminado esto hay que ver lo de guardar ronda en db. backend
-		- Y una vez terminado esto clablear todo lo necesario para la finalizacion del 		juego. backend/frontend
-- Modal(tranqui) para mostrar player details. frontend
-- Proteger determinadas rutas de quienes no estan logueados. backend
-- Mejorar el manejo de errores en register y login. backend/frontend
-- Cablear "recordar usuario". frontend
-- No hay nada en la pagina de todas las partidas. 
-	- Displayear lista de todas las partidas frontend
-	- Modal para mostrar detalles de la partida frontend 
-
 ## Asociar jugador
 - Si el mail del usuario ya esta registrado devolves 400
 - Si el jugador no existe devolver error
