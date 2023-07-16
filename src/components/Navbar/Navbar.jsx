@@ -32,22 +32,22 @@ const navLinks = [
   },
   {
     title: "Jugadores",
-    path: "/players",
+    path: "#/players",
     icon: <PersonIcon />,
   },
   {
     title: "Partidas",
-    path: "/games",
+    path: "#/games",
     icon: <SportsEsportsIcon />,
   },
   {
     title: "Nueva Partida",
-    path: "/games/new",
+    path: "#/games/new",
     icon: <VideogameAssetIcon />,
   },
   {
     title: "Registrarse",
-    path: "/register",
+    path: "#/register",
     icon: <AppRegistrationIcon />,
   },
 ];
@@ -143,7 +143,7 @@ function Navbar() {
                 maxHeight: "40px",
               }}
             >
-              <IconButton component="a" href="/login">
+              <IconButton component="a" href="#/login">
                 <Typography
                   sx={{
                     color: "white",
@@ -159,7 +159,7 @@ function Navbar() {
                   Login
                 </Typography>
               </IconButton>
-              <IconButton component="a" href="/register">
+              <IconButton component="a" href="#/register">
                 <Typography
                   sx={{
                     color: "white",

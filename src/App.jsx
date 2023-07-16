@@ -20,20 +20,20 @@ function App() {
         <Router basename="/">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="#/players" element={<Players />} />
-            <Route path="#/players/:username" element={<PlayerDetails />} />
-            <Route path="#/games" element={<Games />} />
-            <Route path="#/games/:id" element={<GameDetails />} />
+            <Route path="/players" element={<Players />} />
+            <Route path="/players/:username" element={<PlayerDetails />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/games/:id" element={<GameDetails />} />
             <Route
-              path="#/games/new"
+              path="/games/new"
               element={
                 <RequireAuth>
                   <NewGame />
                 </RequireAuth>
               }
             />
-            <Route path="#/login" element={<Login />} />
-            <Route path="#/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Router>
       </AuthProvider>
