@@ -9,5 +9,5 @@ export default defineConfig({
       external: 'NonExistingPath'
     }
   },
-  base: "/FacundoECruz.github.io/"
+  base: './',
 })
