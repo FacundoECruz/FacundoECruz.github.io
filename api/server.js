@@ -8,8 +8,9 @@ import {router as usersRouter} from "./routes/users.js"
 const app = express();
 
 //Esto va a un .env
+// import.meta.env.VITE_DATABASE_LINK
 // mongodb://localhost:27017/altisima
-mongoose.connect(import.meta.env.VITE_DATABASE_LINK, {
+mongoose.connect("mongodb://localhost:27017/altisima", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

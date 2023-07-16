@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
     })
   );
   //Esto tiene que generarse aleatoriamente y no tiene que superar un determinado nro global
-  const cardsPerRound = [6, 5, 4, 7, 6, 3, 4, 8, 10];
+  const cardsPerRound = [6, 5, 4, 7, 9, 3, 4, 8, 10];
 
   const playersImgs = await Promise.all(
     players.map(async (player) => {
