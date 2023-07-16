@@ -4,11 +4,5 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  build: {
-    outDir: "build",
-    rollupOptions: {
-      external: [/^node:.*/],
-    },
-    baseDirectory: "/dist",
-  },
-});
+  base: "/FacundoECruz.github.io/"
+})
