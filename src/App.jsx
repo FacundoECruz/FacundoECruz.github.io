@@ -17,7 +17,7 @@ function App() {
     <>
       <AuthProvider>
         <Navbar />
-        <Router>
+        <Router basename="/">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/players" element={<Players />} />
