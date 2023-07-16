@@ -9,5 +9,6 @@ export default defineConfig({
     rollupOptions: {
       external: [/^node:.*/],
     },
+    baseDirectory: "/dist",
   },
 });
