@@ -15,7 +15,8 @@ function Edit() {
       .then((res) => {
         console.log(res.data)
       })
-  })
+      .catch((err) => console.log(err))
+  }, [])
 
   return ( 
     <Typography>Edit {user}</Typography>
