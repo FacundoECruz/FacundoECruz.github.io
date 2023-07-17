@@ -156,7 +156,7 @@ function Navbar() {
                     },
                   }}
                 >
-                  Login
+                  Ingresar
                 </Typography>
               </IconButton>
               <IconButton component="a" href="#/register">
@@ -172,7 +172,7 @@ function Navbar() {
                     },
                   }}
                 >
-                  Register
+                  Registrarse
                 </Typography>
               </IconButton>
             </Box>
@@ -217,7 +217,7 @@ function Navbar() {
             ) : null}
             <MenuItem onClick={() => handleMenuItemClick()}>
               <Button variant="contained" sx={{ bgcolor: "purple" }}>
-                Salir
+                Cerrar sesión
               </Button>
             </MenuItem>
           </Menu>
