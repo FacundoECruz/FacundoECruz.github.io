@@ -220,6 +220,7 @@ function Navbar() {
                 Cerrar sesión
               </Button>
             </MenuItem>
+            <IconButton component="a" href="#/edit">Editar</IconButton>
           </Menu>
         </Toolbar>
       </AppBar>

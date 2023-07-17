@@ -8,6 +8,7 @@ import NewGame from "./pages/NewGame/index.jsx";
 import Login from "./pages/Login/index.jsx";
 import Register from "./pages/Register/index.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
+import Edit from "./pages/edit/Edit.jsx"
 import "./App.css";
 import { AuthProvider } from "./utils/AuthContext";
 import RequireAuth from "./utils/requireAuth";
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/players" element={<Players />} />
             <Route path="/players/:username" element={<PlayerDetails />} />
+            <Route path="/players/:username/edit" element={<Edit />} />
             <Route path="/games" element={<Games />} />
             <Route path="/games/:id" element={<GameDetails />} />
             <Route
