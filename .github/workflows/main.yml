@@ -9,6 +9,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env: 
+  BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
+  BACKEND_PROTOCOL: ${{ secrets.BACKEND_PROTOCOL }}
+
 # Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:
   contents: read
