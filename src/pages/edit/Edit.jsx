@@ -9,11 +9,11 @@ function Edit() {
   useEffect(() => {
 
     const username = window.localStorage.getItem("user")
-
+    console.log(`username: ${username}`)
     api 
       .getUser(username)
       .then((res) => {
-        console.log(res.data)
+        console.log(res)
       })
       .catch((err) => console.log(err))
   }, [])
