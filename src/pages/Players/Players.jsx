@@ -10,7 +10,6 @@ function Players() {
     api
       .getPlayers()
       .then((response) => {
-        console.log(response)
         const sortedPlayers = response.data.sort((a, b) => b.gamesPlayed - a.gamesPlayed) 
         setPlayers(sortedPlayers);
       })

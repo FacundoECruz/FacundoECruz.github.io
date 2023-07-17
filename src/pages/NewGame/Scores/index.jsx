@@ -78,20 +78,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
     setRound(JSON.parse(window.localStorage.getItem("round")));
     setStatus(JSON.parse(window.localStorage.getItem("status")));
-    console.log(playersRound);
   }, [playersRound]);
-
-  // useEffect(() => {
-  //   console.log("******RONDAAAAAA********");
-  //   console.log("***round***");
-  //   console.log(round);
-  //   console.log("***cardsInCurrent***");
-  //   console.log(cardsPerRound[round - 1]);
-  //   console.log("***status***");
-  //   console.log(status);
-  //   console.log("***table***");
-  //   console.log(table);
-  // }, [cardsPerRound, round, status, table]);
 
   function nextRound() {
     setVarCheck(false);
