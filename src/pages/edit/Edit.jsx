@@ -7,11 +7,13 @@ function Edit() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
+
+    const username = window.localStorage.getItem("user")
+
     api 
-      .getUser()
+      .getUser(username)
       .then((res) => {
         console.log(res.data)
-        setUser(res.data)
       })
   })
 
