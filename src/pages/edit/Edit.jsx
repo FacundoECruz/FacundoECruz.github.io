@@ -1,22 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { AuthContext } from "../../utils/AuthContext";
 import api from "../../utils/api-client";
 import { Typography } from "@mui/material";
 
 function Edit() {
 
-  const [user, setUser] = useState(null)
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-
-    const username = window.localStorage.getItem("user")
-    console.log(`username: ${username}`)
+    console.log(user)
     api 
-      .getUser(username)
+      .getUser(user)
       .then((res) => {
         console.log(res)
       })
       .catch((err) => console.log(err))
-  }, [])
+  }, [user])
 
   return ( 
     <Typography>Edit {user}</Typography>

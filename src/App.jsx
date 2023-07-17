@@ -14,6 +14,9 @@ import { AuthProvider } from "./utils/AuthContext";
 import RequireAuth from "./utils/requireAuth";
 
 function App() {
+
+  
+
   return (
     <>
       <AuthProvider>
