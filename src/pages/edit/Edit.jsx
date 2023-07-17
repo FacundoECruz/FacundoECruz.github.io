@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client";
+import { Typography } from "@mui/material";
 
 function Edit() {
 
@@ -15,7 +16,7 @@ function Edit() {
   })
 
   return ( 
-    <h1>Edit user page</h1>
+    <Typography>Edit {user}</Typography>
    );
 }
 
