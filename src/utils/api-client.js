@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const host = process.env.BACKEND_HOST;
-const protocol = process.env.BACKEND_PROTOCOL;
+// const host = import.meta.env.BACKEND_HOST;
+// const protocol = import.meta.env.BACKEND_PROTOCOL;
 
-console.log(host, protocol)
+// console.log(host, protocol)
 
 const server = axios.create({
-  baseURL: `${protocol}://${host}/api`,
-  // baseURL: "https://altisima-scoreboard.onrender.com/api",
+  // baseURL: `${protocol}://${host}/api`,
+  baseURL: "https://altisima-scoreboard.onrender.com/api",
 });
 
 const api = {
