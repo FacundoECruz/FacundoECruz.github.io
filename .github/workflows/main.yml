@@ -23,9 +23,10 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
+    env:
+      BACKEND_HOST: '${{ secrets.BACKEND_HOST }}'
+      BACKEND_PROTOCOL: '${{ secrets.BACKEND_PROTOCOL }}'
     environment:
-      BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
-      BACKEND_PROTOCOL: ${{ secrets.BACKEND_PROTOCOL }}
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
