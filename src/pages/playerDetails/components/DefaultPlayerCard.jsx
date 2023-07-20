@@ -1,6 +1,6 @@
 import { Container, Grid, Box } from "@mui/material";
 import PlayedGameData from "./PlayedGameData";
-import PlayerCard from "../../../components/PlayerCard";
+import PlayerCard from "../../../components/playerCard/index.jsx";
 import PlayerCardSkeleton from "../../../components/PlayerCard/PlayerCardSkeleton";
 import { player } from "./fakePlayerData";
 
