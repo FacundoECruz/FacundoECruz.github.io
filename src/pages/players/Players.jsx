@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
 import { Box } from "@mui/material";
-import PlayerCard from "../../components/PlayerCard/index.jsx";
+import PlayerCard from "../../components/playerCard/index.jsx";
 
 function Players() {
   const [players, setPlayers] = useState(null);
