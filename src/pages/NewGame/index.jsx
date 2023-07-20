@@ -1,6 +1,6 @@
 import { useState } from "react";
-import GameForm from "./GameForm";
-import Scores from "./Scores";
+import GameForm from "./gameForm";
+import Scores from "./scores";
 import api from "../../utils/api-client";
 // import { useEffect } from "react";
 
