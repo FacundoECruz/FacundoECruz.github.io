@@ -6,7 +6,6 @@ import PlayersList from "./PlayersList";
 import ControlButtons from "./ControlButtons";
 import AddPlayerToDb from "./AddPlayerToDb";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import api from "../../../utils/api-client";
 
 function GameForm({ players, setPlayers, gameState, setGameState, handleStartGame }) {
   const [selectedPlayer, setSelectedPlayer] = useState(null);

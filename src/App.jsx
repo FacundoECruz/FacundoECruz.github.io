@@ -1,21 +1,19 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Index.jsx";
-import Players from "./pages/Players/Players.jsx";
-import PlayerDetails from "./pages/PlayerDetails/index.jsx";
-import Games from "./pages/Games/Games.jsx";
-import GameDetails from "./pages/GameDetails/GameDetails.jsx";
-import NewGame from "./pages/NewGame/index.jsx";
-import Login from "./pages/Login/index.jsx";
-import Register from "./pages/Register/index.jsx";
-import Navbar from "./components/Navbar/Navbar.jsx";
+import Home from "./pages/home/Index.jsx";
+import Players from "./pages/players/Players.jsx";
+import PlayerDetails from "./pages/playerDetails/index.jsx";
+import Games from "./pages/games/Games.jsx";
+import GameDetails from "./pages/gameDetails/GameDetails.jsx";
+import NewGame from "./pages/newGame/index.jsx";
+import Login from "./pages/login/index.jsx";
+import Register from "./pages/register/index.jsx";
+import Navbar from "./components/navbar/Navbar.jsx";
 import Edit from "./pages/edit/Edit.jsx"
 import "./App.css";
 import { AuthProvider } from "./utils/AuthContext";
 import RequireAuth from "./utils/requireAuth";
 
 function App() {
-
-  
 
   return (
     <>
