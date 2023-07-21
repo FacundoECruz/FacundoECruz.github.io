@@ -35,7 +35,7 @@ function Copyright(props) {
 export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
-  const {user, register, error} = useContext(AuthContext)
+  const {user, login, register, error} = useContext(AuthContext)
 
   useEffect(() => {
     if (user) {
@@ -54,6 +54,14 @@ export default function SignInSide() {
     };
 
     register(formData)
+
+    const loginUserObject = {
+      username: formData.username,
+      password: formData.password,
+    };
+
+    login(loginUserObject)
+    
   };
 
   const styles = {
