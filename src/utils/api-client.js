@@ -1,9 +1,7 @@
 import axios from "axios";
 
-
-
 const server = axios.create({
-  // baseURL: "https://localhost3000/api",
+  // baseURL: "http://localhost:3000/api",
   baseURL: "https://altisima-scoreboard.onrender.com/api",
 });
 

@@ -2,11 +2,9 @@ import {
   AppBar,
   Avatar,
   Box,
-  Button,
   Drawer,
   IconButton,
   Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -22,7 +20,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import { useEffect } from "react";
 import api from "../../utils/api-client";
-import PlayerCard from "../playerCard";
+import UserCard from "./UserCard";
 
 const navLinks = [
   {
@@ -67,7 +65,7 @@ function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleMenuItemClick = () => {
+  const handleLogout = () => {
     logout();
     setUserData(null);
     setAnchorEl(null);
@@ -92,6 +90,7 @@ function Navbar() {
                 gamesWon,
                 totalScore,
               };
+              console.log(userData)
               setUserData(userData);
             })
             .catch((err) => console.log(err));
@@ -201,26 +200,7 @@ function Navbar() {
               },
             }}
           >
-            {userData ? (
-              <PlayerCard
-                image={userData.image}
-                username={userData.username}
-                stats={[
-                  { label: "Creadas", value: userData.createdGames },
-                  { label: "Jugadas", value: userData.gamesPlayed },
-                  { label: "Ganadas", value: userData.gamesWon },
-                  { label: "Puntaje", value: userData.totalScore },
-                ]}
-                width="100%"
-                margin="3px"
-              />
-            ) : null}
-            <MenuItem onClick={() => handleMenuItemClick()}>
-              <Button variant="contained" sx={{ bgcolor: "purple" }}>
-                Cerrar sesión
-              </Button>
-            </MenuItem>
-            <IconButton component="a" href="#/edit">Editar</IconButton>
+            {userData ? <UserCard userData={userData} handleLogout={handleLogout}/> : null}
           </Menu>
         </Toolbar>
       </AppBar>
