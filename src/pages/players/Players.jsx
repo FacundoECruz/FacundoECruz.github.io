@@ -2,19 +2,29 @@ import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
 import { Box } from "@mui/material";
 import PlayerCard from "../../components/playerCard/index.jsx";
+import PlayerModal from "./PlayerModal.jsx";
 
 function Players() {
   const [players, setPlayers] = useState(null);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     api
       .getPlayers()
       .then((response) => {
-        const sortedPlayers = response.data.sort((a, b) => b.gamesPlayed - a.gamesPlayed) 
+        const sortedPlayers = response.data.sort(
+          (a, b) => b.gamesPlayed - a.gamesPlayed
+        );
         setPlayers(sortedPlayers);
       })
       .catch((error) => console.log(error));
   }, []);
+
+  const handlePlayerCardClick = (player) => {
+    setSelectedPlayer(player);
+    setIsModalOpen(true);
+  };
 
   return (
     <div
@@ -49,15 +59,25 @@ function Players() {
                   winned={p.gamesWon}
                   stats={[
                     { label: "Jugadas", value: p.gamesPlayed },
-                    { label: "PPP", value: (p.totalScore / p.gamesPlayed).toFixed(1) },
+                    {
+                      label: "PPP",
+                      value: (p.totalScore / p.gamesPlayed).toFixed(1),
+                    },
                   ]}
                   width="30%"
                   margin="10px"
+                  onClick={() => handlePlayerCardClick(p)}
                 />
               );
             })
           : null}
       </Box>
+      {isModalOpen && selectedPlayer && (
+        <PlayerModal
+          player={selectedPlayer}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

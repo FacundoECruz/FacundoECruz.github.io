@@ -9,8 +9,11 @@ import {
 } from "@mui/material";
 import Stars from "../Stars.jsx";
 
-function PlayerCard({ image, username, winned, stats, width, margin }) {
+function PlayerCard({ image, username, winned, stats, width, margin, onClick }) {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const defaultUserImage =
+    "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg";
+
   return (
     <Card
       sx={{
@@ -23,9 +26,10 @@ function PlayerCard({ image, username, winned, stats, width, margin }) {
           transform: "translate(-5px, -5px)",
         },
       }}
+      onClick={onClick}
     >
       <CardMedia
-        image={image}
+        image={image === "" ? defaultUserImage : image}
         title={username}
         sx={{
           height: "150px",
