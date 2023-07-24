@@ -35,7 +35,7 @@ function Copyright(props) {
 }
 
 function Edit() {
-  const { user, error } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [imageUrl, setImageUrl] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -56,10 +56,6 @@ function Edit() {
       .catch((err) => console.log(err));
   }, [user]);
 
-  useEffect(() => {
-    console.log(imageUrl);
-  }, [imageUrl]);
-
   const styles = {
     paperContainer: {
       background:
@@ -78,8 +74,8 @@ function Edit() {
 
     api
       .editUser(username.value, formData)
+      // eslint-disable-next-line no-unused-vars
       .then((res) => {
-        console.log(res.data);
         setStatus("success");
         setMessage("Cambios guardados");
       })
@@ -158,7 +154,7 @@ function Edit() {
               type="password"
               id="password"
               value={password}
-              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
               autoFocus
             />
             <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
@@ -166,9 +162,6 @@ function Edit() {
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
               />
-              {error ? (
-                <Typography sx={{ color: "red" }}>{error}</Typography>
-              ) : null}
               {message !== "" ? (
                 <Box>
                   <Typography sx={{ color: "green" }}>{message}</Typography>

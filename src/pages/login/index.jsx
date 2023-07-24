@@ -45,9 +45,12 @@ export default function Login(  ) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-
-    login(data)
+    const { password, username } = e.target.elements;
+    const formData = {
+      username: username.value,
+      password: password.value,
+    };
+    login(formData)
   };
 
   const styles = {

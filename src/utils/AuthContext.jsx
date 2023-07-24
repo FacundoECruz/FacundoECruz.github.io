@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
         if (!selectedUser) {
           setError("Invalid Username or Password");
         } else {
-          if (selectedUser.password === data.get("password")) {
+          if (selectedUser.password === data.password) {
             window.localStorage.setItem("user", selectedUser.username);
             setUser(selectedUser.username);
           } else {
