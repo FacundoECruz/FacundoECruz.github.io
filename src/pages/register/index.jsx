@@ -6,12 +6,16 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import UploadWidget from "../../components/UploadWidget";
-import { Checkbox, FormControlLabel, TextField } from "@mui/material";
+import {
+  Checkbox,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../utils/AuthContext";
+import ImageWithChangeButton from "../edit/ImageWithChangeButton";
 
 function Copyright(props) {
   return (
@@ -35,12 +39,15 @@ function Copyright(props) {
 export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
-  const {user, login, register, error} = useContext(AuthContext)
+  const { user, login, register, error } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
       navigate("/");
     }
+    setImageUrl(
+      "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg"
+    );
   }, [navigate, user]);
 
   const handleSubmit = async (e) => {
@@ -53,15 +60,14 @@ export default function SignInSide() {
       image: imageUrl,
     };
 
-    register(formData)
+    register(formData);
 
     const loginUserObject = {
       username: formData.username,
       password: formData.password,
     };
 
-    login(loginUserObject)
-    
+    login(loginUserObject);
   };
 
   const styles = {
@@ -141,17 +147,25 @@ export default function SignInSide() {
               id="password"
               autoComplete="current-password"
             />
-            <UploadWidget setImageUrl={setImageUrl} />
             <br />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Recordar usuario"
             />
-            {error ? <Typography sx={{color: "red"}}>{error}</Typography> : null}
+            <Box>
+              <ImageWithChangeButton
+                imageUrl={imageUrl}
+                setImageUrl={setImageUrl}
+              />
+            </Box>
+            {error ? (
+              <Typography sx={{ color: "red" }}>{error}</Typography>
+            ) : null}
+
             <Button
               type="submit"
-              fullWidth
               variant="contained"
+              fullWidth
               sx={{ mt: 3, mb: 2 }}
             >
               Registrarse

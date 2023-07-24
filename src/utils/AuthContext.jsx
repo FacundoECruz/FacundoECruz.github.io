@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
       .getUsers()
       .then((allUsers) => {
         const selectedUser = allUsers.data.find(
-          (el) => el.username === data.get("username")
+          (el) => el.username === data.username
         );
         if (!selectedUser) {
           setError("Invalid Username or Password");

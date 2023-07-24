@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 // eslint-disable-next-line react/prop-types
 function UploadWidget({ setImageUrl }) {
@@ -21,9 +22,17 @@ function UploadWidget({ setImageUrl }) {
   }, [setImageUrl]);
 
   return (
-    <Button variant="contained" onClick={() => widgetRef.current.open()}>
-      Subir Imagen
-    </Button>
+    <IconButton
+      sx={{
+        position: "absolute",
+        bottom: "4px",
+        right: "4px",
+        backgroundColor: "rgba(255, 255, 255, 0.7)",
+      }}
+      onClick={() => widgetRef.current.open()}
+    >
+      <CameraAltIcon />
+    </IconButton>
   );
 }
 

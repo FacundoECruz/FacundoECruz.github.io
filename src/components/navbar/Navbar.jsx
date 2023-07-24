@@ -90,7 +90,6 @@ function Navbar() {
                 gamesWon,
                 totalScore,
               };
-              console.log(userData)
               setUserData(userData);
             })
             .catch((err) => console.log(err));
