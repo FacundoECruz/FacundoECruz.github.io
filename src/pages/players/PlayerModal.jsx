@@ -30,7 +30,7 @@ function PlayerModal({ player, onClose }) {
       <div
         style={{
           background: "white",
-          padding: "20px",
+          padding: "10px",
           borderRadius: "8px",
           width: { md: "50%", sm: "95%" },
           maxHeight: "350px",
@@ -41,6 +41,7 @@ function PlayerModal({ player, onClose }) {
             display: "flex",
             flexDirection: "row",
             boxSizing: "border-box",
+            bgcolor: "green",
           }}
         >
           <CardMedia

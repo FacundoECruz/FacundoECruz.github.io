@@ -16,6 +16,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { useContext } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import { useEffect } from "react";
@@ -47,6 +48,11 @@ const navLinks = [
     title: "Registrarse",
     path: "#/register",
     icon: <AppRegistrationIcon />,
+  },
+  {
+    title: "Como Jugar",
+    path: "#/manual",
+    icon: <MenuBookIcon />,
   },
 ];
 

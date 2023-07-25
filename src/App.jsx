@@ -9,6 +9,7 @@ import Login from "./pages/login/index.jsx";
 import Register from "./pages/register/index.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
 import Edit from "./pages/edit/Edit.jsx";
+import PlayersGuide from "./pages/howToPlay/index.jsx";
 import "./App.css";
 import { AuthProvider } from "./utils/AuthContext";
 import RequireAuth from "./utils/requireAuth";
@@ -54,6 +55,7 @@ function App() {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/manual" element={<PlayersGuide />} />
           </Routes>
         </Router>
       </AuthProvider>
