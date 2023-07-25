@@ -51,7 +51,7 @@ const navLinks = [
 ];
 
 // eslint-disable-next-line react/prop-types
-function Navbar() {
+function Navbar({dataFromServer}) {
   const [open, setOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
@@ -109,6 +109,7 @@ function Navbar() {
             size="large"
             onClick={() => setOpen(true)}
             sx={{ display: "flex" }}
+            disabled={dataFromServer === "loading"}
           >
             <MenuIcon />
           </IconButton>
@@ -141,7 +142,7 @@ function Navbar() {
                 maxHeight: "40px",
               }}
             >
-              <IconButton component="a" href="#/login">
+              <IconButton component="a" href="#/login" disabled={dataFromServer === "loading"}>
                 <Typography
                   sx={{
                     color: "white",
@@ -157,7 +158,7 @@ function Navbar() {
                   Ingresar
                 </Typography>
               </IconButton>
-              <IconButton component="a" href="#/register">
+              <IconButton component="a" href="#/register" disabled={dataFromServer === "loading"}>
                 <Typography
                   sx={{
                     color: "white",

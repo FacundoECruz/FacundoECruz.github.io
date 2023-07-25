@@ -12,16 +12,33 @@ import Edit from "./pages/edit/Edit.jsx";
 import "./App.css";
 import { AuthProvider } from "./utils/AuthContext";
 import RequireAuth from "./utils/requireAuth";
+import { useEffect } from "react";
+import { useState } from "react";
+import api from "./utils/api-client.js";
 
 function App() {
+
+  const [dataFromServer, setDataFromServer] = useState("loading");
+
+  useEffect(() => {
+    api
+      .getPlayers()
+      // eslint-disable-next-line no-unused-vars
+      .then((res) => {
+        if (res.data) {
+          setDataFromServer("loaded");
+        }
+      })
+      .catch((err) => console.log(err));
+  });
 
   return (
     <>
       <AuthProvider>
-        <Navbar />
-        <Router basename="/">
-          <Routes>
-            <Route path="/" element={<Home />} />
+        <Navbar dataFromServer={dataFromServer}/>
+        <Router basename="/" dataFromServer={dataFromServer}>
+          <Routes dataFromServer={dataFromServer}>
+            <Route path="/" element={<Home dataFromServer={dataFromServer}/>} />
             <Route path="/players" element={<Players />} />
             <Route path="/players/:username" element={<PlayerDetails />} />
             <Route path="/edit" element={<Edit />} />
