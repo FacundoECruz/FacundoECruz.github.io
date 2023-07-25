@@ -10,6 +10,9 @@ import {
 } from "@mui/material";
 
 function PlayerModal({ player, onClose }) {
+  
+  const defaultImage = "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg"
+
   return (
     <div
       style={{
@@ -43,7 +46,7 @@ function PlayerModal({ player, onClose }) {
           <CardMedia
             component="img"
             alt="user pic"
-            image={player.image}
+            image={player.image === "" ? defaultImage : player.image}
             sx={{ width: "40%", maxHeight: "300px" }}
           />
           <CardContent>
