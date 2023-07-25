@@ -12,26 +12,8 @@ import Edit from "./pages/edit/Edit.jsx";
 import "./App.css";
 import { AuthProvider } from "./utils/AuthContext";
 import RequireAuth from "./utils/requireAuth";
-import api from "./utils/api-client.js";
-import { useState } from "react";
-import { useEffect } from "react";
-import LoadingServer from "./components/LoadingServer.jsx";
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
-  const [dataFromServer, setDataFromServer] = useState("loading");
-
-  useEffect(() => {
-    api
-      .getPlayers()
-      // eslint-disable-next-line no-unused-vars
-      .then((res) => {
-        if (res.data) {
-          setDataFromServer("loaded");
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <>
@@ -57,7 +39,6 @@ function App() {
             <Route path="/register" element={<Register />} />
           </Routes>
         </Router>
-        {dataFromServer === "loading" ? <LoadingServer /> : null}
       </AuthProvider>
     </>
   );

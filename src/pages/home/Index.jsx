@@ -1,8 +1,25 @@
 import MainHome from "./MainHome.jsx";
 import "../../stylesheets/Home.css";
 import { Container } from "@mui/material";
+import LoadingServer from "./components/LoadingServer.jsx";
+import { useState } from "react";
+import { useEffect } from "react";
+import api from "../../utils/api-client.js";
 
 function Home() {
+  const [dataFromServer, setDataFromServer] = useState("loading");
+
+  useEffect(() => {
+    api
+      .getPlayers()
+      // eslint-disable-next-line no-unused-vars
+      .then((res) => {
+        if (res.data) {
+          setDataFromServer("loaded");
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -19,7 +36,7 @@ function Home() {
           minHeight: "100vh",
         }}
       >
-        <MainHome />
+        {dataFromServer === "loading" ? <LoadingServer /> : <MainHome />}
       </Container>
     </>
   );
