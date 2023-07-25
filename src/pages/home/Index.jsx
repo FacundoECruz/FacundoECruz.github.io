@@ -1,7 +1,7 @@
 import MainHome from "./MainHome.jsx";
 import "../../stylesheets/Home.css";
 import { Container } from "@mui/material";
-import LoadingServer from "./components/LoadingServer.jsx";
+import LoadingServer from "../../components/LoadingServer.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
 import api from "../../utils/api-client.js";
