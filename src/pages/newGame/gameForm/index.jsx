@@ -1,15 +1,46 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewGameForm from "./NewGameForm";
 import PlayersList from "./PlayersList";
 import ControlButtons from "./ControlButtons";
 import AddPlayerToDb from "./AddPlayerToDb";
 import { Box, Button, Grid, Typography } from "@mui/material";
+import api from "../../../utils/api-client";
 
-function GameForm({ players, setPlayers, gameState, setGameState, handleStartGame }) {
+function GameForm({ setGameState, handleStartGame }) {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [playerInputValue, setPlayerInputValue] = useState("");
+  const [players, setPlayers] = useState(() => {
+    const storedPlayers = JSON.parse(window.localStorage.getItem("players"));
+    if (storedPlayers === null) {
+      return [];
+    } else {
+      let players = storedPlayers.map(p => {
+        return p.username;
+      })  
+      return players;
+    }
+  });
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    fetchOptions();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log("***players en el estado de GameForm***")
+  //   console.log(players)
+  // }, [players]);
+
+  async function fetchOptions() {
+    try {
+      const playersResponse = await api.getPlayers();
+      setOptions(playersResponse.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function addPlayer() {
     if (selectedPlayer) {
@@ -24,6 +55,11 @@ function GameForm({ players, setPlayers, gameState, setGameState, handleStartGam
       const updatedPlayers = prevPlayers.filter((p) => p !== player);
       return updatedPlayers;
     });
+  }
+
+  function addPlayerToDbAndGame(newPlayer) {
+    const updatedPlayers = [...players, newPlayer];
+    setPlayers(updatedPlayers);
   }
 
 
@@ -60,6 +96,7 @@ function GameForm({ players, setPlayers, gameState, setGameState, handleStartGam
               setSelectedPlayer={setSelectedPlayer}
               playerInputValue={playerInputValue}
               setPlayerInputValue={setPlayerInputValue}
+              options={options}
             />
           </Box>
 
@@ -86,7 +123,7 @@ function GameForm({ players, setPlayers, gameState, setGameState, handleStartGam
                 },
               }}
               variant="contained"
-              onClick={handleStartGame}
+              onClick={() => handleStartGame(players)}
             >
               Comenzar
             </Button>
@@ -98,7 +135,7 @@ function GameForm({ players, setPlayers, gameState, setGameState, handleStartGam
           sm={12}
           sx={{ mt: 5, display: "flex", justifyContent: "center" }}
         >
-          <AddPlayerToDb />
+          <AddPlayerToDb putNewPlayerIntoGameList={addPlayerToDbAndGame} fetchOptions={fetchOptions}/>
         </Grid>
       </Grid>
     </div>

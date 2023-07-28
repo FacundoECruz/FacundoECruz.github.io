@@ -14,7 +14,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import api from "../../../utils/api-client";
 
-function AddPlayerToDb() {
+// eslint-disable-next-line react/prop-types
+function AddPlayerToDb({putNewPlayerIntoGameList, fetchOptions}) {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState(null)
@@ -35,7 +36,8 @@ function AddPlayerToDb() {
     api
       .createPlayer({username: inputValue})
       .then(res => {
-        console.log(res.data)
+        putNewPlayerIntoGameList(res.data.username)
+        fetchOptions()
         setOpen(false)
       })
       .catch(err => {

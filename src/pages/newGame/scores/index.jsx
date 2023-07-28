@@ -150,6 +150,16 @@ function Scores({ setGameState, playAgain, backToForm }) {
       .catch((err) => console.log(err));
   }
 
+  function setPlayAgain() {
+    const finishTable = [...table]
+    const players = finishTable.map(p => {
+      return p.username
+    })
+    console.log("***players in setPlayAgain***")
+    console.log(players)
+    playAgain(players)
+  }
+
   return (
     <Grid
       container
@@ -303,7 +313,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
             </Button>
           ) : (
             <Button
-              onClick={() => playAgain()}
+              onClick={() => setPlayAgain()}
               sx={{
                 "&:hover": {
                   color: "white",

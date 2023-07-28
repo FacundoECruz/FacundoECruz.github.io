@@ -1,11 +1,7 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
 import { TextField, Autocomplete } from "@mui/material";
-import api from "../../../utils/api-client";
 
-function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPlayerInputValue}) {
-
-  const [options, setOptions] = useState([]);
+function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPlayerInputValue, options}) {
 
   function handleChange(event, newValue) {
     setSelectedPlayer(newValue);
@@ -14,19 +10,6 @@ function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPl
   function handleInputChange(event, newInputValue) {
     setPlayerInputValue(newInputValue);
   }
-
-  useEffect(() => {
-    async function fetchOptions() {
-      try {
-        const playersResponse = await api.getPlayers();
-        setOptions(playersResponse.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchOptions();
-  }, []);
 
   const filterOptions = (options, state) => {
     if (state.inputValue === '' || options.length === 0) {

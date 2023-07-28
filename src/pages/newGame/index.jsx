@@ -5,17 +5,7 @@ import api from "../../utils/api-client";
 // import { useEffect } from "react";
 
 function NewGame() {
-  const [players, setPlayers] = useState(() => {
-    const storedPlayers = JSON.parse(window.localStorage.getItem("players"));
-    if (storedPlayers === null) {
-      return [];
-    } else {
-      let players = storedPlayers.map(p => {
-        return p.username;
-      })  
-      return players;
-    }
-  });
+
   const [gameState, setGameState] = useState(() => {
     const status = JSON.parse(window.localStorage.getItem("status"));
     if (status === "finished") {
@@ -27,12 +17,7 @@ function NewGame() {
     }
   });
 
-  // useEffect(() => {
-  //   console.log("Players en el estado de NewGame")
-  //   console.log(players);
-  // }, [players, gameState]);
-
-  function handleStartGame() {
+  function handleStartGame(players) {
     const table = window.localStorage.getItem("table");
     if (table) {
       window.localStorage.removeItem("table");
@@ -40,8 +25,9 @@ function NewGame() {
     const playersForBackend = players.map((p) => {
       return { username: p, score: 0, bid: 0, bidsLost: 0 };
     });
-    api.createGame(playersForBackend).then((res) => {
-      console.log(res.data);
+    api
+      .createGame(playersForBackend)
+      .then((res) => {
       window.localStorage.setItem(
         "cardsPerRound",
         JSON.stringify(res.data.cardsPerRound)
@@ -75,10 +61,10 @@ function NewGame() {
       });
   }
 
-  function playAgain() {
+  function playAgain(players) {
     finishGame()
     setGameState("finished");
-    handleStartGame();
+    handleStartGame(players);
   }
 
   function backToForm() {
@@ -88,8 +74,6 @@ function NewGame() {
 
   return gameState === "idle" || gameState === "finished" ? (
     <GameForm
-      players={players}
-      setPlayers={setPlayers}
       gameState={gameState}
       setGameState={setGameState}
       handleStartGame={handleStartGame}
