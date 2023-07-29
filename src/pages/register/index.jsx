@@ -6,16 +6,13 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import {
-  Checkbox,
-  FormControlLabel,
-  TextField,
-} from "@mui/material";
+import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import ImageWithChangeButton from "../edit/ImageWithChangeButton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Copyright(props) {
   return (
@@ -38,8 +35,9 @@ function Copyright(props) {
 // eslint-disable-next-line react/prop-types
 export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
+  const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
-  const { user, login, register, error } = useContext(AuthContext);
+  const { user, register, error } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
@@ -50,24 +48,27 @@ export default function SignInSide() {
     );
   }, [navigate, user]);
 
+  useEffect(() => {
+    console.log("status");
+    console.log(status);
+  }, [status]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password, username } = e.target.elements;
-    const formData = {
-      username: username.value,
-      email: email.value,
-      password: password.value,
-      image: imageUrl,
-    };
+    setStatus("loading");
+    setTimeout(function () {
+      const { email, password, username } = e.target.elements;
+      const formData = {
+        username: username.value,
+        email: email.value,
+        password: password.value,
+        image: imageUrl,
+      };
 
-    register(formData);
+      register(formData);
 
-    const loginUserObject = {
-      username: formData.username,
-      password: formData.password,
-    };
-
-    login(loginUserObject);
+      setStatus("idle");
+    }, 500);
   };
 
   const styles = {
@@ -168,7 +169,11 @@ export default function SignInSide() {
               fullWidth
               sx={{ mt: 3, mb: 2 }}
             >
-              Registrarse
+              {status === "loading" ? (
+                <CircularProgress sx={{ color: "white" }} />
+              ) : (
+                "Registrarse"
+              )}
             </Button>
             <Copyright sx={{ mt: 5 }} />
           </Box>

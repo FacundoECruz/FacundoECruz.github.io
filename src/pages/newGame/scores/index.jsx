@@ -9,6 +9,7 @@ import api from "../../../utils/api-client";
 import { types } from "../../../utils/reducer";
 import ScoreBoard from "./ScoreBoard";
 import UndoIcon from "@mui/icons-material/Undo";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -72,6 +73,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
     JSON.parse(window.localStorage.getItem("players"))
   );
   const [varCheck, setVarCheck] = useState(false);
+  const [roundStatus, setRoundStatus] = useState("idle");
   const dashBoardWidth = "40%";
 
   useEffect(() => {
@@ -81,48 +83,55 @@ function Scores({ setGameState, playAgain, backToForm }) {
   }, [playersRound]);
 
   function nextRound() {
-    setVarCheck(false);
-    const playersLost = playersRound.map((p) => {
-      return p.bidsLost;
-    });
-    const invalidRoundData = playersLost.every((p) => p === 0);
-    if (invalidRoundData) {
-      alert(
-        "No pueden ganar todos en una misma ronda, alguien tiene que perder!"
-      );
-    } else {
-      const gameId = window.localStorage.getItem("gameId");
+    setRoundStatus("loading");
+    setTimeout(() => {
+      setVarCheck(false);
+      const playersLost = playersRound.map((p) => {
+        return p.bidsLost;
+      });
+      const invalidRoundData = playersLost.every((p) => p === 0);
+      if (invalidRoundData) {
+        alert(
+          "No pueden ganar todos en una misma ronda, alguien tiene que perder!"
+        );
+      } else {
+        const gameId = window.localStorage.getItem("gameId");
 
-      api
-        .nextRound(playersRound, gameId)
-        .then((res) => {
-          dispatch({ type: types.nextRound, newState: res.data.newRoundState });
-          window.localStorage.setItem("round", res.data.round);
-          if (res.data.round < 10) {
+        api
+          .nextRound(playersRound, gameId)
+          .then((res) => {
+            dispatch({
+              type: types.nextRound,
+              newState: res.data.newRoundState,
+            });
+            window.localStorage.setItem("round", res.data.round);
+            if (res.data.round < 10) {
+              window.localStorage.setItem(
+                "status",
+                JSON.stringify(res.data.status)
+              );
+            } else {
+              window.localStorage.setItem("status", JSON.stringify("finished"));
+            }
             window.localStorage.setItem(
-              "status",
-              JSON.stringify(res.data.status)
+              "players",
+              JSON.stringify(res.data.newRoundState)
             );
-          } else {
-            window.localStorage.setItem("status", JSON.stringify("finished"));
-          }
-          window.localStorage.setItem(
-            "players",
-            JSON.stringify(res.data.newRoundState)
-          );
-          const table = res.data.newRoundState;
-          const uiTable = table.map((p) => {
-            const { username, score, image } = p;
-            return { username: username, score: score, image: image };
+            const table = res.data.newRoundState;
+            const uiTable = table.map((p) => {
+              const { username, score, image } = p;
+              return { username: username, score: score, image: image };
+            });
+            uiTable.sort((a, b) => b.score - a.score);
+            window.localStorage.setItem("table", JSON.stringify(uiTable));
+            setTable(uiTable);
+          })
+          .catch((err) => {
+            console.log(err);
           });
-          uiTable.sort((a, b) => b.score - a.score);
-          window.localStorage.setItem("table", JSON.stringify(uiTable));
-          setTable(uiTable);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+        setRoundStatus("idle");
+      }
+    }, 300);
   }
 
   function prevRound() {
@@ -151,13 +160,13 @@ function Scores({ setGameState, playAgain, backToForm }) {
   }
 
   function setPlayAgain() {
-    const finishTable = [...table]
-    const players = finishTable.map(p => {
-      return p.username
-    })
-    console.log("***players in setPlayAgain***")
-    console.log(players)
-    playAgain(players)
+    const finishTable = [...table];
+    const players = finishTable.map((p) => {
+      return p.username;
+    });
+    console.log("***players in setPlayAgain***");
+    console.log(players);
+    playAgain(players);
   }
 
   return (
@@ -342,7 +351,11 @@ function Scores({ setGameState, playAgain, backToForm }) {
 
       {table ? (
         <Grid item xs={12} md={6}>
-          <ScoreBoard table={table} />
+          {roundStatus === "loading" ? (
+            <CircularProgress />
+          ) : (
+            <ScoreBoard table={table} />
+          )}
         </Grid>
       ) : null}
     </Grid>
