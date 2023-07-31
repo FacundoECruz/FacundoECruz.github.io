@@ -56,19 +56,18 @@ export default function SignInSide() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("loading");
-    setTimeout(function () {
-      const { email, password, username } = e.target.elements;
-      const formData = {
-        username: username.value,
-        email: email.value,
-        password: password.value,
-        image: imageUrl,
-      };
 
-      register(formData);
+    const { email, password, username } = e.target.elements;
+    const formData = {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      image: imageUrl,
+    };
 
-      setStatus("idle");
-    }, 500);
+    register(formData);
+
+    setStatus("idle");
   };
 
   const styles = {

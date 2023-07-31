@@ -84,54 +84,52 @@ function Scores({ setGameState, playAgain, backToForm }) {
 
   function nextRound() {
     setRoundStatus("loading");
-    setTimeout(() => {
-      setVarCheck(false);
-      const playersLost = playersRound.map((p) => {
-        return p.bidsLost;
-      });
-      const invalidRoundData = playersLost.every((p) => p === 0);
-      if (invalidRoundData) {
-        alert(
-          "No pueden ganar todos en una misma ronda, alguien tiene que perder!"
-        );
-      } else {
-        const gameId = window.localStorage.getItem("gameId");
+    setVarCheck(false);
+    const playersLost = playersRound.map((p) => {
+      return p.bidsLost;
+    });
+    const invalidRoundData = playersLost.every((p) => p === 0);
+    if (invalidRoundData) {
+      alert(
+        "No pueden ganar todos en una misma ronda, alguien tiene que perder!"
+      );
+    } else {
+      const gameId = window.localStorage.getItem("gameId");
 
-        api
-          .nextRound(playersRound, gameId)
-          .then((res) => {
-            dispatch({
-              type: types.nextRound,
-              newState: res.data.newRoundState,
-            });
-            window.localStorage.setItem("round", res.data.round);
-            if (res.data.round < 10) {
-              window.localStorage.setItem(
-                "status",
-                JSON.stringify(res.data.status)
-              );
-            } else {
-              window.localStorage.setItem("status", JSON.stringify("finished"));
-            }
-            window.localStorage.setItem(
-              "players",
-              JSON.stringify(res.data.newRoundState)
-            );
-            const table = res.data.newRoundState;
-            const uiTable = table.map((p) => {
-              const { username, score, image } = p;
-              return { username: username, score: score, image: image };
-            });
-            uiTable.sort((a, b) => b.score - a.score);
-            window.localStorage.setItem("table", JSON.stringify(uiTable));
-            setTable(uiTable);
-          })
-          .catch((err) => {
-            console.log(err);
+      api
+        .nextRound(playersRound, gameId)
+        .then((res) => {
+          dispatch({
+            type: types.nextRound,
+            newState: res.data.newRoundState,
           });
-        setRoundStatus("idle");
-      }
-    }, 300);
+          window.localStorage.setItem("round", res.data.round);
+          if (res.data.round < 10) {
+            window.localStorage.setItem(
+              "status",
+              JSON.stringify(res.data.status)
+            );
+          } else {
+            window.localStorage.setItem("status", JSON.stringify("finished"));
+          }
+          window.localStorage.setItem(
+            "players",
+            JSON.stringify(res.data.newRoundState)
+          );
+          const table = res.data.newRoundState;
+          const uiTable = table.map((p) => {
+            const { username, score, image } = p;
+            return { username: username, score: score, image: image };
+          });
+          uiTable.sort((a, b) => b.score - a.score);
+          window.localStorage.setItem("table", JSON.stringify(uiTable));
+          setTable(uiTable);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setRoundStatus("idle");
+    }
   }
 
   function prevRound() {
