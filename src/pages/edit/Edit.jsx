@@ -1,5 +1,4 @@
-import { useEffect, useContext, useState } from "react";
-import { AuthContext } from "../../utils/AuthContext";
+import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
 import {
   Avatar,
@@ -15,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import ImageWithChangeButton from "./ImageWithChangeButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import DoneIcon from "@mui/icons-material/Done";
+import useAuth from "../../utils/useAuth";
 
 function Copyright(props) {
   return (
@@ -35,7 +35,7 @@ function Copyright(props) {
 }
 
 function Edit() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth()
   const [imageUrl, setImageUrl] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");

@@ -17,11 +17,10 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { useContext } from "react";
-import { AuthContext } from "../../utils/AuthContext";
 import { useEffect } from "react";
 import api from "../../utils/api-client";
 import UserCard from "./UserCard";
+import useAuth from "../../utils/useAuth";
 
 const navLinks = [
   {
@@ -56,10 +55,11 @@ const navLinks = [
   },
 ];
 
+
 // eslint-disable-next-line react/prop-types
 function Navbar({dataFromServer}) {
   const [open, setOpen] = useState(false);
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
   const [userData, setUserData] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -78,6 +78,8 @@ function Navbar({dataFromServer}) {
   };
 
   useEffect(() => {
+    console.log("***user***")
+    console.log(user)
     if (user) {
       api
         .getUser(user)

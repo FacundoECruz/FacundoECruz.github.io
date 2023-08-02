@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../utils/AuthContext";
+import useAuth from "../../utils/useAuth";
 import ImageWithChangeButton from "../edit/ImageWithChangeButton";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -37,12 +36,12 @@ export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
-  const { user, register, error } = useContext(AuthContext);
+  const { user, register, error } = useAuth()
 
   useEffect(() => {
     if (user) {
       navigate("/");
-    }
+    } 
     setImageUrl(
       "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg"
     );

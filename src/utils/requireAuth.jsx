@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
-
+import useAuth from "./useAuth";
 
 const RequireAuth = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth()
   if (!user) {
     return <Navigate to="/login" />;
   }
