@@ -15,6 +15,7 @@ import "./App.css";
 import RequireAuth from "./utils/requireAuth";
 import { useEffect, useState } from "react";
 import api from "./utils/api-client.js";
+import { AuthProvider } from "./utils/AuthContext.jsx";
 
 function App() {
   const [dataFromServer, setDataFromServer] = useState("loading");
@@ -33,29 +34,34 @@ function App() {
 
   return (
     <>
-      <Navbar dataFromServer={dataFromServer} />
-      <Router basename="/" dataFromServer={dataFromServer}>
-        <Routes dataFromServer={dataFromServer}>
-          <Route path="/" element={<Home dataFromServer={dataFromServer} />} />
-          <Route path="/players" element={<Players />} />
-          <Route path="/players/:username" element={<PlayerDetails />} />
-          <Route path="/edit" element={<Edit />} />
-          <Route path="/games" element={<Games />} />
-          <Route path="/games/:id" element={<GameDetails />} />
-          <Route
-            path="/games/new"
-            element={
-              <RequireAuth>
-                <NewGame />
-              </RequireAuth>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/manual" element={<PlayersGuide />} />
-        </Routes>
-      </Router>
-      <Footer />
+      <AuthProvider>
+        <Navbar dataFromServer={dataFromServer} />
+        <Router basename="/" dataFromServer={dataFromServer}>
+          <Routes dataFromServer={dataFromServer}>
+            <Route
+              path="/"
+              element={<Home dataFromServer={dataFromServer} />}
+            />
+            <Route path="/players" element={<Players />} />
+            <Route path="/players/:username" element={<PlayerDetails />} />
+            <Route path="/edit" element={<Edit />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/games/:id" element={<GameDetails />} />
+            <Route
+              path="/games/new"
+              element={
+                <RequireAuth>
+                  <NewGame />
+                </RequireAuth>
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/manual" element={<PlayersGuide />} />
+          </Routes>
+        </Router>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }

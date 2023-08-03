@@ -20,7 +20,8 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { useEffect } from "react";
 import api from "../../utils/api-client";
 import UserCard from "./UserCard";
-import useAuth from "../../utils/useAuth";
+import { AuthContext } from "../../utils/AuthContext";
+import { useContext } from "react";
 
 const navLinks = [
   {
@@ -59,10 +60,10 @@ const navLinks = [
 // eslint-disable-next-line react/prop-types
 function Navbar({dataFromServer}) {
   const [open, setOpen] = useState(false);
-  const { user, logout } = useAuth();
   const [userData, setUserData] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const { user, logout } = useContext(AuthContext);
+  
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -77,9 +78,12 @@ function Navbar({dataFromServer}) {
     setAnchorEl(null);
   };
 
+  // useEffect(() => {
+  //   console.log("***user***")
+  //   console.log(user)
+  // }, [user]);
+
   useEffect(() => {
-    console.log("***user***")
-    console.log(user)
     if (user) {
       api
         .getUser(user)

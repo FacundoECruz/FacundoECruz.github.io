@@ -14,7 +14,8 @@ import Paper from "@mui/material/Paper";
 import ImageWithChangeButton from "./ImageWithChangeButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import DoneIcon from "@mui/icons-material/Done";
-import useAuth from "../../utils/useAuth";
+import { AuthContext } from "../../utils/AuthContext";
+import { useContext } from "react";
 
 function Copyright(props) {
   return (
@@ -35,7 +36,7 @@ function Copyright(props) {
 }
 
 function Edit() {
-  const { user } = useAuth()
+  const { user } = useContext(AuthContext)
   const [imageUrl, setImageUrl] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");

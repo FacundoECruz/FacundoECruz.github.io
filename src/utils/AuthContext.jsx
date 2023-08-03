@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import api from "./api-client";
 
+export const AuthContext = createContext();
+
 // eslint-disable-next-line react/prop-types
-const useAuth = () => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const storedUser = window.localStorage.getItem("user");
     return storedUser || null;
@@ -22,7 +24,6 @@ const useAuth = () => {
           if (selectedUser.password === data.password) {
             window.localStorage.setItem("user", selectedUser.username);
             setUser(selectedUser.username);
-            window.location.reload();
           } else {
             setError("Invalid Username or Password");
           }
@@ -50,8 +51,9 @@ const useAuth = () => {
       });
   };
 
-  return { user, login, logout, error, register }
-
+  return (
+    <AuthContext.Provider value={{ user, login, logout, error, register }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
-
-export default useAuth;
