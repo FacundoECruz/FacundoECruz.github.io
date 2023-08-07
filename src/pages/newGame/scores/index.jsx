@@ -82,8 +82,12 @@ function Scores({ setGameState, playAgain, backToForm }) {
     setStatus(JSON.parse(window.localStorage.getItem("status")));
   }, [playersRound]);
 
+  useEffect(() => {
+    console.log("***roundStatus***")
+    console.log(roundStatus)
+  }, [roundStatus]);
+
   function nextRound() {
-    setRoundStatus("loading");
     setVarCheck(false);
     const playersLost = playersRound.map((p) => {
       return p.bidsLost;
@@ -92,11 +96,12 @@ function Scores({ setGameState, playAgain, backToForm }) {
     if (invalidRoundData) {
       alert(
         "No pueden ganar todos en una misma ronda, alguien tiene que perder!"
-      );
+        );
     } else {
       const gameId = window.localStorage.getItem("gameId");
-
-      api
+      setRoundStatus("loading");
+      
+      setTimeout(() => api
         .nextRound(playersRound, gameId)
         .then((res) => {
           dispatch({
@@ -124,11 +129,11 @@ function Scores({ setGameState, playAgain, backToForm }) {
           uiTable.sort((a, b) => b.score - a.score);
           window.localStorage.setItem("table", JSON.stringify(uiTable));
           setTable(uiTable);
+          setRoundStatus("idle");
         })
         .catch((err) => {
           console.log(err);
-        });
-      setRoundStatus("idle");
+        }), 500)
     }
   }
 
