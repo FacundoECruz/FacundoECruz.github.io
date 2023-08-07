@@ -101,7 +101,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
       const gameId = window.localStorage.getItem("gameId");
       setRoundStatus("loading");
       
-      setTimeout(() => api
+      api
         .nextRound(playersRound, gameId)
         .then((res) => {
           dispatch({
@@ -133,7 +133,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
         })
         .catch((err) => {
           console.log(err);
-        }), 500)
+        })
     }
   }
 
