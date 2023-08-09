@@ -11,8 +11,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../utils/AuthContext";
-import { useContext } from "react";
+import { useAuth } from "../../utils/AuthContext";
+
 
 function Copyright(props) {
   return (
@@ -35,7 +35,7 @@ function Copyright(props) {
 // eslint-disable-next-line react/prop-types
 export default function Login(  ) {
   const navigate = useNavigate();
-  const {user, login, loginError} = useContext(AuthContext)
+  const {user, login, loginError} = useAuth()
 
   useEffect(() => {
     if (user) {

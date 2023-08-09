@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import api from "./api-client";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export function AuthProvider({ children }) {
@@ -45,4 +45,8 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
 }

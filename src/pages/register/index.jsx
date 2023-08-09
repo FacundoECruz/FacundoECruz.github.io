@@ -11,8 +11,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageWithChangeButton from "../edit/ImageWithChangeButton";
 import CircularProgress from "@mui/material/CircularProgress";
-import { AuthContext } from "../../utils/AuthContext";
-import { useContext } from "react";
+import { useAuth } from "../../utils/AuthContext";
 
 function Copyright(props) {
   return (
@@ -37,7 +36,7 @@ export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
-  const { user, register, error } = useContext(AuthContext)
+  const { user, register, error } = useAuth()
 
   useEffect(() => {
     if (user) {
