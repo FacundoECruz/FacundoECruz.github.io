@@ -48,10 +48,10 @@ export default function SignInSide() {
     );
   }, [navigate, user]);
 
-  useEffect(() => {
-    console.log("status");
-    console.log(status);
-  }, [status]);
+  // useEffect(() => {
+  //   console.log("status");
+  //   console.log(status);
+  // }, [status]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,8 +65,8 @@ export default function SignInSide() {
       image: imageUrl,
     };
 
-    register(formData);
-
+    register(formData)
+    
     setStatus("idle");
   };
 

@@ -9,29 +9,21 @@ export function AuthProvider({ children }) {
     const storedUser = window.localStorage.getItem("user");
     return storedUser || null;
   });
-  const [error, setError] = useState(null);
+  const [loginError, setLoginError] = useState(null);
+  const [registerError, setRegisterError] = useState(null);
+
+  function handleUserResponse(data) {
+    const user = data.data.username;
+    window.localStorage.setItem("user", user);
+    setUser(user);
+    return user;
+  }
 
   const login = (data) => {
     api
-      .getUsers()
-      .then((allUsers) => {
-        const selectedUser = allUsers.data.find(
-          (el) => el.username === data.username
-        );
-        if (!selectedUser) {
-          setError("Invalid Username or Password");
-        } else {
-          if (selectedUser.password === data.password) {
-            window.localStorage.setItem("user", selectedUser.username);
-            setUser(selectedUser.username);
-          } else {
-            setError("Invalid Username or Password");
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .login(data)
+      .then(handleUserResponse)
+      .catch((err) => setLoginError(err.response.data.message));
   };
 
   const logout = () => {
@@ -42,17 +34,12 @@ export function AuthProvider({ children }) {
   const register = (formData) => {
     api
       .createUser(formData)
-      .then(() => {
-        window.localStorage.setItem("user", formData.username);
-        setUser(formData.username);
-      })
-      .catch((err) => {
-        setError(err.response.data);
-      });
+      .then(handleUserResponse)
+      .catch((err) => setRegisterError(err.response.data.message));
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, error, register }}>
+    <AuthContext.Provider value={{ user, login, logout, loginError, registerError, register }}>
       {children}
     </AuthContext.Provider>
   );

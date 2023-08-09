@@ -35,7 +35,7 @@ function Copyright(props) {
 // eslint-disable-next-line react/prop-types
 export default function Login(  ) {
   const navigate = useNavigate();
-  const {user, login, error} = useContext(AuthContext)
+  const {user, login, loginError} = useContext(AuthContext)
 
   useEffect(() => {
     if (user) {
@@ -51,6 +51,7 @@ export default function Login(  ) {
       password: password.value,
     };
     login(formData)
+    
   };
 
   const styles = {
@@ -125,7 +126,7 @@ export default function Login(  ) {
               autoComplete="current-password"
             />
 
-            {error ? <Typography color="red">{error}</Typography> : null}
+            {loginError ? <Typography color="red">{loginError}</Typography> : null}
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
