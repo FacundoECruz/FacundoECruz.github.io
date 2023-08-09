@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
   }
 
   const login = (data) => {
+    setLoginError(null)
     api
       .login(data)
       .then(handleUserResponse)
@@ -32,6 +33,7 @@ export function AuthProvider({ children }) {
   };
 
   const register = (formData) => {
+    setRegisterError(null)
     api
       .createUser(formData)
       .then(handleUserResponse)
