@@ -36,7 +36,7 @@ export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
-  const { user, register, error } = useAuth()
+  const { user, register, registerError } = useAuth()
 
   useEffect(() => {
     if (user) {
@@ -48,9 +48,9 @@ export default function SignInSide() {
   }, [navigate, user]);
 
   // useEffect(() => {
-  //   console.log("status");
-  //   console.log(status);
-  // }, [status]);
+  //   console.log("registerError");
+  //   console.log(registerError);
+  // }, [registerError]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -157,8 +157,8 @@ export default function SignInSide() {
                 setImageUrl={setImageUrl}
               />
             </Box>
-            {error ? (
-              <Typography sx={{ color: "red" }}>{error}</Typography>
+            {registerError ? (
+              <Typography sx={{ color: "red" }}>{registerError}</Typography>
             ) : null}
 
             <Button
