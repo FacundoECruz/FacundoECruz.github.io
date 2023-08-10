@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
     api
       .login(data)
       .then((res) => {
+        console.log(res)
         const user = res.data.username;
         window.localStorage.setItem("user", user);
         setUser(user);
@@ -34,7 +35,7 @@ export function AuthProvider({ children }) {
     api
       .createUser(formData)
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
         const user = JSON.parse(res.data.username);
         window.localStorage.setItem("user", user);
         setUser(user);
