@@ -13,8 +13,8 @@ export function AuthProvider({ children }) {
   const [registerError, setRegisterError] = useState(null);
 
   function handleUserResponse(data) {
-    console.log(data.data)
-    const user = data.data.username;
+    console.log(JSON.parse(data.data))
+    const user = JSON.parse(data.data.username)
     window.localStorage.setItem("user", user);
     setUser(user);
     return user;
