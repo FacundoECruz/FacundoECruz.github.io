@@ -12,19 +12,15 @@ export function AuthProvider({ children }) {
   const [loginError, setLoginError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
 
-  function handleUserResponse(data) {
-    console.log(JSON.parse(data.data))
-    const user = JSON.parse(data.data.username)
-    window.localStorage.setItem("user", user);
-    setUser(user);
-    return user;
-  }
-
   const login = (data) => {
     setLoginError(null);
     api
       .login(data)
-      .then(handleUserResponse)
+      .then((res) => {
+        const user = res.data.username;
+        window.localStorage.setItem("user", user);
+        setUser(user);
+      })
       .catch((err) => setLoginError(err.response.data.message));
   };
 
@@ -37,7 +33,12 @@ export function AuthProvider({ children }) {
     setRegisterError(null);
     api
       .createUser(formData)
-      .then(handleUserResponse)
+      .then((res) => {
+        console.log(res.data);
+        const user = JSON.parse(res.data.username);
+        window.localStorage.setItem("user", user);
+        setUser(user);
+      })
       .catch((err) => {
         setRegisterError(err.response.data.error);
       });
