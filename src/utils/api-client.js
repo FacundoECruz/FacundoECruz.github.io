@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const server = axios.create({
-  // baseURL: "http://localhost:3000/api",
-  baseURL: "https://altisima-scoreboard.onrender.com/api",
+  baseURL: "http://localhost:3000/api",
+  // baseURL: "https://altisima-scoreboard.onrender.com/api",
 });
 
 const api = {
@@ -13,6 +13,7 @@ const api = {
   createPlayer: (playerData) => server.post("/players", playerData),
   getPlayers: () => server.get("/players"),
   getUser: (username) => server.get(`/users/${username}`),
+  login: (data) => server.post("/users/login", data),
   createUser: (userData) => server.post("/users", userData),
   getUsers: () => server.get("/users"),
   editUser: (username, userData) =>
