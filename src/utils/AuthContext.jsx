@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
   }
 
   const login = (data) => {
-    setLoginError(null)
+    setLoginError(null);
     api
       .login(data)
       .then(handleUserResponse)
@@ -33,15 +33,19 @@ export function AuthProvider({ children }) {
   };
 
   const register = (formData) => {
-    setRegisterError(null)
+    setRegisterError(null);
     api
       .createUser(formData)
       .then(handleUserResponse)
-      .catch((err) => setRegisterError(err.response.data.message));
+      .catch((err) => {
+        setRegisterError(err.response.data.error);
+      });
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loginError, registerError, register }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, loginError, registerError, register }}
+    >
       {children}
     </AuthContext.Provider>
   );
