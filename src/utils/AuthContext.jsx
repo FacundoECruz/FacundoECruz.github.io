@@ -17,7 +17,6 @@ export function AuthProvider({ children }) {
     api
       .login(data)
       .then((res) => {
-        console.log(res)
         const user = res.data.username;
         window.localStorage.setItem("user", user);
         setUser(user);
@@ -25,24 +24,24 @@ export function AuthProvider({ children }) {
       .catch((err) => setLoginError(err.response.data.message));
   };
 
-  const logout = () => {
-    window.localStorage.removeItem("user");
-    setUser(null);
-  };
-
   const register = (formData) => {
     setRegisterError(null);
     api
       .createUser(formData)
       .then((res) => {
-        console.log(res);
-        const user = JSON.parse(res.data.username);
+        console.log(res.data.username);
+        const user = res.data.username;
         window.localStorage.setItem("user", user);
         setUser(user);
       })
       .catch((err) => {
         setRegisterError(err.response.data.error);
       });
+  };
+
+  const logout = () => {
+    window.localStorage.removeItem("user");
+    setUser(null);
   };
 
   return (

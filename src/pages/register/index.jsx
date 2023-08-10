@@ -10,7 +10,6 @@ import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageWithChangeButton from "../edit/ImageWithChangeButton";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useAuth } from "../../utils/AuthContext";
 
 function Copyright(props) {
@@ -34,7 +33,6 @@ function Copyright(props) {
 // eslint-disable-next-line react/prop-types
 export default function SignInSide() {
   const [imageUrl, setImageUrl] = useState("");
-  const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
   const { user, register, registerError } = useAuth()
 
@@ -54,7 +52,6 @@ export default function SignInSide() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("loading");
 
     const { email, password, username } = e.target.elements;
     const formData = {
@@ -65,8 +62,7 @@ export default function SignInSide() {
     };
 
     register(formData)
-    
-    setStatus("idle");
+  
   };
 
   const styles = {
@@ -167,11 +163,7 @@ export default function SignInSide() {
               fullWidth
               sx={{ mt: 3, mb: 2 }}
             >
-              {status === "loading" ? (
-                <CircularProgress sx={{ color: "white" }} />
-              ) : (
-                "Registrarse"
-              )}
+              Registrarse
             </Button>
             <Copyright sx={{ mt: 5 }} />
           </Box>
