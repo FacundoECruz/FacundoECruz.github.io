@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -33,7 +35,7 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function Login(  ) {
+export default function Login() {
   const navigate = useNavigate();
   const {user, login, loginError} = useAuth()
 
@@ -113,6 +115,7 @@ export default function Login(  ) {
               id="username"
               label="Username"
               name="username"
+              data-testid="username"
               autoFocus
             />
             <TextField
@@ -123,6 +126,7 @@ export default function Login(  ) {
               label="Contraseña"
               type="password"
               id="password"
+              data-testid="password"
               autoComplete="current-password"
             />
 
