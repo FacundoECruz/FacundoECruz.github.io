@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
@@ -9,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ImageWithChangeButton from "../edit/ImageWithChangeButton";
+import {ImageWithChangeButton as ImageWithChangeButton_} from "../edit/ImageWithChangeButton.jsx";
 import { useAuth } from "../../utils/AuthContext";
 
 function Copyright(props) {
@@ -31,7 +33,7 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function SignInSide() {
+export default function SignInSide({ImageWithChangeButton = ImageWithChangeButton_}) {
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
   const { user, register, registerError } = useAuth()
@@ -77,7 +79,7 @@ export default function SignInSide() {
       container
       component="main"
       sx={{
-        height: "100vh",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

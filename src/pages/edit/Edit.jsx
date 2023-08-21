@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Paper from "@mui/material/Paper";
-import ImageWithChangeButton from "./ImageWithChangeButton";
+import {ImageWithChangeButton as ImageWithChangeButton_} from "./ImageWithChangeButton.jsx";
 import CircularProgress from "@mui/material/CircularProgress";
 import DoneIcon from "@mui/icons-material/Done";
 import { useAuth } from "../../utils/AuthContext";
@@ -34,7 +34,8 @@ function Copyright(props) {
   );
 }
 
-function Edit() {
+// eslint-disable-next-line react/prop-types
+function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
   const { user } = useAuth()
   const [imageUrl, setImageUrl] = useState("");
   const [username, setUsername] = useState("");
@@ -87,7 +88,7 @@ function Edit() {
       container
       component="main"
       sx={{
-        height: "100vh",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

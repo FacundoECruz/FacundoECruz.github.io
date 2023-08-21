@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import UploadWidget from "../../components/UploadWidget";
@@ -17,4 +19,4 @@ const ImageWithChangeButton = ({ imageUrl, setImageUrl }) => {
   );
 };
 
-export default ImageWithChangeButton;
+export {ImageWithChangeButton};
