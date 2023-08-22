@@ -13,7 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../utils/AuthContext";
+import { useAuth as _useAuth } from "../../utils/AuthContext";
 
 
 function Copyright(props) {
@@ -35,7 +35,7 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function Login() {
+export default function Login({useAuth = _useAuth}) {
   const navigate = useNavigate();
   const {user, login, loginError} = useAuth()
 
