@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 import { useEffect, useRef } from "react";
 import { IconButton } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";

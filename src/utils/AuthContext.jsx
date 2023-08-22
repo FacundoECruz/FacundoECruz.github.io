@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import React from "react";
 import { createContext, useContext, useState } from "react";
 import api from "./api-client";
 
