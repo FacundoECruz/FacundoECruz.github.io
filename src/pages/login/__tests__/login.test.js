@@ -5,11 +5,12 @@ import { render, screen } from "@testing-library/react";
 import Login from "..";
 import { BrowserRouter as Router } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+// import { AuthProvider } from "../../../utils/AuthContext";
 import "@testing-library/jest-dom";
 
 const mockUseAuth = () => {
   return {
-    user: "mockUser",
+    user: null,
     login: jest.fn(),
     loginError: null,
   };
@@ -33,14 +34,16 @@ describe("Login Component", () => {
   });
 
   it("submitting the form calls onSubmit with username and password", async () => {
-    // const useAuthMock = mockUseAuth();
-    const user = "No importa";
-    const login = jest.fn();
-    const loginError = null;
-    const userEventSetup = userEvent.setup();
+    // Sin usar el mockUseAuth
+    // const user = null
+    // const login = jest.fn()
+    // const loginError = null
+    // user={user} login={login} loginError={loginError}
+
+    const _userEvent = userEvent.setup();
     render(
       <Router>
-        <Login user={user} login={login} loginError={loginError} />
+          <Login useAuth={mockUseAuth}/>
       </Router>
     );
 
@@ -50,17 +53,17 @@ describe("Login Component", () => {
     const usernameInput = screen.getByRole("textbox", { name: /usuario/i });
     const passwordInput = screen.getByLabelText(/contraseña/i);
 
-    await userEventSetup.type(usernameInput, username);
-    await userEventSetup.type(passwordInput, password);
+    await _userEvent.type(usernameInput, username);
+    await _userEvent.type(passwordInput, password);
 
-    await userEventSetup.click(
+    await _userEvent.click(
       screen.getByRole("button", { name: "Ingresar" })
     );
 
-    expect(login).toHaveBeenCalledWith({
+    expect(mockUseAuth().login).toHaveBeenCalledWith({
       username,
       password,
     });
-    expect(login).toHaveBeenCalledTimes(1);
+    expect(mockUseAuth().login).toHaveBeenCalledTimes(1);
   });
 });
