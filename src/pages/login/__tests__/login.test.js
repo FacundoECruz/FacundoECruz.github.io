@@ -32,28 +32,35 @@ describe("Login Component", () => {
     ).toBeInTheDocument();
   });
 
-  it("submitting the form calls onSubmit with username and password", () => {
-    const useAuthMock = mockUseAuth();
+  it("submitting the form calls onSubmit with username and password", async () => {
+    // const useAuthMock = mockUseAuth();
+    const user = "No importa";
+    const login = jest.fn();
+    const loginError = null;
+    const userEventSetup = userEvent.setup();
     render(
       <Router>
-        <Login useAuth={mockUseAuth} />
+        <Login user={user} login={login} loginError={loginError} />
       </Router>
     );
 
     const username = "Facu";
     const password = "noLaNecesito";
 
-    userEvent.type(
-      screen.getByRole("textbox", { name: /username/i }),
-      username
-    );
-    userEvent.type(screen.getByTestId("password"), password);
-    userEvent.click(screen.getByRole("button", { name: "Ingresar" }));
+    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
 
-    expect(useAuthMock.login).toHaveBeenCalledWith({
+    await userEventSetup.type(usernameInput, username);
+    await userEventSetup.type(passwordInput, password);
+
+    await userEventSetup.click(
+      screen.getByRole("button", { name: "Ingresar" })
+    );
+
+    expect(login).toHaveBeenCalledWith({
       username,
       password,
     });
-    expect(useAuthMock.login).toHaveBeenCalledTimes(1);
+    expect(login).toHaveBeenCalledTimes(1);
   });
 });
