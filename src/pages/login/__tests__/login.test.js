@@ -24,9 +24,9 @@ describe("Login Component", () => {
     );
 
     expect(
-      screen.getByRole("textbox", { name: /username/i })
+      screen.getByRole("textbox", { name: /usuario/i })
     ).toBeInTheDocument();
-    expect(screen.getByTestId("password")).toBeInTheDocument();
+    expect(screen.getByLabelText(/contraseña/i)).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Ingresar" })
     ).toBeInTheDocument();
@@ -47,8 +47,8 @@ describe("Login Component", () => {
     const username = "Facu";
     const password = "noLaNecesito";
 
-    const usernameInput = screen.getByRole("textbox", { name: /username/i });
-    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const usernameInput = screen.getByRole("textbox", { name: /usuario/i });
+    const passwordInput = screen.getByLabelText(/contraseña/i);
 
     await userEventSetup.type(usernameInput, username);
     await userEventSetup.type(passwordInput, password);
