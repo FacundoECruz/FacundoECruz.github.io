@@ -35,9 +35,9 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function Login({useAuth = _useAuth}) {
+export default function Login({user, login, loginError}) {
   const navigate = useNavigate();
-  const {user, login, loginError} = useAuth()
+  // const {user, login, loginError} = useAuth()
 
   useEffect(() => {
     if (user) {
@@ -113,7 +113,7 @@ export default function Login({useAuth = _useAuth}) {
               required
               fullWidth
               id="username"
-              label="Username"
+              label="Usuario"
               name="username"
               data-testid="username"
               autoFocus
