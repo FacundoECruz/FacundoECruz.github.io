@@ -35,9 +35,9 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function Login({user, login, loginError}) {
+export default function Login({useAuth = _useAuth}) {
   const navigate = useNavigate();
-  // const {user, login, loginError} = useAuth()
+  const {user, login, loginError} = useAuth()
 
   useEffect(() => {
     if (user) {
