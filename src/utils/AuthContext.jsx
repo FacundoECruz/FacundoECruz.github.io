@@ -6,9 +6,9 @@ import api from "./api-client";
 const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
-export function AuthProvider({ children }) {
+export function AuthProvider({ children, localStorage = window.localStorage }) {
   const [user, setUser] = useState(() => {
-    const storedUser = window.localStorage.getItem("user");
+    const storedUser = localStorage.getItem("user");
     return storedUser || null;
   });
   const [loginError, setLoginError] = useState(null);
