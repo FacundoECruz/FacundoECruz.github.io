@@ -5,22 +5,33 @@ import { render, screen } from "@testing-library/react";
 import Login from "..";
 import { BrowserRouter as Router } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-// import { AuthProvider } from "../../../utils/AuthContext";
+import { useAuth } from "../../../utils/AuthContext";
 import "@testing-library/jest-dom";
 
-const mockUseAuth = () => {
-  return {
-    user: null,
-    login: jest.fn(),
-    loginError: null,
-  };
-};
+const localStorage = {};
+const login = () => {
+  localStorage.user = "usuario"
+}
+
+jest.mock("../../../utils/AuthContext", () => ({
+  useAuth: jest.fn(),
+}));
+
+const loginMock = jest.fn();
 
 describe("Login Component", () => {
+  beforeEach(() => {
+    useAuth.mockImplementation(() => ({
+      user: null,
+      login: loginMock,
+      loginError: null,
+    }));
+  });
+
   it("renders correctly", () => {
     render(
       <Router>
-        <Login useAuth={mockUseAuth} />
+        <Login useAuth={useAuth} />
       </Router>
     );
 
@@ -34,19 +45,13 @@ describe("Login Component", () => {
   });
 
   it("submitting the form calls onSubmit with username and password", async () => {
-    // Sin usar el mockUseAuth
-    // const user = null
-    // const login = jest.fn()
-    // const loginError = null
-    // user={user} login={login} loginError={loginError}
-
+    loginMock.mockImplementation(login)
     const _userEvent = userEvent.setup();
     render(
       <Router>
-          <Login useAuth={mockUseAuth}/>
+        <Login useAuth={useAuth} />
       </Router>
     );
-
     const username = "Facu";
     const password = "noLaNecesito";
 
@@ -56,14 +61,12 @@ describe("Login Component", () => {
     await _userEvent.type(usernameInput, username);
     await _userEvent.type(passwordInput, password);
 
-    await _userEvent.click(
-      screen.getByRole("button", { name: "Ingresar" })
-    );
+    await _userEvent.click(screen.getByRole("button", { name: "Ingresar" }));
 
-    expect(mockUseAuth().login).toHaveBeenCalledWith({
+    expect(loginMock).toHaveBeenCalledWith({
       username,
       password,
     });
-    expect(mockUseAuth().login).toHaveBeenCalledTimes(1);
+    expect(loginMock).toHaveBeenCalledTimes(1);
   });
 });
