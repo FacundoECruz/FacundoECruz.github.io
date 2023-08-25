@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import Avatar from "@mui/material/Avatar";
@@ -11,8 +12,8 @@ import Typography from "@mui/material/Typography";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {ImageWithChangeButton as ImageWithChangeButton_} from "../edit/ImageWithChangeButton.jsx";
-import { useAuth } from "../../utils/AuthContext";
+import { ImageWithChangeButton as ImageWithChangeButton_ } from "../edit/ImageWithChangeButton.jsx";
+import { useAuth as _useAuth } from "../../utils/AuthContext";
 
 function Copyright(props) {
   return (
@@ -33,15 +34,18 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function SignInSide({ImageWithChangeButton = ImageWithChangeButton_}) {
+export default function SignInSide({
+  ImageWithChangeButton = ImageWithChangeButton_,
+  useAuth = _useAuth,
+}) {
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
-  const { user, register, registerError } = useAuth()
+  const { user, register, registerError } = useAuth();
 
   useEffect(() => {
     if (user) {
       navigate("/");
-    } 
+    }
     setImageUrl(
       "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg"
     );
@@ -63,8 +67,7 @@ export default function SignInSide({ImageWithChangeButton = ImageWithChangeButto
       image: imageUrl,
     };
 
-    register(formData)
-  
+    register(formData);
   };
 
   const styles = {
@@ -121,7 +124,7 @@ export default function SignInSide({ImageWithChangeButton = ImageWithChangeButto
               required
               fullWidth
               id="username"
-              label="Username"
+              label="Usuario"
               name="username"
               autoFocus
             />
