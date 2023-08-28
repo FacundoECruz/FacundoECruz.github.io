@@ -6,16 +6,26 @@ import Register from "../index";
 import { BrowserRouter as Router } from "react-router-dom";
 import "@testing-library/jest-dom";
 import { useAuth } from "../../../utils/AuthContext";
-import ImageWithChangeButton from "../../edit/ImageWithChangeButton";
+import { ImageWithChangeButton } from "../../edit/ImageWithChangeButton";
+// eslint-disable-next-line no-unused-vars
+import UploadWidget from "../../../components/UploadWidget";
 
 // const localStorage = {};
 // const register = () => {
 //   localStorage.user = "usuario";
 // };
 
-jest.mock("../../edit/ImageWithChangeButton", () => {
+jest.doMock("../../edit/ImageWithChangeButton", () => {
   const MockedUploadImage = "Upload Image Component";
   return <MockedUploadImage />;
+});
+
+const useRef = jest.fn()
+const setImageUrl = jest.fn()
+
+jest.doMock("../../../components/UploadWidget", () => {
+  const MockedUploadWidget = "Upload Widget Component";
+  return <MockedUploadWidget setImageUrl={setImageUrl} useRef={useRef} />;
 });
 
 jest.mock("../../../utils/AuthContext", () => ({
@@ -43,11 +53,9 @@ describe("Register Component", () => {
     expect(
       screen.getByRole("textbox", { name: /usuario/i })
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: /email/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: /email/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/contraseña/i)).toBeInTheDocument();
-    expect(ImageWithChangeButton.mock.calls).toHaveLength(1)
+    expect(ImageWithChangeButton.mock.calls).toHaveLength(1);
     expect(
       screen.getByRole("button", { name: "Registrarse" })
     ).toBeInTheDocument();

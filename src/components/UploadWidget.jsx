@@ -1,27 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import { useEffect, useRef } from "react";
+import { useRef as _useRef } from "react";
 import { IconButton } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { useUploadWidgetEffect } from "./useUploadWidgetEffect";
 
 // eslint-disable-next-line react/prop-types
-function UploadWidget({ setImageUrl }) {
+function UploadWidget({ setImageUrl, useRef = _useRef }) {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
-  useEffect(() => {
-    cloudinaryRef.current = window.cloudinary;
-    widgetRef.current = cloudinaryRef.current.createUploadWidget(
-      {
-        cloudName: "dfknsvqer",
-        uploadPreset: "oallf3bt",
-      },
-      function (error, res) {
-        if (res.info.url) {
-          setImageUrl(res.info.url);
-        }
-      }
-    );
-  }, [setImageUrl]);
+  useUploadWidgetEffect(cloudinaryRef, widgetRef, setImageUrl)
 
   return (
     <IconButton
