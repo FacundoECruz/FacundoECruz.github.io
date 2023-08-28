@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box, Button } from "@mui/material";
 import UndoIcon from "@mui/icons-material/Undo";
-import { types } from "../../../utils/reducerTypes";
+import { types } from "../../../../utils/reducerTypes";
 
 function ScoreboardControlButtons({
   round,

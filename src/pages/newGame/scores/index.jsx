@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Grid } from "@mui/material";
-import ScoreBoard from "./ScoreBoard";
+import ScoreBoard from "./components/ScoreBoard";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useScores } from "./useScores";
-import Header from "./Header";
-import PlayerScoreEntry from "./PlayerScoreEntry";
-import ScoreboardControlButtons from "./ScoreboardControlButtons";
+import Header from "./components/Header";
+import PlayerScoreEntry from "./components/PlayerScoreEntry";
+import ScoreboardControlButtons from "./components/ScoreboardControlButtons";
 
 function Scores({ setGameState, playAgain, backToForm }) {
   const {

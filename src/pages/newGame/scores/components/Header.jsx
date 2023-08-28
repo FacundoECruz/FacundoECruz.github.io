@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Typography } from "@mui/material";
-import { useScores } from "./useScores";
+import { useScores } from "../useScores";
 
 function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
   return (

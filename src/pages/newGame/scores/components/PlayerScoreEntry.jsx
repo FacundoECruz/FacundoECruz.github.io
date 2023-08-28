@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box } from "@mui/material";
 import PlayerDash from "./PlayerDash";
-import { types } from "../../../utils/reducerTypes";
+import { types } from "../../../../utils/reducerTypes";
 
 function PlayerScoreEntry({playersRound, dispatch}) {
   return (
