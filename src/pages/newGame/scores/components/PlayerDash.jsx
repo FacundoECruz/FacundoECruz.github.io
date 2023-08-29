@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+import React from "react";
 import { Typography, Button, Box } from "@mui/material";
 
 const PlayerDash = ({ player, index, dispatch, types }) => {
