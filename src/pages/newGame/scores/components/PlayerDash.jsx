@@ -42,6 +42,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
           </Typography>
           <Button
             id="bid-button"
+            data-testid="bid-button"
             variant="contained"
             onClick={() => dispatch({ type: types.addBid, index: index })}
             sx={{
@@ -56,6 +57,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
             {player.bid}
           </Button>
           <Button
+            data-testid="reset-bid"
             onClick={() => dispatch({ type: types.resetBid, index: index })}
             sx={{
               "&:hover": {
@@ -72,6 +74,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
           </Typography>
           <Button
             id="lost-button"
+            data-testid="lost-button"
             variant="contained"
             onClick={() => dispatch({ type: types.addLost, index: index })}
             sx={{
@@ -86,6 +89,7 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
             {player.bidsLost}
           </Button>
           <Button
+            data-testid="reset-lost"
             onClick={() => dispatch({ type: types.resetLost, index: index })}
             sx={{
               "&:hover": {
