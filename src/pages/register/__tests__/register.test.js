@@ -15,19 +15,15 @@ import UploadWidget from "../../../components/UploadWidget";
 //   localStorage.user = "usuario";
 // };
 
-jest.doMock("../../edit/ImageWithChangeButton", () => {
-  const MockedUploadImage = "Upload Image Component";
-  return <MockedUploadImage />;
-});
+// jest.doMock("../../edit/ImageWithChangeButton", () => {
+//   const MockedUploadImage = "Upload Image Component";
+//   return <MockedUploadImage />;
+// });
 
-const useRef = jest.fn()
-const setImageUrl = jest.fn()
-
-jest.doMock("../../../components/UploadWidget", () => {
-  const MockedUploadWidget = "Upload Widget Component";
-  return <MockedUploadWidget setImageUrl={setImageUrl} useRef={useRef} />;
-});
-
+// jest.mock("../../../components/UploadWidget", () => {
+//   const MockedUploadWidget = "Upload Widget Component";
+//   return <MockedUploadWidget setImageUrl={setImageUrl} cloudinary={jest.fn()} />;
+// });
 jest.mock("../../../utils/AuthContext", () => ({
   useAuth: jest.fn(),
 }));
@@ -38,10 +34,21 @@ describe("Register Component", () => {
   beforeEach(() => {
     useAuth.mockImplementation(() => ({
       user: null,
-      login: registerMock,
-      loginError: null,
+      register: registerMock,
+      registerError: null,
     }));
-  });
+
+    global.cloudinary = {
+      createUploadWidget: jest.fn()
+    };
+
+    global.cloudinary.createUploadWidget.mockImplementation((options, callback) => {
+      // here you can mock the behavior of the widget, like invoking the callback etc.
+      return {
+        open: jest.fn() // since you're calling widgetRef.current.open() in your component
+      };
+    });
+  });  
 
   it("renders correctly", () => {
     render(
@@ -50,14 +57,19 @@ describe("Register Component", () => {
       </Router>
     );
 
+    // screen.debug(undefined, Infinity)
+    
+    const widget = screen.getByTestId("upload-widget")
+
     expect(
       screen.getByRole("textbox", { name: /usuario/i })
     ).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: /email/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/contraseña/i)).toBeInTheDocument();
-    expect(ImageWithChangeButton.mock.calls).toHaveLength(1);
+    // expect(ImageWithChangeButton.mock.calls).toHaveLength(1);
     expect(
       screen.getByRole("button", { name: "Registrarse" })
     ).toBeInTheDocument();
+    expect(widget).toBeInTheDocument()
   });
 });
