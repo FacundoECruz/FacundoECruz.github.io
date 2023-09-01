@@ -6,7 +6,6 @@ import Register from "../index";
 import { BrowserRouter as Router } from "react-router-dom";
 import "@testing-library/jest-dom";
 import { useAuth } from "../../../utils/AuthContext";
-import { ImageWithChangeButton } from "../../edit/ImageWithChangeButton";
 // eslint-disable-next-line no-unused-vars
 import UploadWidget from "../../../components/UploadWidget";
 
@@ -42,10 +41,10 @@ describe("Register Component", () => {
       createUploadWidget: jest.fn()
     };
 
+    // eslint-disable-next-line no-unused-vars
     global.cloudinary.createUploadWidget.mockImplementation((options, callback) => {
-      // here you can mock the behavior of the widget, like invoking the callback etc.
       return {
-        open: jest.fn() // since you're calling widgetRef.current.open() in your component
+        open: jest.fn() 
       };
     });
   });  
