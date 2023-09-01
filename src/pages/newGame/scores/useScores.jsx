@@ -22,10 +22,10 @@ export function useScores() {
     setStatus(JSON.parse(window.localStorage.getItem("status")));
   }, [playersRound]);
 
-  useEffect(() => {
-    console.log("***roundStatus***");
-    console.log(roundStatus);
-  }, [roundStatus]);
+  // useEffect(() => {
+  //   console.log("***playersRound***");
+  //   console.log(playersRound);
+  // }, [playersRound]);
 
   function nextRound() {
     setVarCheck(false);
@@ -63,8 +63,8 @@ export function useScores() {
           );
           const table = res.data.newRoundState;
           const uiTable = table.map((p) => {
-            const { username, score, image } = p;
-            return { username: username, score: score, image: image };
+            const { username, score, image, history } = p;
+            return { username: username, score: score, image: image, history: history };
           });
           uiTable.sort((a, b) => b.score - a.score);
           window.localStorage.setItem("table", JSON.stringify(uiTable));
@@ -92,8 +92,8 @@ export function useScores() {
         );
         const table = res.data.newRoundState;
         const uiTable = table.map((p) => {
-          const { username, score, image } = p;
-          return { username: username, score: score, image: image };
+          const { username, score, image, history } = p;
+          return { username: username, score: score, image: image, history: history };
         });
         uiTable.sort((a, b) => b.score - a.score);
         window.localStorage.setItem("table", JSON.stringify(uiTable));

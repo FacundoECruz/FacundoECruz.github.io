@@ -39,7 +39,8 @@ function NewGame() {
       if (players) {
         window.localStorage.removeItem("players");
       }
-      window.localStorage.setItem("players", JSON.stringify(res.data.players));
+      const playersWithHistory = res.data.players.map(item => ({ ...item, history: [] }))
+      window.localStorage.setItem("players", JSON.stringify(playersWithHistory));
       setGameState("in progress");
     });
   }
