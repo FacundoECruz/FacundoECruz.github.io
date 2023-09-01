@@ -18,20 +18,4 @@ App developed with React for the frontend, Express for the backend and MongoDB.
 
 ## Encriptar contraseñas
 
-## Traer el anotador
-
-## Modal juagadores y usuarios
-
-## Consideraciones
-- no se tiene que repetir ni el username ni el mail
-- el identificador del usuario y del player va a ser el username
-
-## Anotador
-- el estado se va a mantener en la base de datos
-  - cuando inicia la partida se crea el documento en la base de datos
-  - al final de cada ronda se actualiza el estado del Game.
-  - al finalizar el juego se actualiza el Game, se setea el atributo finalizado y se asignan los puntos a cada jugador. 
-
-  - El game va a tener un id, el POST inicial tiene que devolver un id. En cada ronda vos tenes que mandar ese id.
-
-  https://app.swaggerhub.com/apis/IVANLP10N2_1/altisima2/1.0.0#/
+https://app.swaggerhub.com/apis/IVANLP10N2_1/altisima2/1.0.0#/
