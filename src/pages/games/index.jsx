@@ -32,7 +32,7 @@ function Games() {
         justifyContent: "center",
       }}
     >
-      <Box sx={{display: "flex", flexDirection: "column", maxWidth: "100vh"}}>
+      <Box sx={{display: "flex", flexWrap: "wrap", gap: "16px"}}>
       {gamesToDisplay.map((game, i) => {
         return <LittleGameCard game={game} key={i}/>
       })}

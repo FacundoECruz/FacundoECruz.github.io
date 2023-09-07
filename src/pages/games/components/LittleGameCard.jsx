@@ -5,19 +5,28 @@ function LittleGameCard({ game }) {
   const parts = game.date.split("GMT");
   const gameDate = parts[0].trim();
 
-  const finalResult = game.results[9];
+  const finalResult = game.results[9].sort((a, b) => b.score - a.score);
 
   return (
-    <Card >
+    <Card sx={{bgcolor: "black"}}>
       <CardContent sx={{ width: "100%", display: "column", flexDirection: "row" }}>
-        <Typography>{gameDate}</Typography>
+        <Typography sx={{borderBottom: "1px solid white", color: "white"}}>{gameDate}</Typography>
         {finalResult.map((player, i) => {
-          return (
-            <Box key={i}>
-              <Typography>{player.username}</Typography>
-              <Typography>{player.score}</Typography>
-            </Box>
-          );
+          if(i === 0) {
+            return (
+              <Box key={i} sx={{display: "flex", justifyContent: "space-between"}}>
+                <Typography sx={{color: "green"}}>{player.username}</Typography>
+                <Typography sx={{color: "green"}}>{player.score}</Typography>
+              </Box>
+            );
+          } else {
+            return (
+              <Box key={i} sx={{display: "flex", justifyContent: "space-between"}}>
+                <Typography sx={{color: "white"}}>{player.username}</Typography>
+                <Typography sx={{color: "white"}}>{player.score}</Typography>
+              </Box>
+            );
+          }
         })}
       </CardContent>
     </Card>
