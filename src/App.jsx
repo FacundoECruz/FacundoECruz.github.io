@@ -2,7 +2,7 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Index.jsx";
 import Players from "./pages/players/Players.jsx";
 import PlayerDetails from "./pages/playerDetails/index.jsx";
-import Games from "./pages/games/Games.jsx";
+import Games from "./pages/games/index.jsx";
 import GameDetails from "./pages/gameDetails/GameDetails.jsx";
 import NewGame from "./pages/newGame/index.jsx";
 import Login from "./pages/login/index.jsx";
