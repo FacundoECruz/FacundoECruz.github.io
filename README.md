@@ -16,6 +16,5 @@ App developed with React for the frontend, Express for the backend and MongoDB.
   - Una vez creado el user, borrar player.
   - Devolver 204
 
-## Encriptar contraseñas
-
+## Contrato
 https://app.swaggerhub.com/apis/IVANLP10N2_1/altisima2/1.0.0#/
