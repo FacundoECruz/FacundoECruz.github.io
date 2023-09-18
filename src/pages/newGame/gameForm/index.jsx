@@ -2,9 +2,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import NewGameForm from "./NewGameForm";
-import PlayersList from "./PlayersList";
+import PlayerBox from "./PlayersList";
 import ControlButtons from "./ControlButtons";
-import AddPlayerToDb from "./AddPlayerToDb";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import api from "../../../utils/api-client";
 
@@ -16,9 +15,9 @@ function GameForm({ setGameState, handleStartGame }) {
     if (storedPlayers === null) {
       return [];
     } else {
-      let players = storedPlayers.map(p => {
+      let players = storedPlayers.map((p) => {
         return p.username;
-      })  
+      });
       return players;
     }
   });
@@ -62,7 +61,6 @@ function GameForm({ setGameState, handleStartGame }) {
     setPlayers(updatedPlayers);
   }
 
-
   return (
     <div
       style={{
@@ -72,72 +70,63 @@ function GameForm({ setGameState, handleStartGame }) {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "left",
-        minHeight: "100vh",
+        minHeight: "85vh",
       }}
     >
-      <Grid container>
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            mt: 5,
-          }}
-        >
-          <Typography variant="h5" sx={{ mx: 1, my: 3, color: "white" }}>
-            Agregar Jugadores
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", width: "60%" }}>
-            <NewGameForm
-              selectedPlayer={selectedPlayer}
-              setSelectedPlayer={setSelectedPlayer}
-              playerInputValue={playerInputValue}
-              setPlayerInputValue={setPlayerInputValue}
-              options={options}
-            />
-          </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: { md: "60%", xs: "100%" },
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Typography variant="h5" sx={{ mx: 1, my: 3, color: "white" }}>
+          Agregar Jugadores
+        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "column", width: "60%" }}>
+          <NewGameForm
+            selectedPlayer={selectedPlayer}
+            setSelectedPlayer={setSelectedPlayer}
+            playerInputValue={playerInputValue}
+            setPlayerInputValue={setPlayerInputValue}
+            options={options}
+            addPlayerToDbAndGame={addPlayerToDbAndGame}
+            fetchOptions={fetchOptions}
+          />
+        </Box>
 
-          <ControlButtons addPlayer={addPlayer} setPlayers={setPlayers} />
+        <ControlButtons addPlayer={addPlayer} setPlayers={setPlayers} />
 
-          {players.length ? (
-            <PlayersList
-              players={players}
-              setGameState={setGameState}
-              removePlayer={removePlayer}
-            />
-          ) : null}
-          {players.length > 2 ? (
-            <Button
-              sx={{
-                width: "200px",
-                color: "white",
-                bgcolor: "green",
-                border: "1px solid green",
-                "&:hover": {
-                  transform: "translate(-1px, -1px)",
-                  bgcolor: "white",
-                  color: "black",
-                },
-              }}
-              variant="contained"
-              onClick={() => handleStartGame(players)}
-            >
-              Comenzar
-            </Button>
-          ) : null}
-        </Grid>
-        <Grid
-          item
-          md={6}
-          sm={12}
-          sx={{ mt: 5, display: "flex", justifyContent: "center" }}
-        >
-          <AddPlayerToDb putNewPlayerIntoGameList={addPlayerToDbAndGame} fetchOptions={fetchOptions}/>
-        </Grid>
-      </Grid>
+        {players.length ? (
+          <PlayerBox
+            players={players}
+            setGameState={setGameState}
+            removePlayer={removePlayer}
+          />
+        ) : null}
+        {players.length > 2 ? (
+          <Button
+            sx={{
+              width: "200px",
+              color: "white",
+              bgcolor: "green",
+              border: "1px solid green",
+              "&:hover": {
+                transform: "translate(-1px, -1px)",
+                bgcolor: "white",
+                color: "black",
+              },
+            }}
+            variant="contained"
+            onClick={() => handleStartGame(players)}
+          >
+            Comenzar
+          </Button>
+        ) : null}
+      </Box>
     </div>
   );
 }

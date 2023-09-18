@@ -12,13 +12,13 @@ import {
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-function PlayersList({ players, removePlayer }) {
+function PlayerBox({ players, removePlayer }) {
   function handleRemovePlayer(player) {
     removePlayer(player);
   }
 
   return (
-    <Box sx={{ width: "50%" }}>
+    <Box sx={{ width: "80%" }}>
       {players.map((p) => {
         return (
           <List
@@ -76,4 +76,4 @@ function PlayersList({ players, removePlayer }) {
   );
 }
 
-export default PlayersList;
+export default PlayerBox;

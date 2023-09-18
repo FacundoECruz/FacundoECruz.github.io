@@ -1,7 +1,27 @@
 /* eslint-disable react/prop-types */
-import { TextField, Autocomplete } from "@mui/material";
+import { TextField, Autocomplete, Paper, Button } from "@mui/material";
+import DialogAddPlayerToDb from "./DialogAddPlayerToDb";
+import { useState } from "react";
 
-function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPlayerInputValue, options}) {
+function NewGameForm({
+  selectedPlayer,
+  setSelectedPlayer,
+  playerInputValue,
+  setPlayerInputValue,
+  options,
+  addPlayerToDbAndGame,
+  fetchOptions,
+}) {
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   function handleChange(event, newValue) {
     setSelectedPlayer(newValue);
@@ -12,35 +32,55 @@ function NewGameForm({selectedPlayer, setSelectedPlayer, playerInputValue, setPl
   }
 
   const filterOptions = (options, state) => {
-    if (state.inputValue === '' || options.length === 0) {
+    if (state.inputValue === "" || options.length === 0) {
       return [];
     }
 
-    return options.filter(option =>
+    return options.filter((option) =>
       option.username.toLowerCase().includes(state.inputValue.toLowerCase())
     );
-  }
+  };
   return (
-    <Autocomplete
-      options={options}
-      value={selectedPlayer}
-      onChange={handleChange}
-      inputValue={playerInputValue}
-      onInputChange={handleInputChange}
-      getOptionLabel={(option) => (option ? option.username : "")}
-      filterOptions={filterOptions}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          id="name"
-          // label="Nombre"
-          type="text"
-          variant="outlined"
-          required
-          sx={{ mx: 1, bgcolor: "white" }}
-        />
-      )}
-    />
+    <div>
+      <Autocomplete
+        options={options}
+        value={selectedPlayer}
+        onChange={handleChange}
+        inputValue={playerInputValue}
+        onInputChange={handleInputChange}
+        getOptionLabel={(option) => (option ? option.username : "")}
+        filterOptions={filterOptions}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            id="name"
+            // label="Nombre"
+            type="text"
+            variant="outlined"
+            required
+            sx={{ mx: 1, bgcolor: "white" }}
+          />
+        )}
+        PaperComponent={({ children }) => {
+          return (
+            <Paper>
+              {children}
+              <Button
+                color="primary"
+                fullWidth
+                sx={{ justifyContent: "flex-start", pl: 2 }}
+                onMouseDown={() => {
+                  handleClickOpen();
+                }}
+              >
+                + Agregar Nuevo
+              </Button>
+            </Paper>
+          );
+        }}
+      />
+      <DialogAddPlayerToDb open={open} putNewPlayerIntoGameList={addPlayerToDbAndGame} setOpen={setOpen} fetchOptions={fetchOptions} handleClose={handleClose}/>
+    </div>
   );
 }
 
