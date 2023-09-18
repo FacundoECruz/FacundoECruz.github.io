@@ -16,6 +16,7 @@ function FaqItem({question, answer}) {
         <Typography variant="h6" sx={{color: "white"}}>{question}</Typography>
       </AccordionSummary>
       <AccordionDetails>
+        {/* aca deberia ir el componente answer que reciba por props */}
         <Typography sx={{color: "white"}}>{answer}</Typography>
       </AccordionDetails>
     </Accordion>
