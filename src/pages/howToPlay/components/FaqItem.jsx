@@ -11,12 +11,12 @@ function FaqItem({question, answer}) {
   };
 
   return (
-    <Accordion expanded={expanded} onChange={handleAccordionChange}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="h6">{question}</Typography>
+    <Accordion expanded={expanded} onChange={handleAccordionChange} sx={{bgcolor: "black"}}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color: "white"}}/>}>
+        <Typography variant="h6" sx={{color: "white"}}>{question}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>{answer}</Typography>
+        <Typography sx={{color: "white"}}>{answer}</Typography>
       </AccordionDetails>
     </Accordion>
   );

@@ -15,7 +15,7 @@ function Home({dataFromServer}) {
           alignItems: "center",
           justifyContent: "center",
           backgroundImage:
-            'url("https://res.cloudinary.com/dfknsvqer/image/upload/v1688502718/chris-burgett-YzTLqYMASFw-unsplash_m1h8lr.jpg")',
+            'url("https://res.cloudinary.com/dfknsvqer/image/upload/v1695064901/fondo-home_noahch.jpg")',
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "bottom",
