@@ -11,6 +11,7 @@ function Games() {
     api.getGames().then((res) => {
       const allGames = res.data;
       const completedGames = allGames.filter((game) => game.round === 10);
+      completedGames.reverse();
       setGamesToDisplay(completedGames);
       console.log(completedGames);
     });
