@@ -1,3 +1,5 @@
+import roundsImage from "../../../assets/faqs/ronda-cartas.jpg";
+
 function CardsPerRoundAnswer() {
   return (
     <div>
@@ -6,17 +8,10 @@ function CardsPerRoundAnswer() {
         variando en cada una de las rondas.
       </p>
       <p>
-        La cantidad de cartas por ronda no puede ser menor a 3, mientras que el
-        máximo de cartas por ronda estará dado por la división entre el total de
-        cartas en el mazo (40) y la cantidad de jugadores (en esta aplicación,
-        la cantidad de cartas por ronda se determina aleatoriamente, siendo
-        regla general que en la última ronda se juega con el máximo de cartas
-        posible).
+        La aplicación te va a indicar cuantas cartas se reparten.
       </p>
-      <p>
-        Ejemplo: si son 5 jugadores, el máximo de cartas por ronda será 8
-        <i>(40/5=8)</i> la última ronda debería ser de 8 cartas.
-      </p>
+      
+      <img src={roundsImage} style={{width: "80%"}}/>
     </div>
   );
 }

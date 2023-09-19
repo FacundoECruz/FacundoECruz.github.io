@@ -5,6 +5,8 @@ import CardsPerRoundAnswer from "./components/CardsPerRoundAnswer";
 import DynamicsOfTheRound from "./components/DynamicsOfTheRound";
 import ScorePointsAnswer from "./components/ScorePointsAnswer";
 import HowToWinAnswer from "./components/HowToWinAnswer";
+import WhatDoYouNeedAnswer from "./components/WhatDoYouNeedAnswer";
+import HowToUseTheScoreboard from "./components/HowToUseTheScoreboard";
 
 function PlayersGuide() {
   return (
@@ -29,8 +31,12 @@ function PlayersGuide() {
         }}
       >
         <Grid item md={6} sm={12}>
+        <FaqItem
+            question="¿Qué necesitás?"
+            answer={<WhatDoYouNeedAnswer />}
+          />
           <FaqItem
-            question="¿Cómo se juega al Altísima?"
+            question="¿Cómo es el juego?"
             answer={<HowToPlayAnswer />}
           />
           <FaqItem
@@ -38,7 +44,7 @@ function PlayersGuide() {
             answer={<CardsPerRoundAnswer />}
           />
           <FaqItem
-            question="¿Cuál es la dinámica de la ronda?"
+            question="¿Cómo se juega cada ronda?"
             answer={<DynamicsOfTheRound />}
           />
           <FaqItem
@@ -46,8 +52,12 @@ function PlayersGuide() {
             answer={<ScorePointsAnswer />}
           />
           <FaqItem
-            question="¿Cómo se gana una partida de Altísima?"
+            question="¿Cómo se gana una partida?"
             answer={<HowToWinAnswer />}
+          />
+          <FaqItem
+            question="¿Cómo usar el anotador?"
+            answer={<HowToUseTheScoreboard />}
           />
         </Grid>
       </Grid>
