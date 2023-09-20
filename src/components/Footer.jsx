@@ -15,7 +15,7 @@ function Footer() {
       }}
     >
       <IconButton
-        href="https://www.linkedin.com/in/facundo-cruz-321401259/"
+        href="https://www.linkedin.com/in/facundo-cruz-253527286/"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
@@ -31,7 +31,7 @@ function Footer() {
         <GitHubIcon sx={{color: "white"}}/>
       </IconButton>
       <IconButton
-        href="mailto:facundo.emanuel.cruz.94@gmail.com"
+        href="mailto:facundoecruz.dev@gmail.com"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Email"
