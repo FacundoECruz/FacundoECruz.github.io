@@ -48,7 +48,7 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
     api
       .getUser(user)
       .then((res) => {
-        const { email, image, password, username } = res.data[0];
+        const { email, image, password, username } = res.data;
         setUsername(username);
         setEmail(email);
         setImageUrl(image);

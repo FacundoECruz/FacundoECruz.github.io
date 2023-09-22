@@ -87,14 +87,14 @@ function Navbar({dataFromServer}) {
       api
         .getUser(user)
         .then((res) => {
-          const { username, image, createdGames } = res.data[0];
+          const { username, image, createdGames } = res.data;
           return { username, image, createdGames };
         })
         .then((userObj) => {
           api
             .getPlayer(user)
             .then((res) => {
-              const { gamesPlayed, gamesWon, totalScore } = res.data[0];
+              const { gamesPlayed, gamesWon, totalScore } = res.data;
               const userData = {
                 ...userObj,
                 gamesPlayed,
