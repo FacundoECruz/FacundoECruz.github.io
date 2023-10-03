@@ -5,7 +5,6 @@ import api from "../../utils/api-client";
 // import { useEffect } from "react";
 
 function NewGame() {
-
   const [gameState, setGameState] = useState(() => {
     const status = JSON.parse(window.localStorage.getItem("status"));
     if (status === "finished") {
@@ -25,9 +24,9 @@ function NewGame() {
     const playersForBackend = players.map((p) => {
       return { username: p, score: 0, bid: 0, bidsLost: 0 };
     });
-    api
-      .createGame(playersForBackend)
-      .then((res) => {
+    api.createGame(playersForBackend).then((res) => {
+      console.log("***res***")
+      console.log(res);
       window.localStorage.setItem(
         "cardsPerRound",
         JSON.stringify(res.data.cardsPerRound)
@@ -39,8 +38,14 @@ function NewGame() {
       if (players) {
         window.localStorage.removeItem("players");
       }
-      const playersWithHistory = res.data.players.map(item => ({ ...item, history: [] }))
-      window.localStorage.setItem("players", JSON.stringify(playersWithHistory));
+      const playersWithHistory = res.data.players.map((item) => ({
+        ...item,
+        history: [],
+      }));
+      window.localStorage.setItem(
+        "players",
+        JSON.stringify(playersWithHistory)
+      );
       setGameState("in progress");
     });
   }
@@ -48,14 +53,15 @@ function NewGame() {
   function finishGame() {
     const gameId = window.localStorage.getItem("gameId");
     const user = window.localStorage.getItem("user");
-    const table = JSON.parse(window.localStorage.getItem("table"))
-    const players = JSON.parse(window.localStorage.getItem("players"))
+    const table = JSON.parse(window.localStorage.getItem("table"));
+    const players = JSON.parse(window.localStorage.getItem("players"));
     const winner = table[0].username;
 
     api
       .finishGame(players, gameId, user, winner)
       .then((res) => {
-        console.log(res)
+        console.log("finish game res.data")
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -63,13 +69,13 @@ function NewGame() {
   }
 
   function playAgain(players) {
-    finishGame()
+    finishGame();
     setGameState("finished");
     handleStartGame(players);
   }
 
   function backToForm() {
-    finishGame()
+    finishGame();
     setGameState("finished");
   }
 
