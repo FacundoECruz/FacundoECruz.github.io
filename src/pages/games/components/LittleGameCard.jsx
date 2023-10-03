@@ -1,31 +1,32 @@
 /* eslint-disable react/prop-types */
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import { WinnerAccordion } from "./WinnerAccordion";
+import { PlayerAccordion } from "./PlayersAccordion";
+
 
 function LittleGameCard({ game }) {
   const parts = game.date.split("GMT");
   const gameDate = parts[0].trim();
 
-  const finalResult = game.results[9].sort((a, b) => b.score - a.score);
+  const finalResult = game.currentResults.sort((a, b) => b.score - a.score);
 
   return (
-    <Card sx={{bgcolor: "black"}}>
-      <CardContent sx={{ width: "100%", display: "column", flexDirection: "row" }}>
-        <Typography sx={{borderBottom: "1px solid white", color: "white"}}>{gameDate}</Typography>
+    <Card sx={{ bgcolor: "black" }}>
+      <CardContent
+        sx={{ width: "100%", display: "column", flexDirection: "row" }}
+      >
+        <Typography sx={{ borderBottom: "1px solid white", color: "white" }}>
+          {gameDate}
+        </Typography>
         {finalResult.map((player, i) => {
-          if(i === 0) {
-            return (
-              <Box key={i} sx={{display: "flex", justifyContent: "space-between"}}>
-                <Typography sx={{color: "green"}}>{player.username}</Typography>
-                <Typography sx={{color: "green"}}>{player.score}</Typography>
-              </Box>
-            );
+          if (i === 0) {
+            return <WinnerAccordion player={player} key={i}/>;
           } else {
-            return (
-              <Box key={i} sx={{display: "flex", justifyContent: "space-between"}}>
-                <Typography sx={{color: "white"}}>{player.username}</Typography>
-                <Typography sx={{color: "white"}}>{player.score}</Typography>
-              </Box>
-            );
+            return <PlayerAccordion player={player} key={i}/>;
           }
         })}
       </CardContent>
