@@ -25,6 +25,7 @@ function DialogAddPlayerToDb({open, putNewPlayerIntoGameList, setOpen, fetchOpti
     api
       .createPlayer({ username: inputValue })
       .then((res) => {
+        
         putNewPlayerIntoGameList(res.data.username);
         fetchOptions();
         setOpen(false);

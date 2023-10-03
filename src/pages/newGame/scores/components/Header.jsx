@@ -17,6 +17,7 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
       <Typography variant="h4" mr={2} sx={{ color: "white" }}>
         Ronda {parseInt(round)}
       </Typography>
+      {round === 9 ? <Typography variant="h6" sx={{ color: "white" }}>Ultima</Typography> : null}
       <Typography variant="h4" mr={2} sx={{ color: "white" }}>
         Cartas {cardsPerRound[round - 1]}
       </Typography>

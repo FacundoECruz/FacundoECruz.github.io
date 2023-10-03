@@ -23,7 +23,7 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
         window.localStorage.setItem("user", user);
         setUser(user);
       })
-      .catch((err) => setLoginError(err.response.data.message));
+      .catch((err) => setLoginError(err.response.data));
   };
 
   const register = (formData) => {
@@ -31,13 +31,12 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
     api
       .createUser(formData)
       .then((res) => {
-        console.log(res.data.username);
         const user = res.data.username;
         window.localStorage.setItem("user", user);
         setUser(user);
       })
       .catch((err) => {
-        setRegisterError(err.response.data.error);
+        setRegisterError(err.response.data);
       });
   };
 

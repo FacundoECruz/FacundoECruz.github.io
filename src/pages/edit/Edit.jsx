@@ -43,6 +43,7 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
+  const [editErrorMsg, setEditErrorMsg] = useState(null);
 
   useEffect(() => {
     api
@@ -79,8 +80,12 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
       .then((res) => {
         setStatus("success");
         setMessage("Cambios guardados");
+        setEditErrorMsg(null);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setEditErrorMsg(err.response.data)
+        setStatus("idle")
+      });
   };
 
   return (
@@ -181,6 +186,7 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
                 "Guardar Cambios"
               )}
             </Button>
+            {editErrorMsg ? <Typography sx={{color: "red"}}>{editErrorMsg}</Typography> : null}
             <Copyright sx={{ mt: 5 }} />
           </Box>
         </Box>
