@@ -8,10 +8,18 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import SportsScoreIcon from "@mui/icons-material/SportsScore";
 
 function PlayerModal({ player, onClose }) {
-  
-  const defaultImage = "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg"
+  const defaultImage =
+    "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg";
+
+  const rowStyles = {display: "flex", flexDirection: "row", justifyContent: "flex-start", my: 1};
+  function iconStyles(color) {
+    return {color: color, mr: 1}
+  }
 
   return (
     <div
@@ -59,12 +67,23 @@ function PlayerModal({ player, onClose }) {
             >
               <Stars value={player.gamesWon} />
             </Box>
-            <Typography>Partidas Jugadas: {player.gamesPlayed}</Typography>
-            <Typography>Partidas Ganadas: {player.gamesWon}</Typography>
-            <Typography>
-              Promedio por partida:
-              {player.totalScore === 0 ? "-" : (player.totalScore / player.gamesPlayed).toFixed(1)}
-            </Typography>
+            <Box sx={rowStyles}>
+              <SportsEsportsIcon sx={iconStyles("orange")}/>
+              <Typography>Partidas Jugadas: {player.gamesPlayed}</Typography>
+            </Box>
+            <Box sx={rowStyles}>
+              <SportsScoreIcon sx={iconStyles("blue")}/>
+              <Typography>Partidas Ganadas: {player.gamesWon}</Typography>
+            </Box>
+            <Box sx={rowStyles}>
+              <MilitaryTechIcon sx={iconStyles("purple")}/>
+              <Typography>
+                Promedio por partida:
+                {player.totalScore === 0
+                  ? "-"
+                  : (player.totalScore / player.gamesPlayed).toFixed(1)}
+              </Typography>
+            </Box>
           </CardContent>
         </Card>
         <Button onClick={onClose} sx={{ color: "red" }}>
