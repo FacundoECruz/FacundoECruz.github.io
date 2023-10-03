@@ -11,6 +11,7 @@ function ScoreboardControlButtons({
   prevRound,
   status,
   setPlayAgain,
+  varCheck
 }) {
   return (
     <Box
@@ -74,7 +75,7 @@ function ScoreboardControlButtons({
             },
           }}
         >
-          Finalizar
+          Siguiente
         </Button>
       ) : (
         <Button
@@ -98,7 +99,7 @@ function ScoreboardControlButtons({
           },
         }}
         onClick={() => prevRound()}
-        disabled={round === 1}
+        disabled={round === 1 || varCheck}
       >
         <UndoIcon sx={{ color: "black" }} />
       </Button>

@@ -62,6 +62,7 @@ function Scores({ setGameState, playAgain, backToForm }) {
             prevRound={prevRound}
             status={status}
             setPlayAgain={setPlayAgain}
+            varCheck={varCheck}
           />
         </Grid>
 

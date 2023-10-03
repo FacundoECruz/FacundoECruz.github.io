@@ -10,10 +10,10 @@ function Games() {
   useEffect(() => {
     api.getGames().then((res) => {
       const allGames = res.data;
-      const completedGames = allGames.filter((game) => game.round === 10);
+      const completedGames = allGames.filter((game) => game.currentRound >= 9);
       completedGames.reverse();
-      setGamesToDisplay(completedGames);
       console.log(completedGames);
+      setGamesToDisplay(completedGames);
     });
   }, []);
 
