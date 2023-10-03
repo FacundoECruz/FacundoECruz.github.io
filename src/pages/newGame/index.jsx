@@ -69,13 +69,11 @@ function NewGame() {
   }
 
   function playAgain(players) {
-    finishGame();
     setGameState("finished");
     handleStartGame(players);
   }
 
   function backToForm() {
-    finishGame();
     setGameState("finished");
   }
 
@@ -90,6 +88,7 @@ function NewGame() {
       setGameState={setGameState}
       playAgain={playAgain}
       backToForm={backToForm}
+      finishGame={finishGame}
     />
   );
 }

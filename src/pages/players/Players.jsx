@@ -13,9 +13,9 @@ function Players() {
     api
       .getPlayers()
       .then((response) => {
-        // Verificar si el Player tiene User
+        console.log(response)
         const sortedPlayers = response.data.sort(
-          (a, b) => b.gamesPlayed - a.gamesPlayed
+          (a, b) => b.gamesWon - a.gamesWon
         );
         setPlayers(sortedPlayers);
       })

@@ -11,8 +11,15 @@ function ScoreboardControlButtons({
   prevRound,
   status,
   setPlayAgain,
-  varCheck
+  varCheck,
+  finishGame,
 }) {
+
+function endGame(){
+  nextRound()
+  finishGame()
+}
+
   return (
     <Box
       sx={{
@@ -64,7 +71,7 @@ function ScoreboardControlButtons({
         </Button>
       ) : round === 9 && status === "in progress" ? (
         <Button
-          onClick={nextRound}
+          onClick={() => endGame()}
           sx={{
             color: "white",
             border: "1px solid blue",
