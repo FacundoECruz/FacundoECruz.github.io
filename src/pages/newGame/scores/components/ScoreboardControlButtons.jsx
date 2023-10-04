@@ -106,7 +106,7 @@ function endGame(){
           },
         }}
         onClick={() => prevRound()}
-        disabled={round === 1 || varCheck}
+        disabled={round === 1 || varCheck || round > 9}
       >
         <UndoIcon sx={{ color: "black" }} />
       </Button>
