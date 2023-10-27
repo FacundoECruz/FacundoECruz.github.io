@@ -1,4 +1,5 @@
 export const checkPlayerAchievements = (player, achievements) => {
+  
   const {
     topScoreInAGame, 
     wasTopScoreInAGame, 
