@@ -8,7 +8,7 @@ import Header from "./components/Header";
 import PlayerScoreEntry from "./components/PlayerScoreEntry";
 import ScoreboardControlButtons from "./components/ScoreboardControlButtons";
 
-function Scores({ setGameState, playAgain, backToForm, finishGame }) {
+function Scores({ setGameState, playAgain, backToForm, finishGame, achievements }) {
   const {
     round,
     status,
@@ -52,7 +52,7 @@ function Scores({ setGameState, playAgain, backToForm, finishGame }) {
             setGameState={setGameState}
           />
 
-          <PlayerScoreEntry playersRound={playersRound} dispatch={dispatch} />
+          <PlayerScoreEntry playersRound={playersRound} dispatch={dispatch} achievements={achievements}/>
 
           <ScoreboardControlButtons
             round={round}

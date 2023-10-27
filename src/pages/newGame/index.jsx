@@ -2,6 +2,7 @@ import { useState } from "react";
 import GameForm from "./gameForm";
 import Scores from "./scores";
 import api from "../../utils/api-client";
+import useAchievements from "../../components/achievements/useAchievements";
 // import { useEffect } from "react";
 
 function NewGame() {
@@ -16,6 +17,8 @@ function NewGame() {
     }
   });
 
+  const { achievements } = useAchievements();
+
   function handleStartGame(players) {
     const table = window.localStorage.getItem("table");
     if (table) {
@@ -25,8 +28,6 @@ function NewGame() {
       return { username: p, score: 0, bid: 0, bidsLost: 0 };
     });
     api.createGame(playersForBackend).then((res) => {
-      console.log("***res***")
-      console.log(res);
       window.localStorage.setItem(
         "cardsPerRound",
         JSON.stringify(res.data.cardsPerRound)
@@ -89,6 +90,7 @@ function NewGame() {
       playAgain={playAgain}
       backToForm={backToForm}
       finishGame={finishGame}
+      achievements={achievements}
     />
   );
 }

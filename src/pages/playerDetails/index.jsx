@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
@@ -57,11 +58,3 @@ function PlayerDetails() {
 }
 
 export default PlayerDetails;
-
-{
-  /* <p>Played Games: {player.gamesPlayed}</p>
-<p>Won Games: {player.gamesWon}</p>
-<p>Created Games: {player.createdGames}</p>
-<p>Total Score: {player.totalScore}</p>
-<p>Average: {player.totalScore / player.gamesPlayed}</p> */
-}

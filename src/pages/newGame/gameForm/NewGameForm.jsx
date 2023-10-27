@@ -54,7 +54,6 @@ function NewGameForm({
           <TextField
             {...params}
             id="name"
-            // label="Nombre"
             type="text"
             variant="outlined"
             required

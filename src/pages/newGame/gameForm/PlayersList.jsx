@@ -13,6 +13,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 function PlayerBox({ players, removePlayer }) {
+
   function handleRemovePlayer(player) {
     removePlayer(player);
   }

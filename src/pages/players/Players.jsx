@@ -1,28 +1,37 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import api from "../../utils/api-client.js";
 import { Box } from "@mui/material";
 import PlayerCard from "../../components/playerCard/index.jsx";
 import PlayerModal from "./PlayerModal.jsx";
+import { checkPlayerAchievements } from "./utils/checkPlayerAchievements.js";
 
 function Players() {
   const [players, setPlayers] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [achievements, setAchievements] = useState(null);
+  const [playerAchievements, setPlayerAchievements] = useState(null);
 
   useEffect(() => {
     api
       .getPlayers()
       .then((response) => {
-        console.log(response)
         const sortedPlayers = response.data.sort(
           (a, b) => b.gamesWon - a.gamesWon
         );
         setPlayers(sortedPlayers);
       })
       .catch((error) => console.log(error));
+    api.getAchievements().then((res) => {
+      console.log(res.data);
+      setAchievements(res.data);
+    });
   }, []);
 
   const handlePlayerCardClick = (player) => {
+    const stats = checkPlayerAchievements(player.username, achievements);
+    setPlayerAchievements(stats);
     setSelectedPlayer(player);
     setIsModalOpen(true);
   };
@@ -58,13 +67,12 @@ function Players() {
                   image={p.image}
                   username={p.username}
                   winned={p.gamesWon}
-                  stats={[
-                    { label: "Jugadas", value: p.gamesPlayed },
-                    {
-                      label: "PPP",
-                      value: (p.totalScore / p.gamesPlayed).toFixed(1),
-                    },
-                  ]}
+                  achievements={checkPlayerAchievements(
+                    p.username,
+                    achievements
+                  )}
+                  played={p.gamesPlayed}
+                  average={p.gamesPlayed === 0 ? "-" : ((p.totalScore / p.gamesPlayed).toFixed(1))}
                   width="30%"
                   margin="10px"
                   onClick={() => handlePlayerCardClick(p)}
@@ -76,6 +84,7 @@ function Players() {
       {isModalOpen && selectedPlayer && (
         <PlayerModal
           player={selectedPlayer}
+          stats={playerAchievements}
           onClose={() => setIsModalOpen(false)}
         />
       )}

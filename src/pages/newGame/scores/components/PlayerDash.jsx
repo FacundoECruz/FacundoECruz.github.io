@@ -2,8 +2,9 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { Typography, Button, Box } from "@mui/material";
+import AchievementsBox from "../../../../components/achievements/AchievementsBox";
 
-const PlayerDash = ({ player, index, dispatch, types }) => {
+const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
   return (
     <Box
       sx={{
@@ -16,24 +17,27 @@ const PlayerDash = ({ player, index, dispatch, types }) => {
         bgcolor: "black",
       }}
     >
-      <Typography
-        variant="h2"
-        sx={{
-          mb: 2,
-          ml: 1,
-          color: "white",
-          fontFamily: "'Bodoni Moda', serif",
-          fontSize: player.username.length > 9 ? "20px" : "25px",
-        }}
-      >
-        {player.username}
-      </Typography>
+      <Box sx={{display: "flex", flexDirection: "row"}}>
+        <Typography
+          variant="h2"
+          sx={{
+            mb: 2,
+            ml: 1,
+            color: "white",
+            fontFamily: "'Bodoni Moda', serif",
+            fontSize: player.username.length > 9 ? "20px" : "25px",
+          }}
+        >
+          {player.username}
+        </Typography>
+        <AchievementsBox data={achievements} />
+      </Box>
       <Box
         sx={{
           display: "flex",
           flexDirection: "row",
           alignItems: "flex-end",
-          maxHeight: "80px"
+          maxHeight: "80px",
         }}
       >
         <Box sx={{ mb: 2, mt: 2 }}>
