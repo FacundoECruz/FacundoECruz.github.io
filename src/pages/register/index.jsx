@@ -14,6 +14,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ImageWithChangeButton as ImageWithChangeButton_ } from "../edit/ImageWithChangeButton.jsx";
 import { useAuth as _useAuth } from "../../utils/AuthContext";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import Tooltip from "@mui/material/Tooltip";
+import AssociateModal from "./components/AssociateModal.jsx";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 function Copyright(props) {
   return (
@@ -39,8 +45,12 @@ export default function SignInSide({
   useAuth = _useAuth,
 }) {
   const [imageUrl, setImageUrl] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [usernameValue, setUsernameValue] = useState("");
+  const [removePlayer, setRemovePlayer] = useState(false);
   const navigate = useNavigate();
-  const { user, register, registerError } = useAuth();
+  const { user, register, registerError, associate } = useAuth();
 
   useEffect(() => {
     if (user) {
@@ -50,11 +60,6 @@ export default function SignInSide({
       "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg"
     );
   }, [navigate, user]);
-
-  // useEffect(() => {
-  //   console.log("registerError");
-  //   console.log(registerError);
-  // }, [registerError]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,9 +71,22 @@ export default function SignInSide({
       password: password.value,
       image: imageUrl,
     };
-
-    register(formData);
+    if(removePlayer)
+      associate(formData)
+    else
+      register(formData);
   };
+
+  function handleSelectedPlayer() {
+    setUsernameValue(selectedPlayer.username);
+    setOpenModal(false);
+    setRemovePlayer(true);
+  }
+
+  function handleRemovePlayer(){
+    setRemovePlayer(false)
+    setUsernameValue("")
+  }
 
   const styles = {
     paperContainer: {
@@ -127,6 +145,32 @@ export default function SignInSide({
               label="Usuario"
               name="username"
               autoFocus
+              value={usernameValue}
+              onChange={(e) => setUsernameValue(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {!removePlayer ? (
+                      <Tooltip title="Asociar con un jugador ya existente">
+                        <IconButton
+                          edge="end"
+                          onClick={() => setOpenModal(true)}
+                        >
+                          <GroupAddIcon sx={{ color: "blue" }} />
+                        </IconButton>
+                      </Tooltip>
+                    ) : null}
+
+                    {removePlayer ? (
+                      <Tooltip title="Remover">
+                      <IconButton edge="end" onClick={() => handleRemovePlayer()}>
+                        <HighlightOffIcon />
+                      </IconButton>
+                      </Tooltip>
+                    ) : null}
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               margin="normal"
@@ -171,6 +215,13 @@ export default function SignInSide({
               Registrarse
             </Button>
             <Copyright sx={{ mt: 5 }} />
+            <AssociateModal
+              open={openModal}
+              handleClose={() => setOpenModal(false)}
+              selectedPlayer={selectedPlayer}
+              setSelectedPlayer={setSelectedPlayer}
+              handleSelectedPlayer={handleSelectedPlayer}
+            />
           </Box>
         </Box>
       </Grid>
