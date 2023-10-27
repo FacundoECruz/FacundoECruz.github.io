@@ -40,6 +40,20 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       });
   };
 
+  const associate = (formData) => {
+    setRegisterError(null)
+    api
+      .associateUser(formData)
+      .then((res) => {
+        const user = res.data.username;
+        window.localStorage.setItem("user", user);
+        setUser(user);
+      })
+      .catch((err) => {
+        setRegisterError(err.response.data);
+      });
+  }
+
   const logout = () => {
     window.localStorage.removeItem("user");
     setUser(null);
@@ -47,7 +61,7 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, loginError, registerError, register }}
+      value={{ user, login, logout, loginError, registerError, register, associate }}
     >
       {children}
     </AuthContext.Provider>

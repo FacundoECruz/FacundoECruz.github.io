@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import Stars from "../../components/Stars";
 import {
@@ -11,8 +12,9 @@ import {
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import SportsScoreIcon from "@mui/icons-material/SportsScore";
+import AchievementsBox from "../../components/achievements/AchievementsBox";
 
-function PlayerModal({ player, onClose }) {
+function PlayerModal({ player, onClose, stats }) {
   const defaultImage =
     "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg";
 
@@ -84,6 +86,7 @@ function PlayerModal({ player, onClose }) {
                   : (player.totalScore / player.gamesPlayed).toFixed(1)}
               </Typography>
             </Box>
+            <AchievementsBox data={stats}/>
           </CardContent>
         </Card>
         <Button onClick={onClose} sx={{ color: "red" }}>

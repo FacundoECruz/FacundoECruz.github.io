@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     api
-      .getPlayers()
+      .getUsers()
       // eslint-disable-next-line no-unused-vars
       .then((res) => {
         if (res.data) {

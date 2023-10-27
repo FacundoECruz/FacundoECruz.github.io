@@ -22,11 +22,6 @@ export function useScores() {
     setStatus(JSON.parse(window.localStorage.getItem("status")));
   }, [playersRound]);
 
-  // useEffect(() => {
-  //   console.log("***playersRound***");
-  //   console.log(playersRound);
-  // }, [playersRound]);
-
   function nextRound() {
     setVarCheck(false);
     const playersLost = playersRound.map((p) => {
@@ -44,6 +39,8 @@ export function useScores() {
       api
         .nextRound(playersRound, gameId)
         .then((res) => {
+          console.log("***nextRound res.data***");
+          console.log(res.data);
           dispatch({
             type: types.nextRound,
             newState: res.data.newRoundState,
@@ -64,7 +61,12 @@ export function useScores() {
           const table = res.data.newRoundState;
           const uiTable = table.map((p) => {
             const { username, score, image, history } = p;
-            return { username: username, score: score, image: image, history: history };
+            return {
+              username: username,
+              score: score,
+              image: image,
+              history: history,
+            };
           });
           uiTable.sort((a, b) => b.score - a.score);
           window.localStorage.setItem("table", JSON.stringify(uiTable));
@@ -80,9 +82,13 @@ export function useScores() {
   function prevRound() {
     setVarCheck(true);
     const gameId = window.localStorage.getItem("gameId");
+    console.log("gameId")
+    console.log(gameId)
     api
       .prevRound(gameId)
       .then((res) => {
+        console.log("***prevRound res.data***");
+        console.log(res.data);
         dispatch({ type: types.nextRound, newState: res.data.newRoundState });
         window.localStorage.setItem("round", res.data.round);
         window.localStorage.setItem("status", JSON.stringify(res.data.status));
@@ -93,7 +99,12 @@ export function useScores() {
         const table = res.data.newRoundState;
         const uiTable = table.map((p) => {
           const { username, score, image, history } = p;
-          return { username: username, score: score, image: image, history: history };
+          return {
+            username: username,
+            score: score,
+            image: image,
+            history: history,
+          };
         });
         uiTable.sort((a, b) => b.score - a.score);
         window.localStorage.setItem("table", JSON.stringify(uiTable));

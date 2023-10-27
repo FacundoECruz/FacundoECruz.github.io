@@ -45,6 +45,11 @@ export default function Login({useAuth = _useAuth}) {
     }
   }, [navigate, user]);
 
+  // useEffect(() => {
+  //   console.log("loginError")
+  //   console.log(loginError)
+  // })
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { password, username } = e.target.elements;

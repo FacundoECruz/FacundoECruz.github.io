@@ -8,8 +8,19 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Stars from "../Stars.jsx";
+import AchievementsBox from "../achievements/AchievementsBox.jsx";
 
-function PlayerCard({ image, username, winned, stats, width, margin, onClick }) {
+function PlayerCard({
+  image,
+  username,
+  winned,
+  achievements,
+  played,
+  average,
+  width,
+  margin,
+  onClick,
+}) {
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const defaultUserImage =
     "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg";
@@ -56,11 +67,15 @@ function PlayerCard({ image, username, winned, stats, width, margin, onClick }) 
           <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
             <Stars value={winned} />
           </Box>
-          {stats.map((stat, index) => (
-            <Typography key={index} variant="body2" sx={{ fontWeight: "bold" }}>
-              {stat.label}: {isNaN(stat.value) ? "-" : stat.value}
-            </Typography>
-          ))}
+          <AchievementsBox data={achievements} />
+          <Box sx={{display: "flex" }}>
+            <Typography>Jugadas: </Typography>
+            <Typography sx={{color: "yellow", ml: "4px"}}>{played}</Typography>
+          </Box>
+          <Box sx={{display: "flex" }}>
+            <Typography>Prom: </Typography>
+            <Typography sx={{color: "yellow", ml: "4px"}}>{average}</Typography>
+          </Box>
         </Box>
       </CardContent>
     </Card>
