@@ -15,12 +15,14 @@ const api = {
   getPlayer: (username) => server.get(`/players/${username}`),
   createPlayer: (playerData) => server.post("/v1/players", playerData),
   getPlayers: () => server.get("/players"),
+  getUnregisteredPlayers: () => server.get("/v1/players"),
   getUser: (username) => server.get(`/users/${username}`),
   login: (data) => server.post("/users/login", data),
   createUser: (userData) => server.post("/v1/users", userData),
   getUsers: () => server.get("/users"),
   editUser: (username, userData) =>
     server.put(`/users/${username}`, userData),
+  associateUser: (userData) => server.post("/v1/users/associate", userData),
   deleteUser: (username) => server.delete(`/users/${username}`),
   nextRound: (playersRound, gameId) =>
     server.put("/v1/games/next", { playersRound: playersRound, gameId: gameId }),
@@ -32,6 +34,7 @@ const api = {
       user: user,
       winner: winner,
     }),
+    getAchievements: () => server.get("/achievements")
 };
 
 export default api;
