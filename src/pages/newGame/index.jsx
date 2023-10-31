@@ -16,11 +16,9 @@ function NewGame() {
       return "idle";
     }
   });
-  const [loading, setLoading] = useState(false);
   const achievements = useAchievements();
 
   function handleStartGame(players) {
-    setLoading(true)
     const table = window.localStorage.getItem("table");
     if (table) {
       window.localStorage.removeItem("table");
@@ -48,7 +46,6 @@ function NewGame() {
         "players",
         JSON.stringify(playersWithHistory)
       );
-      setLoading(false);
       setGameState("in progress");
     });
   }
@@ -85,7 +82,6 @@ function NewGame() {
       gameState={gameState}
       setGameState={setGameState}
       handleStartGame={handleStartGame}
-      loading={loading}
     />
   ) : (
     <Scores
