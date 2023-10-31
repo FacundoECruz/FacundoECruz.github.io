@@ -48,7 +48,7 @@ export default function SignInSide({
   const [openModal, setOpenModal] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [usernameValue, setUsernameValue] = useState("");
-  const [removePlayer, setRemovePlayer] = useState(false);
+  const [removePlayerToAssociate, setRemovePlayerToAssociate] = useState(false);
   const navigate = useNavigate();
   const { user, register, registerError, associate } = useAuth();
 
@@ -71,7 +71,7 @@ export default function SignInSide({
       password: password.value,
       image: imageUrl,
     };
-    if(removePlayer)
+    if(removePlayerToAssociate)
       associate(formData)
     else
       register(formData);
@@ -80,11 +80,11 @@ export default function SignInSide({
   function handleSelectedPlayer() {
     setUsernameValue(selectedPlayer.username);
     setOpenModal(false);
-    setRemovePlayer(true);
+    setRemovePlayerToAssociate(true);
   }
 
   function handleRemovePlayer(){
-    setRemovePlayer(false)
+    setRemovePlayerToAssociate(false)
     setUsernameValue("")
   }
 
@@ -150,7 +150,7 @@ export default function SignInSide({
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    {!removePlayer ? (
+                    {!removePlayerToAssociate ? (
                       <Tooltip title="Asociar con un jugador ya existente">
                         <IconButton
                           edge="end"
@@ -161,7 +161,7 @@ export default function SignInSide({
                       </Tooltip>
                     ) : null}
 
-                    {removePlayer ? (
+                    {removePlayerToAssociate ? (
                       <Tooltip title="Remover">
                       <IconButton edge="end" onClick={() => handleRemovePlayer()}>
                         <HighlightOffIcon />
