@@ -71,15 +71,21 @@ function ScoreBoard({ table }) {
               sx={{ display: "flex", justifyContent: "space-evenly" }}
             >
               {player.history.map((roundResult, index) => {
-                if (roundResult > 0) {
+                if (roundResult > 0 && roundResult <= 9) {
                   return (
                     <Typography key={index} sx={{ color: "green", fontSize: "20px" }}>
                       {roundResult}
                     </Typography>
                   );
-                } else {
+                } else if(roundResult < 0){
                   return (
                     <Typography key={index} sx={{ color: "red", fontSize: "20px" }}>
+                      {roundResult}
+                    </Typography>
+                  );
+                } else if(roundResult > 9){
+                  return (
+                    <Typography key={index} sx={{ color: "lightblue", fontSize: "20px" }}>
                       {roundResult}
                     </Typography>
                   );
