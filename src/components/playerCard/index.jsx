@@ -10,6 +10,7 @@ import {
 import Stars from "../Stars.jsx";
 import AchievementsBox from "../achievements/AchievementsBox.jsx";
 
+
 function PlayerCard({
   image,
   username,
@@ -37,11 +38,11 @@ function PlayerCard({
           transform: "translate(-5px, -5px)",
         },
       }}
-      onClick={onClick}
     >
       <CardMedia
         image={image === "" ? defaultUserImage : image}
         title={username}
+        onClick={onClick}
         sx={{
           height: "150px",
         }}
