@@ -5,7 +5,6 @@ import { types } from "../../../../utils/reducerTypes";
 import { checkPlayerAchievements } from "../../../players/utils/checkPlayerAchievements";
 
 function PlayerScoreEntry({playersRound, dispatch, achievements}) {
-
   return (
     <Box mb={1}>
       {playersRound.map((p, i) => {
