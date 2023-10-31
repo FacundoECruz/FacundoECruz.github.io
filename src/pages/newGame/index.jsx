@@ -48,6 +48,7 @@ function NewGame() {
         "players",
         JSON.stringify(playersWithHistory)
       );
+      setLoading(false);
       setGameState("in progress");
     });
   }
