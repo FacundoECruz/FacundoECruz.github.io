@@ -9,9 +9,9 @@ function useAchievements() {
       .getAchievements()
       .then(res => {
         setAchievements(res.data)
+        window.localStorage.setItem("achievements", JSON.stringify(res.data))
       })
   }, []);
-
 
   return { achievements };
 }
