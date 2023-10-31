@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth as _useAuth } from "../../utils/AuthContext";
-
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Copyright(props) {
   return (
@@ -35,9 +35,10 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function Login({useAuth = _useAuth}) {
+export default function Login({ useAuth = _useAuth }) {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {user, login, loginError} = useAuth()
+  const { user, login, loginError } = useAuth();
 
   useEffect(() => {
     if (user) {
@@ -45,20 +46,15 @@ export default function Login({useAuth = _useAuth}) {
     }
   }, [navigate, user]);
 
-  // useEffect(() => {
-  //   console.log("loginError")
-  //   console.log(loginError)
-  // })
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const { password, username } = e.target.elements;
     const formData = {
       username: username.value,
       password: password.value,
     };
-    login(formData)
-    
+    login(formData);
   };
 
   const styles = {
@@ -135,7 +131,9 @@ export default function Login({useAuth = _useAuth}) {
               autoComplete="current-password"
             />
 
-            {loginError ? <Typography color="red">{loginError}</Typography> : null}
+            {loginError ? (
+              <Typography color="red">{loginError}</Typography>
+            ) : null}
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -147,7 +145,7 @@ export default function Login({useAuth = _useAuth}) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Ingresar
+              {loading ? <CircularProgress /> : "Ingresar"}
             </Button>
             <Grid container>
               <Grid item xs>
