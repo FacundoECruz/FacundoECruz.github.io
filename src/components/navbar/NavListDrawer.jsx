@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from "@mui/material";
 
-function NavListDrawer({ navLinks }) {
+function NavListDrawer({ navLinks, onClose }) {
   return (
     <div
       style={{
@@ -25,7 +25,7 @@ function NavListDrawer({ navLinks }) {
         <nav>
           <List>
             {navLinks.map((item) => (
-              <ListItem disablePadding key={item.title}>
+              <ListItem disablePadding key={item.title} onClick={() => onClose()}>
                 <ListItemButton component="a" href={item.path}>
                   <ListItemIcon sx={{color: "white"}}>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.title} sx={{color: "white"}}/>

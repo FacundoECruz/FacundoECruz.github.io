@@ -23,14 +23,15 @@ function Players() {
         setPlayers(sortedPlayers);
       })
       .catch((error) => console.log(error));
-    api.getAchievements().then((res) => {
-      console.log(res.data);
+    api.getAchievements()
+    .then((res) => {
       setAchievements(res.data);
-    });
+    })
+    .catch((error) => console.log(error))
   }, []);
 
   const handlePlayerCardClick = (player) => {
-    const stats = checkPlayerAchievements(player.username, achievements);
+    const stats = checkPlayerAchievements(player, achievements);
     setPlayerAchievements(stats);
     setSelectedPlayer(player);
     setIsModalOpen(true);

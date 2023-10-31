@@ -8,7 +8,7 @@ import Header from "./components/Header";
 import PlayerScoreEntry from "./components/PlayerScoreEntry";
 import ScoreboardControlButtons from "./components/ScoreboardControlButtons";
 
-function Scores({ setGameState, playAgain, backToForm, finishGame, achievements }) {
+function Scores({ setGameState, playAgain, backToForm, finishGame }) {
   const {
     round,
     status,
@@ -26,10 +26,10 @@ function Scores({ setGameState, playAgain, backToForm, finishGame, achievements 
     const players = finishTable.map((p) => {
       return p.username;
     });
-    console.log("***players in setPlayAgain***");
-    console.log(players);
     playAgain(players);
   }
+
+  const achievements = JSON.parse(window.localStorage.getItem("achievements"))
 
   return (
     <div

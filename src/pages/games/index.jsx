@@ -12,7 +12,6 @@ function Games() {
       const allGames = res.data;
       const completedGames = allGames.filter((game) => game.currentRound >= 9);
       completedGames.reverse();
-      console.log(completedGames);
       setGamesToDisplay(completedGames);
     });
   }, []);

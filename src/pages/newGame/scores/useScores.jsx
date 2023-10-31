@@ -39,8 +39,6 @@ export function useScores() {
       api
         .nextRound(playersRound, gameId)
         .then((res) => {
-          console.log("***nextRound res.data***");
-          console.log(res.data);
           dispatch({
             type: types.nextRound,
             newState: res.data.newRoundState,
@@ -82,13 +80,9 @@ export function useScores() {
   function prevRound() {
     setVarCheck(true);
     const gameId = window.localStorage.getItem("gameId");
-    console.log("gameId")
-    console.log(gameId)
     api
       .prevRound(gameId)
       .then((res) => {
-        console.log("***prevRound res.data***");
-        console.log(res.data);
         dispatch({ type: types.nextRound, newState: res.data.newRoundState });
         window.localStorage.setItem("round", res.data.round);
         window.localStorage.setItem("status", JSON.stringify(res.data.status));

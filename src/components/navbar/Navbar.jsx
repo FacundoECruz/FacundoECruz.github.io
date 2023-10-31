@@ -69,6 +69,7 @@ function Navbar({dataFromServer}) {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setOpen(false)
   };
 
   const handleLogout = () => {
@@ -76,11 +77,6 @@ function Navbar({dataFromServer}) {
     setUserData(null);
     setAnchorEl(null);
   };
-
-  // useEffect(() => {
-  //   console.log("***user***")
-  //   console.log(user)
-  // }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -222,7 +218,7 @@ function Navbar({dataFromServer}) {
         onClose={() => setOpen(false)}
         sx={{ display: "flex" }}
       >
-        <NavListDrawer navLinks={navLinks} />
+        <NavListDrawer navLinks={navLinks} onClose={handleMenuClose} />
       </Drawer>
     </>
   );
