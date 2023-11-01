@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
-import SportsScoreIcon from "@mui/icons-material/SportsScore";
 import AchievementsBox from "../../components/achievements/AchievementsBox";
 
 function PlayerModal({ player, onClose, stats }) {
@@ -71,16 +70,12 @@ function PlayerModal({ player, onClose, stats }) {
             </Box>
             <Box sx={rowStyles}>
               <SportsEsportsIcon sx={iconStyles("orange")}/>
-              <Typography>Partidas Jugadas: {player.gamesPlayed}</Typography>
-            </Box>
-            <Box sx={rowStyles}>
-              <SportsScoreIcon sx={iconStyles("blue")}/>
-              <Typography>Partidas Ganadas: {player.gamesWon}</Typography>
+              <Typography>Jugadas: {player.gamesPlayed}</Typography>
             </Box>
             <Box sx={rowStyles}>
               <MilitaryTechIcon sx={iconStyles("purple")}/>
               <Typography>
-                Promedio por partida:
+                Promedio:
                 {player.totalScore === 0
                   ? "-"
                   : (player.totalScore / player.gamesPlayed).toFixed(1)}
