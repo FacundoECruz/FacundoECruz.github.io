@@ -13,8 +13,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Paper from "@mui/material/Paper";
 import {ImageWithChangeButton as ImageWithChangeButton_} from "./ImageWithChangeButton.jsx";
 import CircularProgress from "@mui/material/CircularProgress";
-import DoneIcon from "@mui/icons-material/Done";
 import { useAuth } from "../../utils/AuthContext";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -42,8 +43,8 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
-  const [message, setMessage] = useState("");
   const [editErrorMsg, setEditErrorMsg] = useState(null);
+  const navigate = useNavigate() 
 
   useEffect(() => {
     api
@@ -79,8 +80,16 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
       // eslint-disable-next-line no-unused-vars
       .then((res) => {
         setStatus("success");
-        setMessage("Cambios guardados");
         setEditErrorMsg(null);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          text: 'Editado correctamente',
+          showConfirmButton: false,
+          timer: 1500,
+          width: "50%",
+        })
+        navigate("/");
       })
       .catch((err) => {
         setEditErrorMsg(err.response.data)
@@ -168,12 +177,6 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
               />
-              {message !== "" ? (
-                <Box>
-                  <Typography sx={{ color: "green" }}>{message}</Typography>
-                  <DoneIcon />
-                </Box>
-              ) : null}
             </Box>
             <Button type="submit" fullWidth sx={{ mt: 3, mb: 2 }}>
               {status === "loading" ? (
