@@ -69,7 +69,6 @@ function Navbar({dataFromServer}) {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    setOpen(false)
   };
 
   const handleLogout = () => {
@@ -77,6 +76,11 @@ function Navbar({dataFromServer}) {
     setUserData(null);
     setAnchorEl(null);
   };
+
+  // useEffect(() => {
+  //   console.log("***user***")
+  //   console.log(user)
+  // }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -207,7 +211,7 @@ function Navbar({dataFromServer}) {
               },
             }}
           >
-            {userData ? <UserCard userData={userData} handleLogout={handleLogout}/> : null}
+            {userData ? <UserCard userData={userData} handleLogout={handleLogout} close={setAnchorEl}/> : null}
           </Menu>
         </Toolbar>
       </AppBar>
@@ -218,7 +222,7 @@ function Navbar({dataFromServer}) {
         onClose={() => setOpen(false)}
         sx={{ display: "flex" }}
       >
-        <NavListDrawer navLinks={navLinks} onClose={handleMenuClose} />
+        <NavListDrawer navLinks={navLinks} onClose={() => setOpen(false)}/>
       </Drawer>
     </>
   );

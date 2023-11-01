@@ -11,7 +11,6 @@ function Players() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [achievements, setAchievements] = useState(null);
-  const [playerAchievements, setPlayerAchievements] = useState(null);
 
   useEffect(() => {
     api
@@ -23,16 +22,11 @@ function Players() {
         setPlayers(sortedPlayers);
       })
       .catch((error) => console.log(error));
-    api.getAchievements()
-    .then((res) => {
-      setAchievements(res.data);
-    })
-    .catch((error) => console.log(error))
+      const ach = JSON.parse(window.localStorage.getItem("achievements"))
+      setAchievements(ach);
   }, []);
 
   const handlePlayerCardClick = (player) => {
-    const stats = checkPlayerAchievements(player, achievements);
-    setPlayerAchievements(stats);
     setSelectedPlayer(player);
     setIsModalOpen(true);
   };
@@ -74,7 +68,7 @@ function Players() {
                   )}
                   played={p.gamesPlayed}
                   average={p.gamesPlayed === 0 ? "-" : ((p.totalScore / p.gamesPlayed).toFixed(1))}
-                  width="30%"
+                  width="45%"
                   margin="10px"
                   onClick={() => handlePlayerCardClick(p)}
                 />
@@ -85,7 +79,7 @@ function Players() {
       {isModalOpen && selectedPlayer && (
         <PlayerModal
           player={selectedPlayer}
-          stats={playerAchievements}
+          stats={checkPlayerAchievements(selectedPlayer.username, achievements)}
           onClose={() => setIsModalOpen(false)}
         />
       )}

@@ -10,7 +10,6 @@ import {
 import Stars from "../Stars.jsx";
 import AchievementsBox from "../achievements/AchievementsBox.jsx";
 
-
 function PlayerCard({
   image,
   username,
@@ -25,6 +24,7 @@ function PlayerCard({
   const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const defaultUserImage =
     "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg";
+  
 
   return (
     <Card
