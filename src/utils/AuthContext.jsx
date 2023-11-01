@@ -2,6 +2,7 @@
 import React from "react";
 import { createContext, useContext, useState } from "react";
 import api from "./api-client";
+import Swal from "sweetalert2";
 
 const AuthContext = createContext();
 
@@ -14,7 +15,7 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
   const [loginError, setLoginError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
 
-  const login = (data) => {
+  const login = async (data) => {
     setLoginError(null);
     const validateError = validateLoginData(data);
     if (validateError === "") {
@@ -40,6 +41,14 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       api
         .createUser(formData)
         .then((res) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            text: 'Registrado correctamente',
+            showConfirmButton: false,
+            timer: 1500,
+            width: "50%",
+          })
           const user = res.data.username;
           window.localStorage.setItem("user", user);
           setUser(user);
@@ -59,6 +68,14 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       api
         .associateUser(formData)
         .then((res) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            text: 'Asociado correctamente',
+            showConfirmButton: false,
+            timer: 1500,
+            width: "50%",
+          })
           const user = res.data.username;
           window.localStorage.setItem("user", user);
           setUser(user);
@@ -100,6 +117,16 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
   }
 
   const logout = () => {
+    Swal.fire({
+      text: 'Nos vemo!',
+      imageUrl: 'https://res.cloudinary.com/dfknsvqer/image/upload/v1698851914/altisima/diegote_o4bxs8.jpg',
+      imageWidth: 150,
+      imageHeight: 150,
+      imageAlt: 'bye bye image',
+      width: "50%",
+      timer: 1000,
+      showConfirmButton: false,
+    })
     window.localStorage.removeItem("user");
     setUser(null);
   };

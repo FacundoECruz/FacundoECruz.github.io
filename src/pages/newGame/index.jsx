@@ -3,7 +3,6 @@ import { useState } from "react";
 import GameForm from "./gameForm";
 import Scores from "./scores";
 import api from "../../utils/api-client";
-import useAchievements from "../../components/achievements/useAchievements";
 
 function NewGame() {
   const [gameState, setGameState] = useState(() => {
@@ -16,7 +15,7 @@ function NewGame() {
       return "idle";
     }
   });
-  const achievements = useAchievements();
+
 
   function handleStartGame(players) {
     const table = window.localStorage.getItem("table");

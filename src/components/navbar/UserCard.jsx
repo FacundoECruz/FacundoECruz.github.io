@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
-function UserCard({ userData, handleLogout }) {
+function UserCard({ userData, handleLogout, close }) {
   const userAverage = (userData.totalScore / userData.gamesPlayed).toFixed(1);
 
   return (
@@ -47,6 +47,7 @@ function UserCard({ userData, handleLogout }) {
           variant="contained"
           component="a"
           href="#/edit"
+          onClick={() => close()}
           sx={{
             bgcolor: "lightgreen",
             color: "black",

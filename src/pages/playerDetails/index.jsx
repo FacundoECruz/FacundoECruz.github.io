@@ -9,6 +9,7 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import PolylineIcon from '@mui/icons-material/Polyline';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import Swal from "sweetalert2";
 
 function PlayerDetails() {
   const { username } = useParams();
@@ -21,6 +22,7 @@ function PlayerDetails() {
       .getPlayer(username)
       .then((response) => {
         const [player] = response.data
+        console.log(player)
         setPlayer(player)
       })
       .catch((error) => console.log(error));
@@ -29,6 +31,7 @@ function PlayerDetails() {
   return (
     <>
       {player ? (
+        
         <Box>
           <PlayerCard image={player.image} username={player.username} />
           <PlayerStatics

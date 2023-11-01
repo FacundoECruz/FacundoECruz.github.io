@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React from "react";
@@ -18,8 +19,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import Tooltip from "@mui/material/Tooltip";
-import AssociateModal from "./components/AssociateModal.jsx";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import Swal from "sweetalert2";
+import api from "../../utils/api-client.js";
 
 function Copyright(props) {
   return (
@@ -45,10 +47,10 @@ export default function SignInSide({
   useAuth = _useAuth,
 }) {
   const [imageUrl, setImageUrl] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [usernameValue, setUsernameValue] = useState("");
   const [removePlayerToAssociate, setRemovePlayerToAssociate] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [hasFocus, setHasFocus] = useState(false);
   const navigate = useNavigate();
   const { user, register, registerError, associate } = useAuth();
 
@@ -61,9 +63,24 @@ export default function SignInSide({
     );
   }, [navigate, user]);
 
+  useEffect(() => {
+    fetchOptions();
+  }, []);
+
+  async function fetchOptions() {
+    try {
+      const playersResponse = await api.getUnregisteredPlayers();
+      const playersUsername = playersResponse.data.map((p) => {
+        return p.username;
+      });
+      setOptions(playersUsername);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { email, password, username } = e.target.elements;
     const formData = {
       username: username.value,
@@ -71,21 +88,49 @@ export default function SignInSide({
       password: password.value,
       image: imageUrl,
     };
-    if(removePlayerToAssociate)
-      associate(formData)
-    else
-      register(formData);
+    if (removePlayerToAssociate) associate(formData);
+    else register(formData);
   };
 
-  function handleSelectedPlayer() {
-    setUsernameValue(selectedPlayer.username);
-    setOpenModal(false);
-    setRemovePlayerToAssociate(true);
+  function handleRemovePlayer() {
+    setRemovePlayerToAssociate(false);
+    setUsernameValue("");
   }
 
-  function handleRemovePlayer(){
-    setRemovePlayerToAssociate(false)
-    setUsernameValue("")
+  function openAssociateOffer() {
+    if (!hasFocus) {
+      Swal.fire({
+        title: "Ya jugaste una partida donde se usó este anotador?",
+        text: "Podés asociar tu cuenta al perfil que ya está creado",
+        showCancelButton: true,
+        confirmButtonText: "Asociar",
+        denyButtonText: "Crear nuevo",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          openSearchPlayerToAssociate();
+        }
+      });
+      setHasFocus(true);
+    }
+  }
+
+  function openSearchPlayerToAssociate() {
+    Swal.fire({
+      title: "Asociar jugador",
+      text: "Si ya tenes un perfil en la base de datos podes asociar sus logros y resultados a tu cuenta",
+      input: "select",
+      inputOptions: { options },
+      inputPlaceholder: "Seleccionar jugador",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (result.value !== "") {
+          const selectedValue = result.value;
+          setUsernameValue(options[selectedValue]);
+          setRemovePlayerToAssociate(true);
+        }
+      }
+    });
   }
 
   const styles = {
@@ -94,7 +139,7 @@ export default function SignInSide({
         " url('https://res.cloudinary.com/dfknsvqer/image/upload/v1687094811/istockphoto-1212342896-612x612-1_dlvflo.jpg')",
     },
   };
-
+  
   return (
     <Grid
       container
@@ -144,7 +189,8 @@ export default function SignInSide({
               id="username"
               label="Usuario"
               name="username"
-              autoFocus
+              onFocus={() => openAssociateOffer()}
+              disabled={removePlayerToAssociate}
               value={usernameValue}
               onChange={(e) => setUsernameValue(e.target.value)}
               InputProps={{
@@ -154,7 +200,7 @@ export default function SignInSide({
                       <Tooltip title="Asociar con un jugador ya existente">
                         <IconButton
                           edge="end"
-                          onClick={() => setOpenModal(true)}
+                          onClick={() => openSearchPlayerToAssociate()}
                         >
                           <GroupAddIcon sx={{ color: "blue" }} />
                         </IconButton>
@@ -163,9 +209,12 @@ export default function SignInSide({
 
                     {removePlayerToAssociate ? (
                       <Tooltip title="Remover">
-                      <IconButton edge="end" onClick={() => handleRemovePlayer()}>
-                        <HighlightOffIcon />
-                      </IconButton>
+                        <IconButton
+                          edge="end"
+                          onClick={() => handleRemovePlayer()}
+                        >
+                          <HighlightOffIcon />
+                        </IconButton>
                       </Tooltip>
                     ) : null}
                   </InputAdornment>
@@ -215,13 +264,6 @@ export default function SignInSide({
               Registrarse
             </Button>
             <Copyright sx={{ mt: 5 }} />
-            <AssociateModal
-              open={openModal}
-              handleClose={() => setOpenModal(false)}
-              selectedPlayer={selectedPlayer}
-              setSelectedPlayer={setSelectedPlayer}
-              handleSelectedPlayer={handleSelectedPlayer}
-            />
           </Box>
         </Box>
       </Grid>

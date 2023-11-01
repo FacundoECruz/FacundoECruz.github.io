@@ -3,7 +3,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Autocomplete, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
 import api from "../../../utils/api-client";
@@ -13,7 +13,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "90%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -64,6 +64,7 @@ export default function AssociateModal({ open, handleClose, selectedPlayer, setS
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <Typography sx={{my: 1}}>Si ya tenes un perfil creado en la base de datos podes asociar tu cuenta a ese jugador</Typography>
           <Autocomplete
             options={options}
             value={selectedPlayer}
