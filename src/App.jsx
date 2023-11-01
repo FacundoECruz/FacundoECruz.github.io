@@ -16,9 +16,11 @@ import RequireAuth from "./utils/requireAuth";
 import { useEffect, useState } from "react";
 import api from "./utils/api-client.js";
 import { AuthProvider } from "./utils/AuthContext.jsx";
+import useAchievements from "./components/achievements/useAchievements.jsx";
 
 function App() {
   const [dataFromServer, setDataFromServer] = useState("loading");
+  const {achievements} = useAchievements();
 
   useEffect(() => {
     api
@@ -30,6 +32,7 @@ function App() {
         }
       })
       .catch((err) => console.log(err));
+      window.localStorage.setItem("achievements", JSON.stringify(achievements))
   });
 
   return (
