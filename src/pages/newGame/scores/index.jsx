@@ -43,7 +43,7 @@ function Scores({ setGameState, playAgain, backToForm, finishGame }) {
         minHeight: "90vh",
       }}
     >
-      <Grid container spacing={2} sx={{ mt: "1px", padding: "5px", pb: 6 }}>
+      <Grid container spacing={1} sx={{ mt: "1px", padding: "2px", pb: 4 }}>
         <Grid item xs={12} md={6}>
           <Header
             round={round}

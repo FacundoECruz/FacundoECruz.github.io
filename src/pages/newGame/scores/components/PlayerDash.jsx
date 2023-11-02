@@ -3,8 +3,17 @@
 import React from "react";
 import { Typography, Button, Box } from "@mui/material";
 import AchievementsBox from "../../../../components/achievements/AchievementsBox";
+import { useState } from "react";
+import { useEffect } from "react";
+import { hasAtLeastOneAchievement } from "../utils/hasAtLeastOneAchievement";
 
 const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
+  const [hasAchievement, setHasAchievement] = useState(false);
+
+  useEffect(() => {
+    setHasAchievement(hasAtLeastOneAchievement(achievements));
+  }, [achievements, hasAchievement]);
+
   return (
     <Box
       sx={{
@@ -17,20 +26,24 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
         bgcolor: "black",
       }}
     >
-      <Box sx={{display: "flex", flexDirection: "row"}}>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography
           variant="h2"
           sx={{
-            mb: 2,
+            mb: "3px",
             ml: 1,
             color: "white",
             fontFamily: "'Bodoni Moda', serif",
-            fontSize: player.username.length > 9 ? "20px" : "25px",
+            fontSize: player.username.length > 5 ? "20px" : "23px",
           }}
         >
           {player.username}
         </Typography>
-        <AchievementsBox data={achievements} />
+        {hasAchievement ? (
+          <Box sx={{ ml: 1 }}>
+            <AchievementsBox data={achievements} />
+          </Box>
+        ) : null}
       </Box>
       <Box
         sx={{
@@ -41,7 +54,7 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
         }}
       >
         <Box sx={{ mb: 2, mt: 2 }}>
-          <Typography variant="h6" sx={{ color: "white", fontSize: "16px" }}>
+          <Typography variant="h6" sx={{ color: "white", fontSize: "14px" }}>
             Apuesta
           </Typography>
           <Button
@@ -51,10 +64,9 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
             onClick={() => dispatch({ type: types.addBid, index: index })}
             sx={{
               bgcolor: "green",
-              "&:hover": {
-                border: "1px solid yellow",
-                color: "black",
-                bgcolor: "white",
+              "&:focus": {
+                border: "1px solid #FFD700",
+                backgroundColor: "green",
               },
             }}
           >
@@ -64,16 +76,19 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
             data-testid="reset-bid"
             onClick={() => dispatch({ type: types.resetBid, index: index })}
             sx={{
-              "&:hover": {
+              "&:focus": {
                 color: "white",
               },
+              fontSize: "10px",
+              minWidth: "32px",
+              padding: "3px 3px",
             }}
           >
             Reset
           </Button>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Typography variant="h6" sx={{ color: "white", fontSize: "16px" }}>
+          <Typography variant="h6" sx={{ color: "white", fontSize: "14px" }}>
             Pierde
           </Typography>
           <Button
@@ -83,10 +98,9 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
             onClick={() => dispatch({ type: types.addLost, index: index })}
             sx={{
               bgcolor: "red",
-              "&:hover": {
-                border: "1px solid yellow",
-                color: "black",
-                bgcolor: "white",
+              "&:focus": {
+                border: "1px solid #FFD700",
+                backgroundColor: "red",
               },
             }}
           >
@@ -96,9 +110,12 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
             data-testid="reset-lost"
             onClick={() => dispatch({ type: types.resetLost, index: index })}
             sx={{
-              "&:hover": {
+              "&:focus": {
                 color: "white",
               },
+              fontSize: "10px",
+              minWidth: "32px",
+              padding: "3px 3px",
             }}
           >
             Reset
