@@ -1,8 +1,30 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Typography } from "@mui/material";
 import { useScores } from "../useScores";
+import Swal from "sweetalert2";
 
 function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
+  function terminateGame() {
+    Swal.fire({
+      title: 'Seguro?',
+      text: "No se va a guardar la data de la partida",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, salir'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setGameState("finished");
+        window.localStorage.removeItem("cardsPerRound");
+        window.localStorage.removeItem("gameId");
+        window.localStorage.removeItem("round");
+        window.localStorage.setItem("status", JSON.stringify("finished"));
+      }
+    })
+
+  }
+
   return (
     <Box
       sx={{
@@ -12,13 +34,18 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
         alignItems: "center",
         height: "60px",
         boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
-      <Typography variant="h4" mr={2} sx={{ color: "white" }}>
+      <Typography variant="h4" mr={2} sx={{ color: "white", whiteSpace: "nowrap" }}>
         Ronda {parseInt(round)}
       </Typography>
-      {round === 9 ? <Typography variant="h6" sx={{ color: "white" }}>Ultima</Typography> : null}
-      <Typography variant="h4" mr={2} sx={{ color: "white" }}>
+      {round === 9 ? (
+        <Typography variant="h6" sx={{ color: "white", whiteSpace: "nowrap" }}>
+          Ultima
+        </Typography>
+      ) : null}
+      <Typography variant="h4" mr={2} sx={{ color: "white", whiteSpace: "nowrap" }}>
         Cartas {cardsPerRound[round - 1]}
       </Typography>
       {varCheck ? (
@@ -33,21 +60,17 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
       {round < 10 ? (
         <Button
           onClick={() => {
-            setGameState("finished");
-            window.localStorage.removeItem("cardsPerRound");
-            window.localStorage.removeItem("gameId");
-            window.localStorage.removeItem("round");
-            window.localStorage.setItem("status", JSON.stringify("finished"));
+            terminateGame();
           }}
           sx={{
             color: "red",
             width: "30px",
             height: "30px",
-            fontSize: "8px",
+            fontSize: "12px",
             border: "1px solid red",
           }}
         >
-          Terminar partida
+          Salir
         </Button>
       ) : null}
     </Box>
