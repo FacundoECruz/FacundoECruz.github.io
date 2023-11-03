@@ -89,7 +89,7 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
   );
 }
 
-function FinishedGameHeader({ table }) {
+function FinishedGameHeader() {
   return (
     <Box
       sx={{
@@ -100,10 +100,7 @@ function FinishedGameHeader({ table }) {
         mb: 2,
       }}
     >
-      <Typography sx={{ color: "white" }}>Partida terminada</Typography>
-      <Typography sx={{ color: "white" }}>
-        Gana {table[0].username} con {table[0].score} puntos!
-      </Typography>
+      <img src="https://res.cloudinary.com/dfknsvqer/image/upload/v1699023114/altisima/messi-copa_ypvk60.gif" />
     </Box>
   );
 }

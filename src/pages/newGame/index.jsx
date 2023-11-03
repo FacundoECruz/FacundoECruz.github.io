@@ -74,12 +74,12 @@ function NewGame() {
           },
           color: '#716add',
           background: '#eee url(https://res.cloudinary.com/dfknsvqer/image/upload/v1699022974/altisima/win_za9q0s.jpg)',
-          backdrop: `
-            rgba(0,0,123,0.4)
-            url("https://res.cloudinary.com/dfknsvqer/image/upload/v1699023114/altisima/messi-copa_ypvk60.gif")
-            top
-            no-repeat
-          `,
+          // backdrop: `
+          //   rgba(0,0,123,0.4)
+          //   url("https://res.cloudinary.com/dfknsvqer/image/upload/v1699023114/altisima/messi-copa_ypvk60.gif")
+          //   top
+          //   no-repeat
+          // `,
           confirmButtonText: 'Salir',
         }).then((result) => {
           if (result.isConfirmed) {
