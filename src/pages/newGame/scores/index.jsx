@@ -31,6 +31,7 @@ function Scores({ setGameState, playAgain, backToForm, finishGame }) {
 
   const achievements = JSON.parse(window.localStorage.getItem("achievements"));
 
+  
   return (
     <div
       style={{
@@ -57,7 +58,6 @@ function Scores({ setGameState, playAgain, backToForm, finishGame }) {
         <Grid item xs={12} md={6}>
           <Header
             round={round}
-            table={table}
             varCheck={varCheck}
             setGameState={setGameState}
           />

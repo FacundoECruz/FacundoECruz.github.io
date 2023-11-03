@@ -100,16 +100,16 @@ function FinishedGameHeader() {
         mb: 2,
       }}
     >
-      <img src="https://res.cloudinary.com/dfknsvqer/image/upload/v1699023114/altisima/messi-copa_ypvk60.gif" />
+      <img src="https://res.cloudinary.com/dfknsvqer/image/upload/v1699023114/altisima/messi-copa_ypvk60.gif" style={{zIndex: 1}} />
     </Box>
   );
 }
 
-function Header({ round, table, varCheck, setGameState }) {
+function Header({ round, varCheck, setGameState }) {
   const { cardsPerRound } = useScores();
 
   return round > 9 ? (
-    <FinishedGameHeader table={table} />
+    <FinishedGameHeader />
   ) : (
     <InGameHeader
       round={round}
