@@ -6,13 +6,13 @@ import Swal from "sweetalert2";
 function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
   function terminateGame() {
     Swal.fire({
-      title: 'Seguro?',
+      title: "Seguro?",
       text: "No se va a guardar la data de la partida",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, salir'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, salir",
     }).then((result) => {
       if (result.isConfirmed) {
         setGameState("finished");
@@ -21,8 +21,7 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
         window.localStorage.removeItem("round");
         window.localStorage.setItem("status", JSON.stringify("finished"));
       }
-    })
-
+    });
   }
 
   return (
@@ -37,15 +36,29 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
         overflow: "hidden",
       }}
     >
-      <Typography variant="h4" mr={2} sx={{ color: "white", whiteSpace: "nowrap" }}>
-        Ronda {parseInt(round)}
-      </Typography>
-      {round === 9 ? (
-        <Typography variant="h6" sx={{ color: "white", whiteSpace: "nowrap" }}>
-          Ultima
+      {round !== 9 ? (
+        <Typography
+          variant="h4"
+          mr={2}
+          sx={{ color: "white", whiteSpace: "nowrap" }}
+        >
+          Ronda {parseInt(round)}
         </Typography>
-      ) : null}
-      <Typography variant="h4" mr={2} sx={{ color: "white", whiteSpace: "nowrap" }}>
+      ) : (
+        <Typography
+          variant="h6"
+          mr={2}
+          sx={{ color: "white", whiteSpace: "nowrap" }}
+        >
+          Ultima Ronda
+        </Typography>
+      )}
+
+      <Typography
+        variant="h4"
+        mr={2}
+        sx={{ color: "white", whiteSpace: "nowrap" }}
+      >
         Cartas {cardsPerRound[round - 1]}
       </Typography>
       {varCheck ? (
@@ -56,8 +69,7 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
             style={{ width: "50px", height: "50px" }}
           />
         </Box>
-      ) : null}
-      {round < 10 ? (
+      ) : !varCheck && round < 10 ? (
         <Button
           onClick={() => {
             terminateGame();
