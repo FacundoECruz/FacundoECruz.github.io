@@ -2,6 +2,7 @@
 import { Box, Button } from "@mui/material";
 import UndoIcon from "@mui/icons-material/Undo";
 import { types } from "../../../../utils/reducerTypes";
+import Swal from "sweetalert2";
 
 function ScoreboardControlButtons({
   round,
@@ -16,6 +17,14 @@ function ScoreboardControlButtons({
 }) {
 
 function endGame(){
+  Swal.fire({
+    position: 'top',
+    icon: 'success',
+    title: 'Partida terminada',
+    showConfirmButton: false,
+    timer: 1500
+  })
+
   nextRound()
   finishGame()
 }

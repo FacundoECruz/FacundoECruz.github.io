@@ -54,14 +54,6 @@ function NewGame() {
   }
 
   function finishGame() {
-    Swal.fire({
-      position: 'top',
-      icon: 'success',
-      title: 'Partida terminada',
-      showConfirmButton: false,
-      timer: 1500
-    })
-
     const gameId = window.localStorage.getItem("gameId");
     const user = window.localStorage.getItem("user");
     const table = JSON.parse(window.localStorage.getItem("table"));
