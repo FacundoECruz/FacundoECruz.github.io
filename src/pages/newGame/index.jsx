@@ -73,10 +73,10 @@ function NewGame() {
             title: 'custom-title-color',
           },
           color: '#716add',
-          background: '#eee url(src/pages/newGame/scores/utils/win.jpg)',
+          background: '#eee url(https://res.cloudinary.com/dfknsvqer/image/upload/v1699022974/altisima/win_za9q0s.jpg)',
           backdrop: `
             rgba(0,0,123,0.4)
-            url("src/pages/newGame/scores/utils/messi-copa.gif")
+            url("https://res.cloudinary.com/dfknsvqer/image/upload/v1699023114/altisima/messi-copa_ypvk60.gif")
             top
             no-repeat
           `,
