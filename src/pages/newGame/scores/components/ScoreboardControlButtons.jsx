@@ -67,7 +67,7 @@ function endGame(){
             },
           }}
         >
-          Siguiente Ronda
+          {varCheck ? "Confirmar" : "Siguiente Ronda"}
         </Button>
       ) : round === 9 && status === "in progress" ? (
         <Button

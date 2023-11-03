@@ -2,6 +2,7 @@ import { useEffect, useState, useReducer } from "react";
 import { scoresReducer as reducer } from "./scoresReducer";
 import { types } from "../../../utils/reducerTypes";
 import api from "../../../utils/api-client";
+import Swal from "sweetalert2";
 
 export function useScores() {
   const [cardsPerRound, setCardsPerRound] = useState([]);
@@ -29,9 +30,11 @@ export function useScores() {
     });
     const invalidRoundData = playersLost.every((p) => p === 0);
     if (invalidRoundData) {
-      alert(
-        "No pueden ganar todos en una misma ronda, alguien tiene que perder!"
-      );
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Al menos uno tiene que perder',
+      })
     } else {
       const gameId = window.localStorage.getItem("gameId");
       setRoundStatus("loading");

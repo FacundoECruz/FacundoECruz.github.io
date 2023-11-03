@@ -64,20 +64,19 @@ export default function SignInSide({
   }, [navigate, user]);
 
   useEffect(() => {
-    fetchOptions();
-  }, []);
-
-  async function fetchOptions() {
-    try {
-      const playersResponse = await api.getUnregisteredPlayers();
-      const playersUsername = playersResponse.data.map((p) => {
-        return p.username;
-      });
-      setOptions(playersUsername);
-    } catch (error) {
-      console.error(error);
+    async function fetchData() {
+      try {
+        const playersResponse = await api.getUnregisteredPlayers();
+        const playersUsername = playersResponse.data.map((p) => {
+          return p.username;
+        });
+        setOptions(playersUsername);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -139,7 +138,7 @@ export default function SignInSide({
         " url('https://res.cloudinary.com/dfknsvqer/image/upload/v1687094811/istockphoto-1212342896-612x612-1_dlvflo.jpg')",
     },
   };
-  
+
   return (
     <Grid
       container

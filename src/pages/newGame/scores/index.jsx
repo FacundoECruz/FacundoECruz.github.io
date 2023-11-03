@@ -29,21 +29,31 @@ function Scores({ setGameState, playAgain, backToForm, finishGame }) {
     playAgain(players);
   }
 
-  const achievements = JSON.parse(window.localStorage.getItem("achievements"))
+  const achievements = JSON.parse(window.localStorage.getItem("achievements"));
 
   return (
     <div
       style={{
         position: "relative",
         background:
-          "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1695066138/fondo-partida_akywab.jpg')",
+          "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://res.cloudinary.com/dfknsvqer/image/upload/v1695066138/fondo-partida_akywab.jpg')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "left",
         minHeight: "90vh",
       }}
     >
-      <Grid container spacing={2} sx={{ mt: "1px", padding: "5px", pb: 6 }}>
+      {varCheck ? <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "rgba(0, 0, 0, 0.7)",
+        }}
+      ></div> : null}
+      <Grid container spacing={1} sx={{ mt: "1px", padding: "2px", pb: 4 }}>
         <Grid item xs={12} md={6}>
           <Header
             round={round}
@@ -52,7 +62,11 @@ function Scores({ setGameState, playAgain, backToForm, finishGame }) {
             setGameState={setGameState}
           />
 
-          <PlayerScoreEntry playersRound={playersRound} dispatch={dispatch} achievements={achievements}/>
+          <PlayerScoreEntry
+            playersRound={playersRound}
+            dispatch={dispatch}
+            achievements={achievements}
+          />
 
           <ScoreboardControlButtons
             round={round}

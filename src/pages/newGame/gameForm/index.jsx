@@ -8,7 +8,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import api from "../../../utils/api-client";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function GameForm({ setGameState, handleStartGame }) {
+function GameForm({ setGameState, handleStartGame, loading }) {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [playerInputValue, setPlayerInputValue] = useState("");
   const [players, setPlayers] = useState(() => {
@@ -119,7 +119,7 @@ function GameForm({ setGameState, handleStartGame }) {
             variant="contained"
             onClick={() => handleStartGame(players)}
           >
-            Comenzar
+            {loading ? <CircularProgress /> : "Comenzar"}
           </Button>
         ) : null}
       </Box>

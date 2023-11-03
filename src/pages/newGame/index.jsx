@@ -3,6 +3,8 @@ import { useState } from "react";
 import GameForm from "./gameForm";
 import Scores from "./scores";
 import api from "../../utils/api-client";
+import Swal from "sweetalert2";
+import "./scores/css/scores.css"
 
 function NewGame() {
   const [gameState, setGameState] = useState(() => {
@@ -15,9 +17,10 @@ function NewGame() {
       return "idle";
     }
   });
-
-
+  const [loading, setLoading] = useState(false);
+  
   function handleStartGame(players) {
+    setLoading(true);
     const table = window.localStorage.getItem("table");
     if (table) {
       window.localStorage.removeItem("table");
@@ -45,6 +48,7 @@ function NewGame() {
         "players",
         JSON.stringify(playersWithHistory)
       );
+      setLoading(false);
       setGameState("in progress");
     });
   }
@@ -59,8 +63,29 @@ function NewGame() {
     api
       .finishGame(players, gameId, user, winner)
       .then((res) => {
-        console.log("finish game res.data");
-        console.log(res);
+        const finalTable = JSON.parse(window.localStorage.getItem("table"))
+        const winner = finalTable[0];
+        Swal.fire({
+          title: `Ganó ${winner.username} con ${winner.score} puntos`,
+          width: 600,
+          padding: '3em',
+          customClass: {
+            title: 'custom-title-color',
+          },
+          color: '#716add',
+          background: '#eee url(src/pages/newGame/scores/utils/win.jpg)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("src/pages/newGame/scores/utils/messi-copa.gif")
+            top
+            no-repeat
+          `,
+          confirmButtonText: 'Salir',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            backToForm();
+          } 
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -81,6 +106,7 @@ function NewGame() {
       gameState={gameState}
       setGameState={setGameState}
       handleStartGame={handleStartGame}
+      loading={loading}
     />
   ) : (
     <Scores
