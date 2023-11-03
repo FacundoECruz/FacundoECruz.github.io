@@ -5,7 +5,7 @@ import { Typography, Button, Box } from "@mui/material";
 import AchievementsBox from "../../../../components/achievements/AchievementsBox";
 import { useState } from "react";
 import { useEffect } from "react";
-import { hasAtLeastOneAchievement } from "../utils/hasAtLeastOneAchievement.js";
+import hasAtLeastOneAchievement from "../utils/hasAtLeastOneAchievement.js";
 
 const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
   const [hasAchievement, setHasAchievement] = useState(false);
