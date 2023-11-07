@@ -11,6 +11,7 @@ import Navbar from "./components/navbar/Navbar.jsx";
 import Edit from "./pages/edit/Edit.jsx";
 import PlayersGuide from "./pages/howToPlay/index.jsx";
 import Footer from "./components/Footer.jsx";
+import Achievements from "./pages/achievements/index.jsx";
 import "./App.css";
 import RequireAuth from "./utils/requireAuth";
 import { useEffect, useState } from "react";
@@ -61,6 +62,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/manual" element={<PlayersGuide />} />
+            <Route path="/achievements" element={<Achievements />}/>
           </Routes>
         </Router>
         <Footer />
