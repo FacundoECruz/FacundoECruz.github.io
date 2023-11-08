@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import diego from "../../assets/diego.png";
 import currentGuiness from "../../assets/guiness.png";
-import wasGuiness from "../../assets/guiness-modified.png";
+import wasGuinness from "../../assets/guiness-modified.png";
 import highestRound from "../../assets/highestRound.jpg";
 import topTen from "../../assets/topTen.jpg";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
@@ -9,8 +9,8 @@ import Swal from "sweetalert2";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
-import { singleTopScore } from "./utils/singleTopScore";
-import { moreThanOneTopScore } from "./utils/moreThanOneTopScore";
+import { singleTopScoreModal } from "./utils/singleTopScoreModal";
+import { moreThanOneTopScoreModal } from "./utils/moreThanOneTopScoreModal";
 
 function Achievements() {
   const [topTenList, setTopTenList] = useState([]);
@@ -19,7 +19,7 @@ function Achievements() {
 
   useEffect(() => {
     api.getPlayers().then((res) => {
-      setAllPlayers(res.data)
+      setAllPlayers(res.data);
       const sortedArray = res.data.sort((a, b) => {
         if (b.gamesWon !== a.gamesWon) {
           return b.gamesWon - a.gamesWon;
@@ -45,14 +45,34 @@ function Achievements() {
 
   function handleHighestScoreInAGame() {
     const { topScoreInAGame } = achievements;
-    const [player] = allPlayers.filter(p => p.username === topScoreInAGame[0].username);
-    player.score = topScoreInAGame[0].score;
-
+    
     if (topScoreInAGame.length === 1) {
-      singleTopScore(player)
+      const player = findPlayerData(topScoreInAGame);
+      singleTopScoreModal(player);
     } else {
-      moreThanOneTopScore(topScoreInAGame)
+      const players = findPlayersData(topScoreInAGame);
+      moreThanOneTopScoreModal(players);
     }
+  }
+
+  function findPlayerData(topScoreInAGame) {
+    const [player] = allPlayers.filter(
+      (p) => p.username === topScoreInAGame[0].username
+    );
+    player.score = topScoreInAGame[0].score;
+    return player;
+  }
+
+  function findPlayersData(topScoreInAGame) {
+    let players = [];
+    for (let i = 0; i < topScoreInAGame.length; i++) {
+      const [player] = allPlayers.filter(
+        (p) => p.username === topScoreInAGame[i].username
+      );
+      player.score = topScoreInAGame[0].score;
+      players.push(player);
+    }
+    return players;
   }
 
   function handleHighestScoreInARound() {}
@@ -60,6 +80,8 @@ function Achievements() {
   function handleTenOrMoreInARound() {}
 
   function handleTopTen() {}
+
+  function handleWasGuinness() {}
 
   return (
     <div
@@ -88,6 +110,7 @@ function Achievements() {
         />
         <img src={diego} style={imageStyle} onClick={handleTenOrMoreInARound} />
         <img src={topTen} style={imageStyle} onClick={handleTopTen} />
+        <img src={wasGuinness} style={imageStyle} onClick={handleWasGuinness} />
       </div>
     </div>
   );
