@@ -9,8 +9,9 @@ import Swal from "sweetalert2";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
-import { singleTopScoreModal } from "./utils/singleTopScoreModal";
-import { moreThanOneTopScoreModal } from "./utils/moreThanOneTopScoreModal";
+import { singleTopScoreModal } from "./modals/highestScore/singleHighestModal";
+import { moreThanOneTopScoreModal } from "./modals/highestScore/moreThanOneHighestModal";
+import { wasHighestScoreModal } from "./modals/wasTopScore/wasTopScoreModal";
 
 function Achievements() {
   const [topTenList, setTopTenList] = useState([]);
@@ -45,13 +46,14 @@ function Achievements() {
 
   function handleHighestScoreInAGame() {
     const { topScoreInAGame } = achievements;
-    
+    const instance = "partida"
+    console.log(achievements)
     if (topScoreInAGame.length === 1) {
       const player = findPlayerData(topScoreInAGame);
-      singleTopScoreModal(player);
+      singleTopScoreModal(player, instance);
     } else {
       const players = findPlayersData(topScoreInAGame);
-      moreThanOneTopScoreModal(players);
+      moreThanOneTopScoreModal(players, instance);
     }
   }
 
@@ -69,19 +71,47 @@ function Achievements() {
       const [player] = allPlayers.filter(
         (p) => p.username === topScoreInAGame[i].username
       );
-      player.score = topScoreInAGame[0].score;
+      player.score = topScoreInAGame[i].score;
       players.push(player);
     }
     return players;
   }
 
-  function handleHighestScoreInARound() {}
+  function handleHighestScoreInARound() {
+    const { highestScoreInARound } = achievements;
+    const instance = "ronda"
+
+    if (highestScoreInARound.length === 1) {
+      const player = findPlayerData(highestScoreInARound);
+      singleTopScoreModal(player, instance);
+    } else {
+      const players = findPlayersData(highestScoreInARound);
+      moreThanOneTopScoreModal(players, instance);
+    }
+  }
 
   function handleTenOrMoreInARound() {}
 
   function handleTopTen() {}
 
-  function handleWasGuinness() {}
+  function handleWasGuinness() {
+    const { wasTopScoreInAGame } = achievements;
+    const playersData = findPlayersData(wasTopScoreInAGame);
+    const players = extractPlayersData(playersData);
+    wasHighestScoreModal(players)
+  }
+
+  function extractPlayersData(playersData) {
+    let players = [];
+    for(let i = 0; i < playersData.length; i++) {
+      let player = {};
+      player.username = playersData[i].username;
+      player.score = playersData[i].score;
+      player.image = playersData[i].image;
+      players.push(player)
+    }
+    return players;
+  }
 
   return (
     <div
