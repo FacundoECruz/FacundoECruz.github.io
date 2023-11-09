@@ -9,17 +9,24 @@ import Swal from "sweetalert2";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
-import { singleTopScoreModal } from "./modals/highestScore/singleHighestModal";
-import { moreThanOneTopScoreModal } from "./modals/highestScore/moreThanOneHighestModal";
-import { wasHighestScoreModal } from "./modals/wasTopScore/wasTopScoreModal";
+import { singleTopScoreModal } from "./modals/highestScore/singleHighestModal.js";
+import { moreThanOneTopScoreModal } from "./modals/highestScore/moreThanOneHighestModal.js";
+import { multiplePlayersModal } from "./modals/multiplePlayersModal/multiplePlayersModal.js";
+import { Modal } from "@mui/material";
+import TopTenPlayer from "./modals/topTen/TopTenModalPlayer.jsx";
 
 function Achievements() {
   const [topTenList, setTopTenList] = useState([]);
   const [allPlayers, setAllPlayers] = useState([]);
+  const [openTopTenModal, setOpenTopTenModal] = useState(false);
+  const handleOpen = () => setOpenTopTenModal(true);
+  const handleClose = () => setOpenTopTenModal(false);
+
   const achievements = JSON.parse(window.localStorage.getItem("achievements"));
 
   useEffect(() => {
     api.getPlayers().then((res) => {
+      console.log(res.data)
       setAllPlayers(res.data);
       const sortedArray = res.data.sort((a, b) => {
         if (b.gamesWon !== a.gamesWon) {
@@ -46,8 +53,7 @@ function Achievements() {
 
   function handleHighestScoreInAGame() {
     const { topScoreInAGame } = achievements;
-    const instance = "partida"
-    console.log(achievements)
+    const instance = "partida";
     if (topScoreInAGame.length === 1) {
       const player = findPlayerData(topScoreInAGame);
       singleTopScoreModal(player, instance);
@@ -79,7 +85,7 @@ function Achievements() {
 
   function handleHighestScoreInARound() {
     const { highestScoreInARound } = achievements;
-    const instance = "ronda"
+    const instance = "ronda";
 
     if (highestScoreInARound.length === 1) {
       const player = findPlayerData(highestScoreInARound);
@@ -90,28 +96,50 @@ function Achievements() {
     }
   }
 
-  function handleTenOrMoreInARound() {}
-
-  function handleTopTen() {}
+  function handleTenOrMoreInARound() {
+    const { scoredTenOrMoreInARound } = achievements;
+    const playersWithTenOrMore = [];
+    for (let i = 0; i < scoredTenOrMoreInARound.length; i++) {
+      const [playerWithTenOrMore] = allPlayers.filter(
+        (p) => p.username === scoredTenOrMoreInARound[i]
+      );
+      playersWithTenOrMore.push(playerWithTenOrMore);
+    }
+    const title = "Anotaron 10 o más puntos en una ronda";
+    multiplePlayersModal(playersWithTenOrMore, title);
+  }
 
   function handleWasGuinness() {
     const { wasTopScoreInAGame } = achievements;
     const playersData = findPlayersData(wasTopScoreInAGame);
     const players = extractPlayersData(playersData);
-    wasHighestScoreModal(players)
+    const title = "Tuvieron el record de puntaje más alto";
+    multiplePlayersModal(players, title);
   }
 
   function extractPlayersData(playersData) {
     let players = [];
-    for(let i = 0; i < playersData.length; i++) {
+    for (let i = 0; i < playersData.length; i++) {
       let player = {};
       player.username = playersData[i].username;
       player.score = playersData[i].score;
       player.image = playersData[i].image;
-      players.push(player)
+      players.push(player);
     }
     return players;
   }
+
+  const topTenStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "black",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   return (
     <div
@@ -139,9 +167,27 @@ function Achievements() {
           onClick={handleHighestScoreInARound}
         />
         <img src={diego} style={imageStyle} onClick={handleTenOrMoreInARound} />
-        <img src={topTen} style={imageStyle} onClick={handleTopTen} />
+        <img src={topTen} style={imageStyle} onClick={handleOpen} />
         <img src={wasGuinness} style={imageStyle} onClick={handleWasGuinness} />
       </div>
+
+      <Modal
+        open={openTopTenModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={topTenStyle}>
+          <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginLeft: "35px", marginBottom: "20px"}}>
+            <Typography color={"white"}>Jugador</Typography>
+            <Typography color={"white"}>Ganadas</Typography>
+            <Typography color={"white"}>Puntaje Total</Typography>
+          </Box>
+          {topTenList.map((player, i) => {
+            return <TopTenPlayer data={player} key={i}/>;
+          })}
+        </Box>
+      </Modal>
     </div>
   );
 }
