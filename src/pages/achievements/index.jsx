@@ -4,8 +4,6 @@ import currentGuiness from "../../assets/guiness.png";
 import wasGuinness from "../../assets/guiness-modified.png";
 import highestRound from "../../assets/highestRound.jpg";
 import topTen from "../../assets/topTen.jpg";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import Swal from "sweetalert2";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
@@ -26,7 +24,6 @@ function Achievements() {
 
   useEffect(() => {
     api.getPlayers().then((res) => {
-      console.log(res.data)
       setAllPlayers(res.data);
       const sortedArray = res.data.sort((a, b) => {
         if (b.gamesWon !== a.gamesWon) {
