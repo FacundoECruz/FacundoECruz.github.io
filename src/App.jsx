@@ -12,7 +12,6 @@ import Edit from "./pages/edit/Edit.jsx";
 import PlayersGuide from "./pages/howToPlay/index.jsx";
 import Footer from "./components/Footer.jsx";
 import Achievements from "./pages/achievements/index.jsx";
-import "./App.css";
 import RequireAuth from "./utils/requireAuth";
 import { useEffect, useState } from "react";
 import api from "./utils/api-client.js";
