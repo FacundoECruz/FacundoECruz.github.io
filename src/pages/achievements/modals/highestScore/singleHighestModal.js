@@ -5,8 +5,8 @@ export function singleTopScoreModal(player, instance) {
   const {username, image, score} = player;
   
   Swal.fire({
-    title: username,
-    text: `Máximo puntaje en una ${instance}: ` + score,
+    title: `Máximo puntaje en una ${instance}`,
+    text:  username + ": " + score,
     imageUrl: image,
     imageWidth: 300,
     imageHeight: 200,
