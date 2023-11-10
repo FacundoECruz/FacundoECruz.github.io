@@ -113,7 +113,7 @@ function Achievements() {
     playersWithTenOrMore.push(playerWithTenOrMore);
   }
 
-  function handleWasGuinness() {
+  function handleWasHighestScore() {
     const { wasTopScoreInAGame } = achievements;
     const playersData = setPlayersData(wasTopScoreInAGame);
     const players = extractPlayersDataForModal(playersData);
@@ -127,6 +127,7 @@ function Achievements() {
       let player = getRelevantData(playersData, i);
       players.push(player);
     }
+    players.reverse();
     return players;
   }
 
@@ -169,6 +170,9 @@ function Achievements() {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "100%",
+    '@media (min-width: 768px)': {
+      width: "25%",
+    },
     bgcolor: "black",
     border: "2px solid #000",
     boxShadow: 24,
@@ -190,7 +194,7 @@ function Achievements() {
     { src: highestRound, onClick: handleHighestScoreInARound },
     { src: diego, onClick: handleTenOrMoreInARound },
     { src: topTen, onClick: handleOpen },
-    { src: wasGuinness, onClick: handleWasGuinness },
+    { src: wasGuinness, onClick: handleWasHighestScore },
   ];
 
   return (
