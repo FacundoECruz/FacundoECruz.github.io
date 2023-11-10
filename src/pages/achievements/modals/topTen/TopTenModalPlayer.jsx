@@ -16,7 +16,7 @@ function TopTenPlayer({ data }) {
           style={{
             width: "45px",
             height: "45px",
-            margin: "5px",
+            margin: "3px",
             borderRadius: "50%",
           }}
         />
