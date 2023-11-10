@@ -5,6 +5,7 @@ import Scores from "./scores";
 import api from "../../utils/api-client";
 import Swal from "sweetalert2";
 import "./scores/css/scores.css"
+import useAchievements from "../../components/achievements/useAchievements";
 
 function NewGame() {
   const [gameState, setGameState] = useState(() => {
@@ -93,6 +94,11 @@ function NewGame() {
 
   function backToForm() {
     setGameState("finished");
+    api
+      .getAchievements()
+      .then(res => {
+        window.localStorage.setItem("achievements", JSON.stringify(res.data))
+      })
   }
 
   return gameState === "idle" || gameState === "finished" ? (
