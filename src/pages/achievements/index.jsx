@@ -34,7 +34,7 @@ function Achievements() {
     justifyContent: "center",
   };
 
-  const achievementImageStyle = { width: "150px", border: "1px solid gold" };
+  const achievementImageStyle = { width: "150px", maxHeight: "150px", border: "1px solid gold" };
 
   const containerStyle = {
     maxHeight: "500px",

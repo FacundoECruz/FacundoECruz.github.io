@@ -3,37 +3,30 @@ import { Box, Modal, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 
-function GenericModal({
-  image,
-  imageStyle,
-  achievement,
-  title,
-  players,
-}) {
+function GenericModal({ image, imageStyle, achievement, title, players }) {
   const [open, setOpen] = useState(false);
   const [achievementPlayers, setAchievementsPlayers] = useState([]);
 
   useEffect(() => {
-    for (let i = 0; i < achievement.length; i++) {
-      const playerData = achievement[i];
-      let player = buildPlayerData(playerData);
+    achievement.map((a) => {
       setAchievementsPlayers((prevState) => {
-        prevState.push(player);
-        return prevState;
+        const updatedPlayers = [...prevState];
+        const player = buildPlayerData(a);
+        updatedPlayers.push(player);
+        return updatedPlayers;
       });
-    }
+    });
 
     function buildPlayerData(playerData) {
       let player = null;
-      if (typeof playerData === "string") {
+      if (typeof playerData === "string")
         player = players.find((p) => p.username === playerData);
-      } else {
+      else 
         player = players.find((p) => p.username === playerData.username);
-        player.score = playerData.score;
-      }
+
       return player;
     }
-  }, []);
+  }, [achievement, players]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -82,11 +75,7 @@ function GenericModal({
 
   return (
     <div>
-      <img
-        src={image}
-        onClick={handleOpen}
-        style={imageStyle}
-      />
+      <img src={image} onClick={handleOpen} style={imageStyle} />
 
       <Modal
         open={open}
@@ -107,7 +96,7 @@ function GenericModal({
                 </Typography>
                 {!title.includes("Hicieron 10 o más") ? (
                   <Typography variant="h6" sx={textStyle}>
-                    {p.score}
+                    {achievement[i].score}
                   </Typography>
                 ) : null}
               </Box>
