@@ -17,6 +17,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { useEffect } from "react";
 import api from "../../utils/api-client";
 import UserCard from "./UserCard";
@@ -52,6 +53,11 @@ const navLinks = [
     title: "Como Jugar",
     path: "#/manual",
     icon: <MenuBookIcon />,
+  },
+  {
+    title: "Records",
+    path: "#/achievements",
+    icon: <EmojiEventsIcon />,
   },
 ];
 
