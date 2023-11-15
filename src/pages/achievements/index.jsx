@@ -8,7 +8,7 @@ import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
 import GenericModal from "./modals/GenericModal.jsx";
-import TopTenLegacy from "./modals/TopTenModal.jsx";
+import TopTenModal from "./modals/TopTenModal.jsx";
 import CircularProgress from "@mui/material/CircularProgress";
 
 function Achievements() {
@@ -83,7 +83,7 @@ function Achievements() {
               {achievementStickers.map((achiev, index) => {
                 if (achiev.title === "Top Ten") {
                   return (
-                    <TopTenLegacy
+                    <TopTenModal
                       key={index}
                       image={achiev.src}
                       imageStyle={achievementImageStyle}
