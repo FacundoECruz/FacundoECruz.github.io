@@ -7,7 +7,7 @@ import topTen from "../../assets/topTen.jpg";
 import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
-import GenericModal from "./modals/GenericModal.jsx";
+import GenericAchievementModal from "./modals/GenericModal.jsx";
 import TopTenModal from "./modals/TopTenModal.jsx";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -92,7 +92,7 @@ function Achievements() {
                   );
                 } else {
                   return (
-                    <GenericModal
+                    <GenericAchievementModal
                       key={index}
                       image={achiev.src}
                       imageStyle={achievementImageStyle}
