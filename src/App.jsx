@@ -3,7 +3,6 @@ import Home from "./pages/home/Index.jsx";
 import Players from "./pages/players/Players.jsx";
 import PlayerDetails from "./pages/playerDetails/index.jsx";
 import Games from "./pages/games/index.jsx";
-import GameDetails from "./pages/gameDetails/GameDetails.jsx";
 import NewGame from "./pages/newGame/index.jsx";
 import Login from "./pages/login/index.jsx";
 import Register from "./pages/register/index.jsx";
@@ -49,7 +48,6 @@ function App() {
             <Route path="/players/:username" element={<PlayerDetails />} />
             <Route path="/edit" element={<Edit />} />
             <Route path="/games" element={<Games />} />
-            <Route path="/games/:id" element={<GameDetails />} />
             <Route
               path="/games/new"
               element={

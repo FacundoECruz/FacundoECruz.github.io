@@ -3,7 +3,7 @@ import { Box, Modal, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 
-function GenericModal({ image, imageStyle, achievement, title, players }) {
+function GenericAchievementModal({ image, imageStyle, achievement, title, players }) {
   const [open, setOpen] = useState(false);
   const [achievementPlayers, setAchievementsPlayers] = useState([]);
 
@@ -23,7 +23,6 @@ function GenericModal({ image, imageStyle, achievement, title, players }) {
         player = players.find((p) => p.username === playerData);
       else 
         player = players.find((p) => p.username === playerData.username);
-
       return player;
     }
   }, [achievement, players]);
@@ -73,6 +72,8 @@ function GenericModal({ image, imageStyle, achievement, title, players }) {
     p: 1,
   };
 
+  const noScoreAchievementCriteria = "Hicieron 10 o más";
+
   return (
     <div>
       <img src={image} onClick={handleOpen} style={imageStyle} />
@@ -94,7 +95,7 @@ function GenericModal({ image, imageStyle, achievement, title, players }) {
                 <Typography variant="h6" sx={textStyle}>
                   {p.username}
                 </Typography>
-                {!title.includes("Hicieron 10 o más") ? (
+                {!title.includes(noScoreAchievementCriteria) ? (
                   <Typography variant="h6" sx={textStyle}>
                     {achievement[i].score}
                   </Typography>
@@ -108,4 +109,4 @@ function GenericModal({ image, imageStyle, achievement, title, players }) {
   );
 }
 
-export default GenericModal;
+export default GenericAchievementModal;

@@ -4,7 +4,6 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -20,29 +19,13 @@ import IconButton from "@mui/material/IconButton";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import Tooltip from "@mui/material/Tooltip";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import Swal from "sweetalert2";
 import api from "../../utils/api-client.js";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.youtube.com/watch?v=mzMPcl7vhQo">
-        Altisima
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from "./components/Copyright.jsx";
+import { openAssociateModals } from "./components/offerAssociate.js";
+import { openSearchPlayerToAssociate } from "./components/searchPlayerToAssociate.js";
 
 // eslint-disable-next-line react/prop-types
-export default function SignInSide({
+export default function Register({
   ImageWithChangeButton = ImageWithChangeButton_,
   useAuth = _useAuth,
 }) {
@@ -98,58 +81,39 @@ export default function SignInSide({
 
   function openAssociateOffer() {
     if (!hasFocus) {
-      Swal.fire({
-        title: "Ya jugaste una partida donde se usó este anotador?",
-        text: "Podés asociar tu cuenta al perfil que ya está creado",
-        showCancelButton: true,
-        confirmButtonText: "Asociar",
-        denyButtonText: "Crear nuevo",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          openSearchPlayerToAssociate();
-        }
-      });
+      openAssociateModals(
+        options,
+        setUsernameValue,
+        setRemovePlayerToAssociate
+      );
       setHasFocus(true);
     }
   }
 
-  function openSearchPlayerToAssociate() {
-    Swal.fire({
-      title: "Asociar jugador",
-      text: "Si ya tenes un perfil en la base de datos podes asociar sus logros y resultados a tu cuenta",
-      input: "select",
-      inputOptions: { options },
-      inputPlaceholder: "Seleccionar jugador",
-      showCancelButton: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if (result.value !== "") {
-          const selectedValue = result.value;
-          setUsernameValue(options[selectedValue]);
-          setRemovePlayerToAssociate(true);
-        }
-      }
-    });
-  }
+  const mainContainerStyles = {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
 
-  const styles = {
+  const containerStyles = {
     paperContainer: {
       background:
         " url('https://res.cloudinary.com/dfknsvqer/image/upload/v1687094811/istockphoto-1212342896-612x612-1_dlvflo.jpg')",
     },
   };
 
+  const formContainerStyles = {
+    my: 8,
+    mx: 4,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
+
   return (
-    <Grid
-      container
-      component="main"
-      sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <Grid container component="main" sx={mainContainerStyles}>
       <Grid
         item
         xs={12}
@@ -158,17 +122,9 @@ export default function SignInSide({
         component={Paper}
         elevation={6}
         square
-        style={styles.paperContainer}
+        style={containerStyles.paperContainer}
       >
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+        <Box sx={formContainerStyles}>
           <Avatar sx={{ m: 1, bgcolor: "green" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -199,7 +155,13 @@ export default function SignInSide({
                       <Tooltip title="Asociar con un jugador ya existente">
                         <IconButton
                           edge="end"
-                          onClick={() => openSearchPlayerToAssociate()}
+                          onClick={() =>
+                            openSearchPlayerToAssociate(
+                              options,
+                              setUsernameValue,
+                              setRemovePlayerToAssociate
+                            )
+                          }
                         >
                           <GroupAddIcon sx={{ color: "blue" }} />
                         </IconButton>
