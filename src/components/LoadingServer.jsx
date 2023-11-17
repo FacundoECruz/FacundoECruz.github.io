@@ -18,11 +18,10 @@ function LoadingServer() {
   const playerRef = useRef(null);
   const playerDivRef = useRef(null);
 
-  const { playing, mute, volume, playerbackRate, played, seeking } =
+  const { playing, mute, volume, playerbackRate, played } =
     playerstate;
 
   const handlePlayAndPause = () => {
-    console.log("click");
     setPlayerState({
       ...playerstate,
       playing: !playerstate.playing,
@@ -50,17 +49,17 @@ function LoadingServer() {
   };
 
   const handlePlayerSeek = (newValue) => {
-    setPlayerState({ ...playerstate, played: parseFloat(newValue / 100) });
-    playerRef.current.seekTo(parseFloat(newValue / 100));
+    setPlayerState({ ...playerstate, played: parseFloat(newValue.target.value / 100) });
+    playerRef.current.seekTo(parseFloat(newValue.target.value / 100));
   };
 
   const handlePlayerMouseSeekUp = (newValue) => {
     setPlayerState({ ...playerstate, seeking: false });
-    playerRef.current.seekTo(newValue / 100);
+    playerRef.current.seekTo(newValue.target.value / 100);
   };
 
   const handleMuting = () => {
-    setPlayerState({ ...playerstate, muted: !playerstate.muted });
+    setPlayerState({ ...playerstate, mute: !playerstate.mute });
   };
 
   const handleVolumeChange = (e, newValue) => {
