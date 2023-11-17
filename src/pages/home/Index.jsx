@@ -4,6 +4,7 @@ import "../../stylesheets/Home.css";
 import { Container } from "@mui/material";
 import LoadingServer from "../../components/LoadingServer.jsx";
 
+
 function Home({dataFromServer}) {
 
   return (
@@ -22,7 +23,8 @@ function Home({dataFromServer}) {
           minHeight: "100vh",
         }}
       >
-        {dataFromServer === "loading" ? <LoadingServer /> : <MainHome />}
+        {/* {dataFromServer === "loading" ? <LoadingServer /> : <MainHome />} */}
+        <LoadingServer />
       </Container>
     </>
   );

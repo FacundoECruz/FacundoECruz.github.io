@@ -1,7 +1,101 @@
-import { Box, Typography } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Box } from "@mui/material";
+import ReactPlayer from "react-player";
+import ControlIcons from "../pages/home/ControlIcons.jsx";
+import { useRef, useState } from "react";
+import { format } from "../pages/home/format.js";
+import screenfull from "screenfull";
 
 function LoadingServer() {
+  const [playerstate, setPlayerState] = useState({
+    playing: true,
+    mute: true,
+    volume: 0.5,
+    playerbackRate: 1.0,
+    played: 0,
+    seeking: false,
+  });
+
+  const playerRef = useRef(null);
+  const playerDivRef = useRef(null);
+
+  const { playing, mute, volume, playerbackRate, played, seeking } =
+    playerstate;
+
+  const handlePlayAndPause = () => {
+    console.log("click");
+    setPlayerState({
+      ...playerstate,
+      playing: !playerstate.playing,
+    });
+  };
+
+  const handleRewind = () => {
+    playerRef.current.seekTo(
+      playerRef.current.getCurrentTime() - 10,
+      "seconds"
+    );
+  };
+
+  const handleFastForward = () => {
+    playerRef.current.seekTo(
+      playerRef.current.getCurrentTime() + 30,
+      "seconds"
+    );
+  };
+
+  const handlePlayerProgress = (state) => {
+    if (!playerstate.seeking) {
+      setPlayerState({ ...playerstate, ...state });
+    }
+  };
+
+  const handlePlayerSeek = (newValue) => {
+    setPlayerState({ ...playerstate, played: parseFloat(newValue / 100) });
+    playerRef.current.seekTo(parseFloat(newValue / 100));
+  };
+
+  const handlePlayerMouseSeekUp = (newValue) => {
+    setPlayerState({ ...playerstate, seeking: false });
+    playerRef.current.seekTo(newValue / 100);
+  };
+
+  const handleMuting = () => {
+    setPlayerState({ ...playerstate, muted: !playerstate.muted });
+  };
+
+  const handleVolumeChange = (e, newValue) => {
+    setPlayerState({
+      ...playerstate,
+      volume: parseFloat(newValue / 100),
+      mute: newValue === 0 ? true : false,
+    });
+  };
+
+  const handleVolumeSeek = (e, newValue) => {
+    setPlayerState({
+      ...playerstate,
+      volume: parseFloat(newValue / 100),
+      mute: newValue === 0 ? true : false,
+    });
+  };
+
+  const handlePlayerRate = (rate) => {
+    setPlayerState({ ...playerstate, playerbackRate: rate });
+  };
+
+  const handleFullScreenMode = () => {
+    screenfull.toggle(playerDivRef.current);
+}
+
+  const currentPlayerTime = playerRef.current
+    ? playerRef.current.getCurrentTime()
+    : "00:00";
+  const movieDuration = playerRef.current
+    ? playerRef.current.getDuration()
+    : "00:00";
+  const playedTime = format(currentPlayerTime);
+  const fullMovieTime = format(movieDuration);
+
   return (
     <Box
       sx={{
@@ -17,10 +111,42 @@ function LoadingServer() {
         justifyContent: "center",
       }}
     >
-      <Typography variant="h6" sx={{ color: "white", fontWeight: "400" }}>
+      {/* <Typography variant="h6" sx={{ color: "white", fontWeight: "400" }}>
         Cargando data del servidor...
       </Typography>
-      <CircularProgress />
+      <CircularProgress /> */}
+      <div ref={playerDivRef}>
+        <ReactPlayer
+          width={"100%"}
+          height="100%"
+          url="https://www.youtube.com/watch?v=mzMPcl7vhQo&t=1s"
+          playing={playing}
+          muted={mute}
+          controls={true}
+          ref={playerRef}
+          onProgress={handlePlayerProgress}
+          playbackRate={playerbackRate}
+        />
+      </div>
+      <ControlIcons
+        playAndPause={handlePlayAndPause}
+        playing={playing}
+        rewind={handleRewind}
+        fastForward={handleFastForward}
+        played={played}
+        onSeek={handlePlayerSeek}
+        onSeekMouseUp={handlePlayerMouseSeekUp}
+        playedTime={playedTime}
+        fullMovieTime={fullMovieTime}
+        muting={handleMuting}
+        muted={mute}
+        volume={volume}
+        volumeChange={handleVolumeChange}
+        volumeSeek={handleVolumeSeek}
+        playerbackRate={playerbackRate}
+        playRate={handlePlayerRate}
+        fullScreenMode={handleFullScreenMode}
+      />
     </Box>
   );
 }
