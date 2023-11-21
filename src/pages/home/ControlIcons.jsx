@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
@@ -37,9 +38,6 @@ const ControlIcons = ({
   fullScreenMode,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  console.log("played")
-  console.log(played)
 
   const handlePopOver = (event) => {
     setAnchorEl(event.currentTarget);
@@ -88,6 +86,7 @@ const ControlIcons = ({
       },
     },
   });
+
   return (
     <div className="controls__div">
       {/* Top Segment */}
@@ -105,42 +104,6 @@ const ControlIcons = ({
         </Grid>
       </Grid>
 
-      {/* Middle Segment */}
-      <Grid
-        container
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <IconButton
-          className="controls__icons"
-          aria-label="reqind"
-          onClick={rewind}
-        >
-          <FastRewind fontSize="large" style={{ color: "white" }} />
-        </IconButton>
-
-        <IconButton
-          className="controls__icons"
-          aria-label="reqind"
-          onClick={playAndPause}
-        >
-          {playing ? (
-            <PauseSharp fontSize="large" style={{ color: "white" }} />
-          ) : (
-            <PlayArrowSharp fontSize="large" style={{ color: "white" }} />
-          )}
-        </IconButton>
-
-        <IconButton
-          className="controls__icons"
-          aria-label="reqind"
-          onClick={fastForward}
-        >
-          <FastForwardSharp fontSize="large" style={{ color: "white" }} />
-        </IconButton>
-      </Grid>
-
       {/* Bottom Segment */}
       <Grid
         container
@@ -149,7 +112,6 @@ const ControlIcons = ({
         justifyContent="space-between"
         style={{ padding: 16 }}
       >
-        
         <Grid item xs={12}>
           <PrettoSlider
             min={0}
@@ -240,7 +202,12 @@ const ControlIcons = ({
             </Grid>
           </Popover>
 
-          <IconButton className="bottom__icons" onClick={fullScreenMode}>
+          <IconButton
+            style={{ color: "white" }}
+            className="bottom__icons"
+            onClick={fullScreenMode}
+            disabled={true}
+          >
             <Fullscreen fontSize="large" />
           </IconButton>
         </Grid>
