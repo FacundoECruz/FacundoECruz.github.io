@@ -101,8 +101,8 @@ function LoadingServer() {
         display: "flex",
         flexDirection: "column",
         border: "1px solid black",
-        width: "70%",
-        height: "400px",
+        width: "100%",
+        height: "500px  ",
         borderRadius: "5%",
         background: "rgba(0, 0, 0, 0.7)",
         backdropFilter: "blur(5px)",
@@ -116,7 +116,7 @@ function LoadingServer() {
       <CircularProgress /> */}
       <div ref={playerDivRef}>
         <ReactPlayer
-          width={"100%"}
+          width="100%"
           height="100%"
           url="https://www.youtube.com/watch?v=mzMPcl7vhQo&t=1s"
           playing={playing}
