@@ -14,6 +14,7 @@ const api = {
   createGame: (players) => server.post("/v1/games", players),
   getPlayer: (username) => server.get(`/players/${username}`),
   createPlayer: (playerData) => server.post("/v1/players", playerData),
+  getAssociatedPlayers: (user) => server.get(`/v1/players/${user}`),
   getPlayers: () => server.get("/players"),
   getUnregisteredPlayers: () => server.get("/v1/players"),
   getUser: (username) => server.get(`/users/${username}`),
