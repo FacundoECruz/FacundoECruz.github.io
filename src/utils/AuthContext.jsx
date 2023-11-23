@@ -41,6 +41,7 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       api
         .createUser(formData)
         .then((res) => {
+          console.log(res.data)
           Swal.fire({
             position: 'top-end',
             icon: 'success',

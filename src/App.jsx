@@ -11,6 +11,7 @@ import Edit from "./pages/edit/Edit.jsx";
 import PlayersGuide from "./pages/howToPlay/index.jsx";
 import Footer from "./components/Footer.jsx";
 import Achievements from "./pages/achievements/index.jsx";
+import Associates from "./pages/associates/Associates.jsx";
 import RequireAuth from "./utils/requireAuth";
 import { useEffect, useState } from "react";
 import api from "./utils/api-client.js";
@@ -60,6 +61,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/manual" element={<PlayersGuide />} />
             <Route path="/achievements" element={<Achievements />}/>
+            <Route path="/associates" element={<Associates />}/>
           </Routes>
         </Router>
         <Footer />

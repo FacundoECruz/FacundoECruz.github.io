@@ -74,6 +74,21 @@ function UserCard({ userData, handleLogout, close }) {
         >
           Cerrar sesión
         </Button>
+        <Button
+          variant="contained"
+          onClick={() => close()}
+          href="#/associates"
+          sx={{
+            bgcolor: "green",
+            fontSize: "10px",
+            "&:hover": {
+              bgcolor: "green",
+              color: "white",
+            },
+          }}
+        >
+          Asociados
+        </Button>
       </Box>
     </Card>
   );

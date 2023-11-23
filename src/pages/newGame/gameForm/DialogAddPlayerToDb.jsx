@@ -22,10 +22,12 @@ function DialogAddPlayerToDb({open, putNewPlayerIntoGameList, setOpen, fetchOpti
   }
 
   const savePlayer = async () => {
+    const user = window.localStorage.getItem("user");
+    
     api
-      .createPlayer({ username: inputValue })
+      .createPlayer({ username: inputValue, createdBy: user, createdDate: new Date().getTime() })
       .then((res) => {
-        
+        console.log(res.data)  
         putNewPlayerIntoGameList(res.data.username);
         fetchOptions();
         setOpen(false);
