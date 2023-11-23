@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 
 const images = [
   {
@@ -88,7 +90,7 @@ const ImageMarked = styled("span")(({ theme }) => ({
   transition: theme.transitions.create("opacity"),
 }));
 
-export default function ButtonBases() {
+export default function ButtonBases({showTutorial}) {
   return (
     <Box
       sx={{ display: "flex", flexWrap: "wrap", minWidth: 300, width: "100%", mt: 3, height: "500px" }}
@@ -122,6 +124,7 @@ export default function ButtonBases() {
           </Image>
         </ImageButton>
       ))}
+      <Button onClick={() => showTutorial()}>Mostrar tutorial</Button>
     </Box>
   );
 }

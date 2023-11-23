@@ -3,8 +3,10 @@ import MainHome from "./MainHome.jsx";
 import "../../stylesheets/Home.css";
 import { Container } from "@mui/material";
 import LoadingServer from "../../components/LoadingServer.jsx";
+import { useState } from "react";
 
-function Home({dataFromServer}) {
+function Home({ dataFromServer }) {
+  const [showTutorial, setShowTutorial] = useState(false);
 
   return (
     <>
@@ -22,7 +24,14 @@ function Home({dataFromServer}) {
           minHeight: "100vh",
         }}
       >
-        {dataFromServer === "loading" ? <LoadingServer /> : <MainHome />}
+        {dataFromServer === "loading" || showTutorial ? (
+          <LoadingServer
+            server={dataFromServer}
+            backToHome={() => setShowTutorial(false)}
+          />
+        ) : (
+          <MainHome showTutorial={() => setShowTutorial(true)} />
+        )}
       </Container>
     </>
   );
