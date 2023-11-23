@@ -1,11 +1,14 @@
 import Swal from "sweetalert2";
 
-export function openSearchPlayerToAssociate(options, setUsernameValue, setRemovePlayerToAssociate) {
+export function openSearchPlayerToAssociate(
+  options,
+  setUsernameValue,
+  setRemovePlayerToAssociate
+) {
   const searchPlayerToAssociateProps = {
     title: "Asociar jugador",
-    text: "Si ya tenes un perfil en la base de datos podes asociar sus logros y resultados a tu cuenta",
+    text: "Tenés que pedirle al usuario que creó tu jugador que te dé de alta",
     input: "select",
-    inputOptions: { options },
     inputPlaceholder: "Seleccionar jugador",
     showCancelButton: true,
   };
@@ -19,4 +22,4 @@ export function openSearchPlayerToAssociate(options, setUsernameValue, setRemove
       }
     }
   });
-}  
+}
