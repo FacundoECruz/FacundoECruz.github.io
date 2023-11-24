@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: "http://localhost:8080",
+  // baseURL: "http://localhost:8080",
   // baseURL: "http://localhost:3000/api",
   // baseURL: "https://altisima-scoreboard.onrender.com/api",
-  // baseURL: "https://altisima-spring-backend.onrender.com",
+  baseURL: "https://altisima-spring-backend.onrender.com",
 });
 
 //OJO CON LOS V1 CUANDO CAMBIAMOS DE SERVIDOR!!!
