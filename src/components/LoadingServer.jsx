@@ -154,7 +154,7 @@ function LoadingServer({ server, backToHome }) {
       </Box>
       {server === "loading" ? (
         <Box sx={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-          <Typography sx={{color: "white"}}>Servidor...</Typography>
+          <Typography sx={{color: "white"}}>El servidor puede tardar hasta 1 minuto...</Typography>
           <CircularProgress />
         </Box>
       ) : (

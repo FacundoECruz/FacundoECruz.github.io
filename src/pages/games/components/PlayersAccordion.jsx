@@ -21,12 +21,12 @@ export function PlayerAccordion({ player }) {
         }}
       >
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+          expandIcon={<ExpandMoreIcon sx={{ color: "white", marginLeft: "5px" }} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography sx={{ color: "white" }}>{player.username}</Typography>
-          <Typography sx={{ color: "white", marginLeft: "20px" }}>
+          <Typography sx={{ color: "white", flexGrow: 1 }}>{player.username}</Typography>
+          <Typography sx={{ color: "white" }}>
             {player.score}
           </Typography>
         </AccordionSummary>

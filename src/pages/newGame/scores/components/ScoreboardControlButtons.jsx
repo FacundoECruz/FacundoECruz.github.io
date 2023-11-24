@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Box, Button } from "@mui/material";
 import UndoIcon from "@mui/icons-material/Undo";
-import { types } from "../../../../utils/reducerTypes";
 import Swal from "sweetalert2";
 
 function ScoreboardControlButtons({
   round,
-  dispatch,
   backToForm,
   nextRound,
   prevRound,
@@ -15,43 +13,41 @@ function ScoreboardControlButtons({
   varCheck,
   finishGame,
 }) {
+  function endGame() {
+    Swal.fire({
+      position: "top",
+      icon: "success",
+      title: "Partida terminada",
+      showConfirmButton: false,
+      timer: 1500,
+    });
 
-function endGame(){
-  Swal.fire({
-    position: 'top',
-    icon: 'success',
-    title: 'Partida terminada',
-    showConfirmButton: false,
-    timer: 1500
-  })
-
-  nextRound()
-  finishGame()
-}
+    nextRound();
+    finishGame();
+  }
 
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
       }}
     >
-      {round < 10 ? (
-        <Button
-          variant="contained"
-          sx={{
-            bgcolor: "lightblue",
-            color: "black",
-            "&:hover": {
-              bgcolor: "white",
-            },
-          }}
-          onClick={() => dispatch({ type: types.clean })}
-        >
-          Limpiar
-        </Button>
-      ) : (
+      <Button
+        variant="contained"
+        sx={{
+          bgcolor: "purple",
+          "&:hover": {
+            bgcolor: "white",
+          },
+        }}
+        onClick={() => prevRound()}
+        disabled={round === 1 || varCheck || round > 9}
+      >
+        <UndoIcon sx={{ color: "black" }} />
+      </Button>
+      {round > 10 ? (
         <Button
           onClick={() => backToForm()}
           sx={{
@@ -62,7 +58,7 @@ function endGame(){
         >
           Volver al form
         </Button>
-      )}
+      ) : null}
 
       {round < 9 ? (
         <Button
@@ -105,20 +101,6 @@ function endGame(){
           Jugar de nuevo
         </Button>
       )}
-
-      <Button
-        variant="contained"
-        sx={{
-          bgcolor: "purple",
-          "&:hover": {
-            bgcolor: "white",
-          },
-        }}
-        onClick={() => prevRound()}
-        disabled={ round === 1 || varCheck || round > 9 }
-      >
-        <UndoIcon sx={{ color: "black" }} />
-      </Button>
     </Box>
   );
 }

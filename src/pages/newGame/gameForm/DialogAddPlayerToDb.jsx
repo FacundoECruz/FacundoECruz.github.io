@@ -11,23 +11,34 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import api from "../../../utils/api-client";
+import { CircularProgress } from "@mui/material";
 
-function DialogAddPlayerToDb({open, putNewPlayerIntoGameList, setOpen, fetchOptions, handleClose}) {
-
+function DialogAddPlayerToDb({
+  open,
+  putNewPlayerIntoGameList,
+  setOpen,
+  fetchOptions,
+  handleClose,
+}) {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   function handleInputChange(event) {
     setInputValue(event.target.value);
   }
 
   const savePlayer = async () => {
+    setLoading(true);
     const user = window.localStorage.getItem("user");
-    
     api
-      .createPlayer({ username: inputValue, createdBy: user, createdDate: new Date().getTime() })
+      .createPlayer({
+        username: inputValue,
+        createdBy: user,
+        createdDate: new Date().getTime(),
+      })
       .then((res) => {
-        console.log(res.data)  
+        console.log(res.data);
         putNewPlayerIntoGameList(res.data.username);
         fetchOptions();
         setOpen(false);
@@ -35,6 +46,8 @@ function DialogAddPlayerToDb({open, putNewPlayerIntoGameList, setOpen, fetchOpti
       .catch((err) => {
         setError(err.response.data);
       });
+
+    setLoading(false);
   };
 
   return (
@@ -57,10 +70,14 @@ function DialogAddPlayerToDb({open, putNewPlayerIntoGameList, setOpen, fetchOpti
         />
       </DialogContent>
       {error ? <Typography sx={{ color: "red" }}>{error}</Typography> : null}
-      <DialogActions>
-        <Button onClick={handleClose}>Cancelar</Button>
-        <Button onClick={savePlayer}>Agregar</Button>
-      </DialogActions>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <DialogActions>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={savePlayer}>Agregar</Button>
+        </DialogActions>
+      )}
     </Dialog>
   );
 }

@@ -16,59 +16,21 @@ import PersonIcon from "@mui/icons-material/Person";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { useEffect } from "react";
 import api from "../../utils/api-client";
 import UserCard from "./UserCard";
 import { useAuth } from "../../utils/AuthContext";
 
-const navLinks = [
-  {
-    title: "Home",
-    path: "/",
-    icon: <InboxIcon />,
-  },
-  {
-    title: "Jugadores",
-    path: "#/players",
-    icon: <PersonIcon />,
-  },
-  {
-    title: "Partidas",
-    path: "#/games",
-    icon: <SportsEsportsIcon />,
-  },
-  {
-    title: "Nueva Partida",
-    path: "#/games/new",
-    icon: <VideogameAssetIcon />,
-  },
-  {
-    title: "Registrarse",
-    path: "#/register",
-    icon: <AppRegistrationIcon />,
-  },
-  {
-    title: "Como Jugar",
-    path: "#/manual",
-    icon: <MenuBookIcon />,
-  },
-  {
-    title: "Records",
-    path: "#/achievements",
-    icon: <EmojiEventsIcon />,
-  },
-];
-
-
 // eslint-disable-next-line react/prop-types
-function Navbar({dataFromServer}) {
+function Navbar({ dataFromServer }) {
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, logout } = useAuth();
-  
+  const round = window.localStorage.getItem("round");
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -83,10 +45,43 @@ function Navbar({dataFromServer}) {
     setAnchorEl(null);
   };
 
-  // useEffect(() => {
-  //   console.log("***user***")
-  //   console.log(user)
-  // }, [user]);
+  const navLinks = [
+    {
+      title: "Home",
+      path: "/",
+      icon: <InboxIcon />,
+    },
+    {
+      title: "Jugadores",
+      path: "#/players",
+      icon: <PersonIcon />,
+    },
+    {
+      title: "Partidas",
+      path: "#/games",
+      icon: <SportsEsportsIcon />,
+    },
+    {
+      title: round != null && round > 1 ? "Continuar Partida" : "Nueva Partida",
+      path: "#/games/new",
+      icon: <VideogameAssetIcon />,
+    },
+    {
+      title: "Registrarse",
+      path: "#/register",
+      icon: <AppRegistrationIcon />,
+    },
+    {
+      title: "Como Jugar",
+      path: "#/manual",
+      icon: <MenuBookIcon />,
+    },
+    {
+      title: "Records",
+      path: "#/achievements",
+      icon: <EmojiEventsIcon />,
+    },
+  ];
 
   useEffect(() => {
     if (user) {
@@ -159,7 +154,11 @@ function Navbar({dataFromServer}) {
                 maxHeight: "40px",
               }}
             >
-              <IconButton component="a" href="#/login" disabled={dataFromServer === "loading"}>
+              <IconButton
+                component="a"
+                href="#/login"
+                disabled={dataFromServer === "loading"}
+              >
                 <Typography
                   sx={{
                     color: "white",
@@ -175,7 +174,11 @@ function Navbar({dataFromServer}) {
                   Ingresar
                 </Typography>
               </IconButton>
-              <IconButton component="a" href="#/register" disabled={dataFromServer === "loading"}>
+              <IconButton
+                component="a"
+                href="#/register"
+                disabled={dataFromServer === "loading"}
+              >
                 <Typography
                   sx={{
                     color: "white",
@@ -217,7 +220,13 @@ function Navbar({dataFromServer}) {
               },
             }}
           >
-            {userData ? <UserCard userData={userData} handleLogout={handleLogout} close={setAnchorEl}/> : null}
+            {userData ? (
+              <UserCard
+                userData={userData}
+                handleLogout={handleLogout}
+                close={setAnchorEl}
+              />
+            ) : null}
           </Menu>
         </Toolbar>
       </AppBar>
@@ -228,7 +237,7 @@ function Navbar({dataFromServer}) {
         onClose={() => setOpen(false)}
         sx={{ display: "flex" }}
       >
-        <NavListDrawer navLinks={navLinks} onClose={() => setOpen(false)}/>
+        <NavListDrawer navLinks={navLinks} onClose={() => setOpen(false)} />
       </Drawer>
     </>
   );
