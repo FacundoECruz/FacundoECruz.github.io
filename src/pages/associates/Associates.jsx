@@ -82,6 +82,7 @@ function Associates() {
         <Typography variant="h5">Creados por {user}</Typography>
       </Box>
       {associated.length ? (
+        <>
         <TableContainer component={Paper} sx={tableStyle}>
           <Table>
             <TableHead>
@@ -116,6 +117,16 @@ function Associates() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Box component={Paper} sx={tableStyle}>
+        <Typography sx={{ fontSize: "13px" }}>
+          Al seleccionar DAR DE ALTA se creará un usuario con el nombre del
+          jugador. La contraseña va a ser el nombre del jugador, la cual se
+          podrá modificar después. El jugador tiene hasta 24 horas después de
+          ser dado de alta para ingresar a su cuenta, lo que confirmará la
+          creación del usuario.
+        </Typography>
+      </Box>
+      </>
       ) : (
         <Box component={Paper} sx={tableStyle}>
           <Typography>No hay jugadores creados por {user}</Typography>
