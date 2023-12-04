@@ -69,7 +69,6 @@ export default function Register({
       email: email.value,
       password: password.value,
       image: imageUrl,
-      createdDate: new Date().getTime(),
     };
     if (removePlayerToAssociate) associate(formData);
     else register(formData);
