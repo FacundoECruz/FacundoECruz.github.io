@@ -1,13 +1,24 @@
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: "http://localhost:8080",
+  // baseURL: "http://localhost:8080",
   // baseURL: "http://localhost:3000/api",
   // baseURL: "https://altisima-scoreboard.onrender.com/api",
-  // baseURL: "https://altisima-spring-backend.onrender.com",
+  baseURL: "https://altisima-spring-backend.onrender.com",
 });
 
-//OJO CON LOS V1 CUANDO CAMBIAMOS DE SERVIDOR!!!
+server.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("user");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 const api = {
   getGames: () => server.get("/games"),

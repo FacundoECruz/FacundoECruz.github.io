@@ -14,19 +14,19 @@ import {
 } from "@mui/material";
 import Swal from "sweetalert2";
 import { CircularProgress } from "@mui/material";
+import { useAuth } from "../../utils/AuthContext";
 
 function Associates() {
   const [associated, setAssociated] = useState([]);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const {user} = useAuth()
+
   useEffect(() => {
-    const user = window.localStorage.getItem("user");
-    setUser(user);
     api.getAssociatedPlayers(user).then((res) => {
       setAssociated(res.data.data);
     });
-  }, []);
+  }, [user]);
 
   const containerStyle = {
     display: "flex",
