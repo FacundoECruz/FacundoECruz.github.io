@@ -25,20 +25,16 @@ export function useScores() {
 
   function nextRound() {
     setVarCheck(false);
-    const playersLost = playersRound.map((p) => {
-      return p.bidsLost;
-    });
-    const invalidRoundData = playersLost.every((p) => p === 0);
-    if (invalidRoundData) {
+
+    if (invalidRoundData()) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Al menos uno tiene que perder',
-      })
+        icon: "error",
+        title: "Error",
+        text: "Al menos uno tiene que perder",
+      });
     } else {
       const gameId = window.localStorage.getItem("gameId");
       setRoundStatus("loading");
-
       api
         .nextRound(playersRound, gameId)
         .then((res) => {
@@ -46,38 +42,49 @@ export function useScores() {
             type: types.nextRound,
             newState: res.data.newRoundState,
           });
-          window.localStorage.setItem("round", res.data.round);
-          if (res.data.round < 10) {
-            window.localStorage.setItem(
-              "status",
-              JSON.stringify(res.data.status)
-            );
-          } else {
-            window.localStorage.setItem("status", JSON.stringify("finished"));
-          }
-          window.localStorage.setItem(
-            "players",
-            JSON.stringify(res.data.newRoundState)
-          );
-          const table = res.data.newRoundState;
-          const uiTable = table.map((p) => {
-            const { username, score, image, history } = p;
-            return {
-              username: username,
-              score: score,
-              image: image,
-              history: history,
-            };
-          });
-          uiTable.sort((a, b) => b.score - a.score);
-          window.localStorage.setItem("table", JSON.stringify(uiTable));
-          setTable(uiTable);
-          setRoundStatus("idle");
+          updateLocalStorageAfterRound(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
+  }
+
+  function invalidRoundData() {
+    const playersLost = playersRound.map((p) => {
+      return p.bidsLost;
+    });
+    return playersLost.every((p) => p === 0);
+  }
+
+  function updateLocalStorageAfterRound(roundData) {
+    window.localStorage.setItem("round", roundData.round);
+    if (roundData.round < 10) {
+      window.localStorage.setItem("status", JSON.stringify(roundData.status));
+    } else {
+      window.localStorage.setItem("status", JSON.stringify("finished"));
+    }
+    window.localStorage.setItem(
+      "players",
+      JSON.stringify(roundData.newRoundState)
+    );
+    updateTable(roundData.newRoundState);
+  }
+
+  function updateTable(table){
+    const uiTable = table.map((p) => {
+      const { username, score, image, history } = p;
+      return {
+        username: username,
+        score: score,
+        image: image,
+        history: history,
+      };
+    });
+    uiTable.sort((a, b) => b.score - a.score);
+    window.localStorage.setItem("table", JSON.stringify(uiTable));
+    setTable(uiTable);
+    setRoundStatus("idle");
   }
 
   function prevRound() {
