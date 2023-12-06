@@ -3,17 +3,21 @@ import { useEffect } from "react";
 import api from "../../utils/api-client";
 import { useState } from "react";
 import LittleGameCard from "./components/LittleGameCard.jsx";
+import CircularProgress from "@mui/material";
 
 function Games() {
   const [gamesToDisplay, setGamesToDisplay] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     api.getGames().then((res) => {
       const allGames = res.data;
       const completedGames = allGames.filter((game) => game.currentRound >= 9);
       completedGames.reverse();
       setGamesToDisplay(completedGames);
     });
+    setLoading(false);
   }, []);
 
   return (
@@ -32,11 +36,22 @@ function Games() {
         justifyContent: "center",
       }}
     >
-      <Box sx={{display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center"}}>
-      {gamesToDisplay.map((game, i) => {
-        return <LittleGameCard game={game} key={i}/>
-      })}
-      </Box>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "16px",
+            justifyContent: "center",
+          }}
+        >
+          {gamesToDisplay.map((game, i) => {
+            return <LittleGameCard game={game} key={i} />;
+          })}
+        </Box>
+      )}
     </div>
   );
 }
