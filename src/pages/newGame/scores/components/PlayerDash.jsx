@@ -6,6 +6,7 @@ import AchievementsBox from "../../../../components/achievements/AchievementsBox
 import { useState } from "react";
 import { useEffect } from "react";
 import hasAtLeastOneAchievement from "../utils/hasAtLeastOneAchievement.js";
+import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 
 const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
   const [hasAchievement, setHasAchievement] = useState(false);
@@ -55,7 +56,7 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
       >
         <Box sx={{ mb: 2, mt: 2 }}>
           <Typography variant="h6" sx={{ color: "white", fontSize: "14px" }}>
-            Apuesta
+            Ganó
           </Typography>
           <Button
             id="bid-button"
@@ -84,12 +85,16 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
               padding: "3px 3px",
             }}
           >
-            Reset
+            {player.bid !== 0 ? (
+              <SettingsBackupRestoreIcon />
+            ) : (
+              <SettingsBackupRestoreIcon sx={{ color: "black" }} />
+            )}
           </Button>
         </Box>
         <Box sx={{ mb: 2 }}>
           <Typography variant="h6" sx={{ color: "white", fontSize: "14px" }}>
-            Pierde
+            Perdió
           </Typography>
           <Button
             id="lost-button"
@@ -118,7 +123,11 @@ const PlayerDash = ({ player, index, dispatch, types, achievements }) => {
               padding: "3px 3px",
             }}
           >
-            Reset
+            {player.bidsLost !== 0 ? (
+              <SettingsBackupRestoreIcon />
+            ) : (
+              <SettingsBackupRestoreIcon sx={{ color: "black" }} />
+            )}
           </Button>
         </Box>
       </Box>
