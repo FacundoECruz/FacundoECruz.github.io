@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import api from "../../utils/api-client";
 import { useState } from "react";
 import LittleGameCard from "./components/LittleGameCard.jsx";
-import CircularProgress from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 function Games() {
   const [gamesToDisplay, setGamesToDisplay] = useState([]);
