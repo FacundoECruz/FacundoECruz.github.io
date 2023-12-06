@@ -22,9 +22,9 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       api
         .login(data)
         .then((res) => {
-          const user = res.data.username;
-          window.localStorage.setItem("user", user);
-          setUser(user);
+          window.localStorage.setItem("token", res.data.token)
+          window.localStorage.setItem("user", data.username)
+          setUser(data.username)
         })
         .catch((err) => {
           setLoginError(err.response.data);
@@ -41,7 +41,6 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       api
         .createUser(formData)
         .then((res) => {
-          console.log(res.data)
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -50,9 +49,9 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
             timer: 1500,
             width: "50%",
           })
-          const user = res.data.username;
-          window.localStorage.setItem("user", user);
-          setUser(user);
+          window.localStorage.setItem("token", res.data.token);
+          window.localStorage.setItem("user", formData.username);
+          setUser(formData.username);
         })
         .catch((err) => {
           setRegisterError(err.response.data);
@@ -77,9 +76,8 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
             timer: 1500,
             width: "50%",
           })
-          const user = res.data.username;
-          window.localStorage.setItem("user", user);
-          setUser(user);
+          window.localStorage.setItem("user", res.data.token);
+          setUser(formData.username);
         })
         .catch((err) => {
           setRegisterError(err.response.data);
@@ -129,6 +127,7 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       showConfirmButton: false,
     })
     window.localStorage.removeItem("user");
+    window.localStorage.removeItem("token");
     setUser(null);
   };
 

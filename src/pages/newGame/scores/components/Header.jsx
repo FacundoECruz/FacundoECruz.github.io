@@ -19,6 +19,7 @@ function InGameHeader({ round, cardsPerRound, varCheck, setGameState }) {
         window.localStorage.removeItem("cardsPerRound");
         window.localStorage.removeItem("gameId");
         window.localStorage.removeItem("round");
+        window.localStorage.removeItem("table");
         window.localStorage.setItem("status", JSON.stringify("finished"));
       }
     });

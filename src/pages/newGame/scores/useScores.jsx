@@ -4,7 +4,7 @@ import { types } from "../../../utils/reducerTypes";
 import api from "../../../utils/api-client";
 import Swal from "sweetalert2";
 
-export function useScores() {
+export function useScores(backToForm) {
   const [cardsPerRound, setCardsPerRound] = useState([]);
   const [round, setRound] = useState(null);
   const [status, setStatus] = useState(null);
@@ -23,22 +23,15 @@ export function useScores() {
     setStatus(JSON.parse(window.localStorage.getItem("status")));
   }, [playersRound]);
 
+  // NEXT ROUND
+
   function nextRound() {
     setVarCheck(false);
-    const playersLost = playersRound.map((p) => {
-      return p.bidsLost;
-    });
-    const invalidRoundData = playersLost.every((p) => p === 0);
-    if (invalidRoundData) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Al menos uno tiene que perder',
-      })
+    if (invalidRoundData()) {
+      invalidRoundAlert();
     } else {
       const gameId = window.localStorage.getItem("gameId");
       setRoundStatus("loading");
-
       api
         .nextRound(playersRound, gameId)
         .then((res) => {
@@ -46,39 +39,99 @@ export function useScores() {
             type: types.nextRound,
             newState: res.data.newRoundState,
           });
-          window.localStorage.setItem("round", res.data.round);
-          if (res.data.round < 10) {
-            window.localStorage.setItem(
-              "status",
-              JSON.stringify(res.data.status)
-            );
-          } else {
-            window.localStorage.setItem("status", JSON.stringify("finished"));
+          updateLocalStorageAfterRound(res.data);
+          if (res.data.round > 9) {
+            finishGame();
           }
-          window.localStorage.setItem(
-            "players",
-            JSON.stringify(res.data.newRoundState)
-          );
-          const table = res.data.newRoundState;
-          const uiTable = table.map((p) => {
-            const { username, score, image, history } = p;
-            return {
-              username: username,
-              score: score,
-              image: image,
-              history: history,
-            };
-          });
-          uiTable.sort((a, b) => b.score - a.score);
-          window.localStorage.setItem("table", JSON.stringify(uiTable));
-          setTable(uiTable);
-          setRoundStatus("idle");
         })
         .catch((err) => {
           console.log(err);
         });
     }
   }
+
+  function invalidRoundData() {
+    const playersLost = playersRound.map((p) => {
+      return p.bidsLost;
+    });
+    return playersLost.every((p) => p === 0);
+  }
+
+  function invalidRoundAlert() {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Al menos uno tiene que perder",
+    });
+  }
+
+  function updateLocalStorageAfterRound(roundData) {
+    window.localStorage.setItem("round", roundData.round);
+    window.localStorage.setItem("status", JSON.stringify(roundData.status));
+    window.localStorage.setItem(
+      "players",
+      JSON.stringify(roundData.newRoundState)
+    );
+    updateTable(roundData.newRoundState);
+  }
+
+  function updateTable(table) {
+    const uiTable = table.map((p) => {
+      const { username, score, image, history } = p;
+      return {
+        username: username,
+        score: score,
+        image: image,
+        history: history,
+      };
+    });
+    uiTable.sort((a, b) => b.score - a.score);
+    window.localStorage.setItem("table", JSON.stringify(uiTable));
+    setTable(uiTable);
+    setRoundStatus("idle");
+  }
+
+  function finishGame() {
+    const finalTable = JSON.parse(window.localStorage.getItem("table"));
+    const winner = finalTable[0];
+    Swal.fire({
+      title: `Ganó ${winner.username} con ${winner.score} puntos`,
+      width: 600,
+      padding: "3em",
+      customClass: {
+        title: "custom-title-color",
+      },
+      color: "#716add",
+      background:
+        "#eee url(https://res.cloudinary.com/dfknsvqer/image/upload/v1699022974/altisima/win_za9q0s.jpg)",
+      confirmButtonText: "Salir",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        exitGame();
+      }
+    });
+  }
+
+  function exitGame() {
+    cleanupLocalStorage()
+    updateAchievements()
+  }
+
+  function cleanupLocalStorage(){
+    window.localStorage.removeItem("table");
+    window.localStorage.removeItem("cardsPerRound");
+    window.localStorage.removeItem("gameId");
+    window.localStorage.removeItem("round");
+    backToForm()
+  }
+
+  function updateAchievements(){
+    api.getAchievements().then((res) => {
+      window.localStorage.setItem("achievements", JSON.stringify(res.data));
+    });
+  }
+
+  // PREV ROUND
 
   function prevRound() {
     setVarCheck(true);

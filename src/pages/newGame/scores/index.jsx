@@ -19,7 +19,7 @@ function Scores({ setGameState, playAgain, backToForm, finishGame }) {
     roundStatus,
     prevRound,
     nextRound,
-  } = useScores();
+  } = useScores(backToForm);
 
   function setPlayAgain() {
     const finishTable = [...table];

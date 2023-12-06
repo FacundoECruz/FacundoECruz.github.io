@@ -7,7 +7,18 @@ const server = axios.create({
   baseURL: "https://altisima-spring-backend.onrender.com",
 });
 
-//OJO CON LOS V1 CUANDO CAMBIAMOS DE SERVIDOR!!!
+server.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("user");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 const api = {
   getGames: () => server.get("/games"),
