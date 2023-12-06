@@ -11,7 +11,6 @@ function ScoreboardControlButtons({
   status,
   setPlayAgain,
   varCheck,
-  finishGame,
 }) {
   function endGame() {
     Swal.fire({
@@ -23,7 +22,6 @@ function ScoreboardControlButtons({
     });
 
     nextRound();
-    finishGame();
   }
 
   return (

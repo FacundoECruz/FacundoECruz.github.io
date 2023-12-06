@@ -38,7 +38,6 @@ function DialogAddPlayerToDb({
         createdDate: new Date().getTime(),
       })
       .then((res) => {
-        console.log(res.data);
         putNewPlayerIntoGameList(res.data.username);
         fetchOptions();
         setOpen(false);
