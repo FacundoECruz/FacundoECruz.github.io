@@ -22,7 +22,8 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       api
         .login(data)
         .then((res) => {
-          window.localStorage.setItem("user", res.data.token)
+          window.localStorage.setItem("token", res.data.token)
+          window.localStorage.setItem("user", data.username)
           setUser(data.username)
         })
         .catch((err) => {
@@ -48,7 +49,8 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
             timer: 1500,
             width: "50%",
           })
-          window.localStorage.setItem("user", res.data.token);
+          window.localStorage.setItem("token", res.data.token);
+          window.localStorage.setItem("user", formData.username);
           setUser(formData.username);
         })
         .catch((err) => {
@@ -125,6 +127,7 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       showConfirmButton: false,
     })
     window.localStorage.removeItem("user");
+    window.localStorage.removeItem("token");
     setUser(null);
   };
 
