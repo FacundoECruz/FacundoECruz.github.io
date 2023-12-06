@@ -16,24 +16,21 @@ import RequireAuth from "./utils/requireAuth";
 import { useEffect, useState } from "react";
 import api from "./utils/api-client.js";
 import { AuthProvider } from "./utils/AuthContext.jsx";
-import useAchievements from "./components/achievements/useAchievements.jsx";
 
 function App() {
   const [dataFromServer, setDataFromServer] = useState("loading");
-  const {achievements} = useAchievements();
+  const [achievements, setAchievements] = useState(null);
 
   useEffect(() => {
     api
-      .getUsers()
-      // eslint-disable-next-line no-unused-vars
+      .getAchievements()
       .then((res) => {
-        if (res.data) {
-          setDataFromServer("loaded");
-        }
+        setAchievements(res.data);
+        setDataFromServer("loaded");
+        window.localStorage.setItem("achievements", JSON.stringify(res.data));
       })
-      .catch((err) => console.log(err));
-      window.localStorage.setItem("achievements", JSON.stringify(achievements))
-  });
+      .catch((e) => console.log(e));
+  }, []);
 
   return (
     <>
@@ -60,8 +57,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/manual" element={<PlayersGuide />} />
-            <Route path="/achievements" element={<Achievements />}/>
-            <Route path="/associates" element={<Associates />}/>
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/associates" element={<Associates />} />
           </Routes>
         </Router>
         <Footer />
