@@ -16,8 +16,8 @@ function Games() {
       const completedGames = allGames.filter((game) => game.currentRound >= 9);
       completedGames.reverse();
       setGamesToDisplay(completedGames);
+      setLoading(false);
     });
-    setLoading(false);
   }, []);
 
   return (
@@ -37,7 +37,7 @@ function Games() {
       }}
     >
       {loading ? (
-        <CircularProgress />
+        <CircularProgress sx={{color: "white"}}/>
       ) : (
         <Box
           sx={{

@@ -54,8 +54,12 @@ export default function Login({ useAuth = _useAuth }) {
       username: username.value,
       password: password.value,
     };
-    await login(formData)
-    setLoading(false)
+    try {
+      await login(formData);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const styles = {
