@@ -123,7 +123,7 @@ function LoadingServer({ server, backToHome }) {
           <ReactPlayer
             width="100%"
             height="100%"
-            url="https://www.youtube.com/watch?v=mzMPcl7vhQo&t=1s"
+            url="https://www.youtube.com/watch?v=Nw8UFka_2i4"
             playing={playing}
             muted={mute}
             controls={true}
