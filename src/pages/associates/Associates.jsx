@@ -21,11 +21,23 @@ function Associates() {
   const [loading, setLoading] = useState(false);
 
   const {user} = useAuth()
+  const token = window.localStorage.getItem("token")
 
   useEffect(() => {
-    api.getAssociatedPlayers(user).then((res) => {
-      setAssociated(res.data.data);
-    });
+    async function getAssociatedPlayers(){
+      const associatedResponse = await api.authenticatedRequest(
+        `/v1/players/${user}`,
+        "GET",
+        null,
+        token
+      );
+      setAssociated(associatedResponse.data)
+    }
+     
+    getAssociatedPlayers()
+    // api.getAssociatedPlayers(user).then((res) => {
+    //   setAssociated(res.data.data);
+    // });
   }, [user]);
 
   const containerStyle = {
@@ -61,7 +73,12 @@ function Associates() {
       image: "",
       createdDate: new Date().getTime(),
     };
-    api.associateUser(playerToActivate).then((res) => console.log(res.data));
+    api.authenticatedRequest(
+      "/v1/users/associate",
+      "POST",
+      playerToActivate,
+      token
+    ).then((res) => console.log(res));
     Swal.fire({
       position: "top-end",
       icon: "success",

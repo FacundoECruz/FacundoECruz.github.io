@@ -85,10 +85,11 @@ function Navbar({ dataFromServer }) {
 
   useEffect(() => {
     if (user) {
+      const token = window.localStorage.getItem("token")
       api
-        .getUser(user)
+        .authenticatedRequest(`/users/${user}`, "GET", null, token)
         .then((res) => {
-          const { username, image, createdGames } = res.data;
+          const { username, image, createdGames } = res;
           return { username, image, createdGames };
         })
         .then((userObj) => {

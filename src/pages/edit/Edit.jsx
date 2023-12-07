@@ -45,19 +45,23 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
   const [status, setStatus] = useState("idle");
   const [editErrorMsg, setEditErrorMsg] = useState(null);
   const navigate = useNavigate() 
+  const token = window.localStorage.getItem("token")
 
   useEffect(() => {
-    api
-      .getUser(user)
-      .then((res) => {
-        const { email, image, password, username } = res.data;
+    api.authenticatedRequest(
+      `/users/${user}`,
+      "GET",
+      null,
+      token
+    ).then((res) => {
+        const { email, image, password, username } = res;
         setUsername(username);
         setEmail(email);
         setImageUrl(image);
         setPassword(password);
       })
       .catch((err) => console.log(err));
-  }, [user]);
+  }, [token, user]);
 
   const styles = {
     paperContainer: {
@@ -74,11 +78,8 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
       password: password.value,
       image: imageUrl,
     };
-
-    api
-      .editUser(username.value, formData)
-      // eslint-disable-next-line no-unused-vars
-      .then((res) => {
+    
+    api.editUser(username, formData).then((res) => {
         setStatus("success");
         setEditErrorMsg(null);
         Swal.fire({
@@ -92,7 +93,7 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
         navigate("/");
       })
       .catch((err) => {
-        setEditErrorMsg(err.response.data)
+        setEditErrorMsg(err.response)
         setStatus("idle")
       });
   };

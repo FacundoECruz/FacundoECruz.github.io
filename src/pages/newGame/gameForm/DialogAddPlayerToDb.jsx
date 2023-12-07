@@ -31,22 +31,36 @@ function DialogAddPlayerToDb({
   const savePlayer = async () => {
     setLoading(true);
     const user = window.localStorage.getItem("user");
-    api
-      .createPlayer({
-        username: inputValue,
-        createdBy: user,
-        createdDate: new Date().getTime(),
-      })
-      .then((res) => {
-        putNewPlayerIntoGameList(res.data.username);
-        fetchOptions();
-        setOpen(false);
-      })
-      .catch((err) => {
-        setError(err.response.data);
-      });
-
+    const inputData = {
+      username: inputValue,
+      createdBy: user,
+      createdDate: new Date().getTime(),
+    };
+    const token = window.localStorage.getItem("token");
+    const playerData = await api.authenticatedRequest(
+      "/v1/players",
+      "POST",
+      inputData,
+      token
+    );
+    putNewPlayerIntoGameList(playerData.username);
+    fetchOptions();
+    setOpen(false);
     setLoading(false);
+    // api
+    //   .createPlayer({
+    //     username: inputValue,
+    //     createdBy: user,
+    //     createdDate: new Date().getTime(),
+    //   })
+    //   .then((res) => {
+    //     putNewPlayerIntoGameList(res.data.username);
+    //     fetchOptions();
+    //     setOpen(false);
+    //   })
+    //   .catch((err) => {
+    //     setError(err.response.data);
+    //   });
   };
 
   return (
