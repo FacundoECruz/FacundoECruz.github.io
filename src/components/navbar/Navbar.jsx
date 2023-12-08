@@ -84,33 +84,40 @@ function Navbar({ dataFromServer }) {
   ];
 
   useEffect(() => {
-    if (user) {
-      const token = window.localStorage.getItem("token")
-      api
-        .authenticatedRequest(`/users/${user}`, "GET", null, token)
-        .then((res) => {
-          const { username, image, createdGames } = res;
-          return { username, image, createdGames };
-        })
-        .then((userObj) => {
-          api
-            .getPlayer(user)
-            .then((res) => {
-              const { gamesPlayed, gamesWon, totalScore } = res.data;
-              const userData = {
-                ...userObj,
-                gamesPlayed,
-                gamesWon,
-                totalScore,
-              };
-              setUserData(userData);
-            })
-            .catch((err) => console.log(err));
-        })
-        .catch((err) => console.log(err));
-    } else {
-      return;
-    }
+    const fetchData = async () => {
+      if (user) {
+        const token = window.localStorage.getItem("token");
+        api
+          .authenticatedRequest(`/users/${user}`, "GET", null, token)
+          .then((res1) => {
+              const { username, image, createdGames } = res1;
+              api
+                .getPlayer(user)
+                .then((res2) => {
+                  const { gamesPlayed, gamesWon, totalScore } = res2.data;
+                  const userData = {
+                    username,
+                    image,
+                    createdGames,
+                    gamesPlayed,
+                    gamesWon,
+                    totalScore,
+                  };
+                  setUserData(userData);
+                })
+                .catch((error) => {
+                  if (error.response && error.response.status === 403) {
+                    console.log("Hay un error 403")
+                  }
+                });
+              })          
+          .catch((error) => {
+            window.localStorage.removeItem("token")
+            window.localStorage.removeItem("user")
+          });
+      }
+    };
+    fetchData();
   }, [user]);
 
   return (
