@@ -17,18 +17,30 @@ function NewGame() {
   });
   
   // Maneja el inicio del juego
-  function handleStartGame(players) {
+  async function handleStartGame(players) {
     setLoading(true);
     const playersForBackend = players.map((p) => {
       return { username: p, score: 0, bid: 0, bidsLost: 0 };
     });
-    api.createGame(playersForBackend).then((res) => {
-      saveGameDataInLocalStorage(res.data)
+    const token = window.localStorage.getItem("token");
+    const gameData = await api.authenticatedRequest(
+      "/v1/games",
+      "POST",
+      playersForBackend,
+      token
+    );
+    saveGameDataInLocalStorage(gameData)
       removeOldPlayersFromLocalStorage()
-      setCurrentPlayersInLocalStorage(res.data)
+      setCurrentPlayersInLocalStorage(gameData)
       setLoading(false);
-      setGameState(res.data.status);
-    });
+      setGameState(gameData.status);
+    // api.createGame(playersForBackend).then((res) => {
+    //   saveGameDataInLocalStorage(res.data)
+    //   removeOldPlayersFromLocalStorage()
+    //   setCurrentPlayersInLocalStorage(res.data)
+    //   setLoading(false);
+    //   setGameState(res.data.status);
+    // });
   }
 
   function saveGameDataInLocalStorage(data){

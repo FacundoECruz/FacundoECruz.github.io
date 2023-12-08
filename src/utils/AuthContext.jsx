@@ -22,9 +22,9 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
       api
         .login(data)
         .then((res) => {
-          window.localStorage.setItem("token", res.data.token)
-          window.localStorage.setItem("user", data.username)
-          setUser(data.username)
+          window.localStorage.setItem("token", res.data.token);
+          window.localStorage.setItem("user", data.username);
+          setUser(data.username);
         })
         .catch((err) => {
           setLoginError(err.response.data);
@@ -42,13 +42,13 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
         .createUser(formData)
         .then((res) => {
           Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            text: 'Registrado correctamente',
+            position: "top-end",
+            icon: "success",
+            text: "Registrado correctamente",
             showConfirmButton: false,
             timer: 1500,
             width: "50%",
-          })
+          });
           window.localStorage.setItem("token", res.data.token);
           window.localStorage.setItem("user", formData.username);
           setUser(formData.username);
@@ -63,19 +63,20 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
 
   const associate = (formData) => {
     setRegisterError(null);
+    const token = window.localStorage.getItem("token")
     const validateError = validateRegisterData(formData);
     if (validateError === "") {
       api
-        .associateUser(formData)
+        .acuthenticatedRequest("/v1/users/associate", "POST", formData, token)
         .then((res) => {
           Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            text: 'Asociado correctamente',
+            position: "top-end",
+            icon: "success",
+            text: "Asociado correctamente",
             showConfirmButton: false,
             timer: 1500,
             width: "50%",
-          })
+          });
           window.localStorage.setItem("user", res.data.token);
           setUser(formData.username);
         })
@@ -109,23 +110,22 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
   }
 
   function validateLoginData({ username, password }) {
-    if (username === "" || password === "") 
-      return "Completar todos los campos"
-    else
-      return ""
+    if (username === "" || password === "") return "Completar todos los campos";
+    else return "";
   }
 
   const logout = () => {
     Swal.fire({
-      text: 'Nos vemo!',
-      imageUrl: 'https://res.cloudinary.com/dfknsvqer/image/upload/v1698851914/altisima/diegote_o4bxs8.jpg',
+      text: "Nos vemo!",
+      imageUrl:
+        "https://res.cloudinary.com/dfknsvqer/image/upload/v1698851914/altisima/diegote_o4bxs8.jpg",
       imageWidth: 150,
       imageHeight: 150,
-      imageAlt: 'bye bye image',
+      imageAlt: "bye bye image",
       width: "50%",
       timer: 1000,
       showConfirmButton: false,
-    })
+    });
     window.localStorage.removeItem("user");
     window.localStorage.removeItem("token");
     setUser(null);

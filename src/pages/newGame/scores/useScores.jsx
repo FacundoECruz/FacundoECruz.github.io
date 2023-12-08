@@ -16,6 +16,7 @@ export function useScores(backToForm) {
   );
   const [varCheck, setVarCheck] = useState(false);
   const [roundStatus, setRoundStatus] = useState("idle");
+  const token = window.localStorage.getItem("token")
 
   useEffect(() => {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
@@ -32,15 +33,18 @@ export function useScores(backToForm) {
     } else {
       const gameId = window.localStorage.getItem("gameId");
       setRoundStatus("loading");
-      api
-        .nextRound(playersRound, gameId)
-        .then((res) => {
+      api.authenticatedRequest(
+        "/v1/games/next",
+        "PUT",
+        {playersRound, gameId},
+        token
+      ).then((res) => {
           dispatch({
             type: types.nextRound,
-            newState: res.data.newRoundState,
+            newState: res.newRoundState,
           });
-          updateLocalStorageAfterRound(res.data);
-          if (res.data.round > 9) {
+          updateLocalStorageAfterRound(res);
+          if (res.round > 9) {
             finishGame();
           }
         })
@@ -136,6 +140,12 @@ export function useScores(backToForm) {
   function prevRound() {
     setVarCheck(true);
     const gameId = window.localStorage.getItem("gameId");
+    api.authenticatedRequest(
+      "/v1/games/prev",
+      "PUT",
+      gameId,
+      token
+    );
     api
       .prevRound(gameId)
       .then((res) => {

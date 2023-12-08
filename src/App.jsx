@@ -29,7 +29,9 @@ function App() {
         setDataFromServer("loaded");
         window.localStorage.setItem("achievements", JSON.stringify(res.data));
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+          setDataFromServer("authError")
+      });
   }, []);
 
   return (
