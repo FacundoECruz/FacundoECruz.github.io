@@ -16,17 +16,20 @@ export function AuthProvider({ children, localStorage = window.localStorage }) {
   const [registerError, setRegisterError] = useState(null);
 
   const login = async (data) => {
+    console.log("authContext")
     setLoginError(null);
     const validateError = validateLoginData(data);
     if (validateError === "") {
       api
         .login(data)
         .then((res) => {
+          console.log(".then")
           window.localStorage.setItem("token", res.data.token);
           window.localStorage.setItem("user", data.username);
           setUser(data.username);
         })
         .catch((err) => {
+          console.log(err)
           setLoginError(err.response.data);
         });
     } else {

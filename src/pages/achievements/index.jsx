@@ -9,8 +9,7 @@ import { useEffect, useState } from "react";
 import api from "../../utils/api-client";
 import GenericAchievementModal from "./modals/GenericModal.jsx";
 import TopTenModal from "./modals/TopTenModal.jsx";
-import CircularProgress from "@mui/material/CircularProgress";
-
+import CircularProgress from "@mui/material/CircularProgress"
 function Achievements() {
   const [allPlayers, setAllPlayers] = useState([]);
   const achievements = JSON.parse(window.localStorage.getItem("achievements"));
