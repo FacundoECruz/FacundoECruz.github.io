@@ -35,9 +35,7 @@ function Associates() {
     }
      
     getAssociatedPlayers()
-    // api.getAssociatedPlayers(user).then((res) => {
-    //   setAssociated(res.data.data);
-    // });
+
   }, [user]);
 
   const containerStyle = {
@@ -78,7 +76,7 @@ function Associates() {
       "POST",
       playerToActivate,
       token
-    ).then((res) => console.log(res));
+    ).then((res) => console.log("asociado"));
     Swal.fire({
       position: "top-end",
       icon: "success",

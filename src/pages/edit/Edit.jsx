@@ -41,7 +41,6 @@ function Edit({ ImageWithChangeButton = ImageWithChangeButton_ }) {
   const [imageUrl, setImageUrl] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
   const [editErrorMsg, setEditErrorMsg] = useState(null);
   const navigate = useNavigate();
@@ -52,11 +51,10 @@ function Edit({ ImageWithChangeButton = ImageWithChangeButton_ }) {
       .authenticatedRequest(`/users/${user}`, "GET", null, token)
       .then((res) => {
         console.log(res);
-        const { email, image, password, username } = res;
+        const { email, image, username } = res;
         setUsername(username);
         setEmail(email);
         setImageUrl(image);
-        setPassword(password);
       })
       .catch((err) => console.log(err));
   }, [token, user]);
@@ -71,16 +69,18 @@ function Edit({ ImageWithChangeButton = ImageWithChangeButton_ }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("loading");
-    const { username, password } = e.target.elements;
+    const { username } = e.target.elements;
+    const pass = e.target.elements.password.value;
+    const passForDb = pass === "" ? "" : pass;
     const formData = {
-      password: password.value,
+      password: passForDb,
       image: imageUrl,
     };
+    console.log(formData)  
 
     api
       .editUser(username.value, formData)
       .then((res) => {
-        console.log(res)
         setStatus("success");
         setEditErrorMsg(null);
         Swal.fire({
@@ -171,8 +171,7 @@ function Edit({ ImageWithChangeButton = ImageWithChangeButton_ }) {
               label="Contraseña"
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Si deja en blanco conservará la que ya tiene"
               autoFocus
             />
             <Box

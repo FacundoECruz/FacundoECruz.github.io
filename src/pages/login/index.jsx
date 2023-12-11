@@ -47,7 +47,6 @@ export default function Login({ useAuth = _useAuth }) {
   }, [navigate, user]);
 
   const handleSubmit = async (e) => {
-    console.log("handleSubmit")
     e.preventDefault();
     setLoading(true);
     const { password, username } = e.target.elements;
