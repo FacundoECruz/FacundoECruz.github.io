@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Paper from "@mui/material/Paper";
-import {ImageWithChangeButton as ImageWithChangeButton_} from "./ImageWithChangeButton.jsx";
+import { ImageWithChangeButton as ImageWithChangeButton_ } from "./ImageWithChangeButton.jsx";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useAuth } from "../../utils/AuthContext";
 import Swal from "sweetalert2";
@@ -36,24 +36,22 @@ function Copyright(props) {
 }
 
 // eslint-disable-next-line react/prop-types
-function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
-  const { user } = useAuth()
+function Edit({ ImageWithChangeButton = ImageWithChangeButton_ }) {
+  const { user } = useAuth();
   const [imageUrl, setImageUrl] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
   const [editErrorMsg, setEditErrorMsg] = useState(null);
-  const navigate = useNavigate() 
-  const token = window.localStorage.getItem("token")
+  const navigate = useNavigate();
+  const token = window.localStorage.getItem("token");
 
   useEffect(() => {
-    api.authenticatedRequest(
-      `/users/${user}`,
-      "GET",
-      null,
-      token
-    ).then((res) => {
+    api
+      .authenticatedRequest(`/users/${user}`, "GET", null, token)
+      .then((res) => {
+        console.log(res);
         const { email, image, password, username } = res;
         setUsername(username);
         setEmail(email);
@@ -78,23 +76,27 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
       password: password.value,
       image: imageUrl,
     };
-    
-    api.editUser(username, formData).then((res) => {
+
+    api
+      .editUser(username.value, formData)
+      .then((res) => {
+        console.log(res)
         setStatus("success");
         setEditErrorMsg(null);
         Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          text: 'Editado correctamente',
+          position: "top-end",
+          icon: "success",
+          text: "Editado correctamente",
           showConfirmButton: false,
           timer: 1500,
           width: "50%",
-        })
+        });
         navigate("/");
       })
       .catch((err) => {
-        setEditErrorMsg(err.response)
-        setStatus("idle")
+        console.log(err)
+        setEditErrorMsg(err.response);
+        setStatus("idle");
       });
   };
 
@@ -173,7 +175,14 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
               onChange={(e) => setPassword(e.target.value)}
               autoFocus
             />
-            <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
               <ImageWithChangeButton
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
@@ -190,7 +199,9 @@ function Edit({ImageWithChangeButton = ImageWithChangeButton_}) {
                 "Guardar Cambios"
               )}
             </Button>
-            {editErrorMsg ? <Typography sx={{color: "red"}}>{editErrorMsg}</Typography> : null}
+            {editErrorMsg ? (
+              <Typography sx={{ color: "red" }}>{editErrorMsg}</Typography>
+            ) : null}
             <Copyright sx={{ mt: 5 }} />
           </Box>
         </Box>
