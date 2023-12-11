@@ -22,7 +22,6 @@ function PlayerDetails() {
       .getPlayer(username)
       .then((response) => {
         const [player] = response.data
-        console.log(player)
         setPlayer(player)
       })
       .catch((error) => console.log(error));

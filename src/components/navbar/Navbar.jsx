@@ -112,6 +112,7 @@ function Navbar({ dataFromServer }) {
                 });
               })          
           .catch((error) => {
+            console.log(error)
             window.localStorage.removeItem("token")
             window.localStorage.removeItem("user")
           });
