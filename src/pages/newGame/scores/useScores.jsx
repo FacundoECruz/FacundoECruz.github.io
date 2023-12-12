@@ -16,7 +16,7 @@ export function useScores(backToForm) {
   );
   const [varCheck, setVarCheck] = useState(false);
   const [roundStatus, setRoundStatus] = useState("idle");
-  const token = window.localStorage.getItem("token")
+  const token = window.localStorage.getItem("token");
 
   useEffect(() => {
     setCardsPerRound(JSON.parse(window.localStorage.getItem("cardsPerRound")));
@@ -30,15 +30,18 @@ export function useScores(backToForm) {
     setVarCheck(false);
     if (invalidRoundData()) {
       invalidRoundAlert();
+      
     } else {
       const gameId = window.localStorage.getItem("gameId");
       setRoundStatus("loading");
-      api.authenticatedRequest(
-        "/v1/games/next",
-        "PUT",
-        {playersRound, gameId},
-        token
-      ).then((res) => {
+      api
+        .authenticatedRequest(
+          "/v1/games/next",
+          "PUT",
+          { playersRound, gameId },
+          token
+        )
+        .then((res) => {
           dispatch({
             type: types.nextRound,
             newState: res.newRoundState,
@@ -66,6 +69,10 @@ export function useScores(backToForm) {
       icon: "error",
       title: "Error",
       text: "Al menos uno tiene que perder",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setVarCheck(true)
+      }
     });
   }
 
@@ -117,19 +124,19 @@ export function useScores(backToForm) {
   }
 
   function exitGame() {
-    cleanupLocalStorage()
-    updateAchievements()
+    cleanupLocalStorage();
+    updateAchievements();
   }
 
-  function cleanupLocalStorage(){
+  function cleanupLocalStorage() {
     window.localStorage.removeItem("table");
     window.localStorage.removeItem("cardsPerRound");
     window.localStorage.removeItem("gameId");
     window.localStorage.removeItem("round");
-    backToForm()
+    backToForm();
   }
 
-  function updateAchievements(){
+  function updateAchievements() {
     api.getAchievements().then((res) => {
       window.localStorage.setItem("achievements", JSON.stringify(res.data));
     });
@@ -139,24 +146,19 @@ export function useScores(backToForm) {
 
   function prevRound() {
     setVarCheck(true);
-    const gameId = window.localStorage.getItem("gameId");
-    api.authenticatedRequest(
-      "/v1/games/prev",
-      "PUT",
-      gameId,
-      token
-    );
+    const gameIdString = window.localStorage.getItem("gameId");
+    const gameId = {id: gameIdString};
     api
-      .prevRound(gameId)
-      .then((res) => {
-        dispatch({ type: types.nextRound, newState: res.data.newRoundState });
-        window.localStorage.setItem("round", res.data.round);
-        window.localStorage.setItem("status", JSON.stringify(res.data.status));
+      .authenticatedRequest("/v1/games/prev", "PUT", gameId, token)
+      .then((data) => {
+        dispatch({ type: types.nextRound, newState: data.newRoundState });
+        window.localStorage.setItem("round", data.round);
+        window.localStorage.setItem("status", JSON.stringify(data.status));
         window.localStorage.setItem(
           "players",
-          JSON.stringify(res.data.newRoundState)
+          JSON.stringify(data.newRoundState)
         );
-        const table = res.data.newRoundState;
+        const table = data.newRoundState;
         const uiTable = table.map((p) => {
           const { username, score, image, history } = p;
           return {
