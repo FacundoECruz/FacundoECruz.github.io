@@ -31,7 +31,7 @@ function Home({ dataFromServer }) {
             backToHome={() => setShowTutorial(false)}
           />
         ) : dataFromServer === "authError" ? (
-          <Login />
+          location.reload()
         ) : (
           <MainHome showTutorial={() => setShowTutorial(true)} />
         )}
