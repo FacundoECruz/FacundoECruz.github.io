@@ -4,7 +4,6 @@ import "../../stylesheets/Home.css";
 import { Container } from "@mui/material";
 import LoadingServer from "../../components/LoadingServer.jsx";
 import { useState } from "react";
-import Login from "../login/index.jsx";
 
 function Home({ dataFromServer }) {
   const [showTutorial, setShowTutorial] = useState(false);
