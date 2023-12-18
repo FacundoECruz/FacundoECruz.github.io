@@ -37,30 +37,19 @@ function DialogAddPlayerToDb({
       createdDate: new Date().getTime(),
     };
     const token = window.localStorage.getItem("token");
-    const playerData = await api.authenticatedRequest(
-      "/v1/players",
-      "POST",
-      inputData,
-      token
-    );
-    putNewPlayerIntoGameList(playerData.username);
-    fetchOptions();
-    setOpen(false);
-    setLoading(false);
-    // api
-    //   .createPlayer({
-    //     username: inputValue,
-    //     createdBy: user,
-    //     createdDate: new Date().getTime(),
-    //   })
-    //   .then((res) => {
-    //     putNewPlayerIntoGameList(res.data.username);
-    //     fetchOptions();
-    //     setOpen(false);
-    //   })
-    //   .catch((err) => {
-    //     setError(err.response.data);
-    //   });
+    api
+      .authenticatedRequest("/v1/players", "POST", inputData, token)
+      .then((res) => {
+        if (res.username) {
+          putNewPlayerIntoGameList(res.username);
+          fetchOptions();
+          setOpen(false);
+          setLoading(false);
+        } else {
+          setError(res.response.data);
+          setLoading(false);
+        }
+      });
   };
 
   return (
@@ -82,7 +71,7 @@ function DialogAddPlayerToDb({
           onChange={handleInputChange}
         />
       </DialogContent>
-      {error ? <Typography sx={{ color: "red" }}>{error}</Typography> : null}
+      {error ? <Typography sx={{ color: "red", alignSelf: "center" }}>{error}</Typography> : null}
       {loading ? (
         <CircularProgress />
       ) : (
