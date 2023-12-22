@@ -29,7 +29,9 @@ function PlayedAndWinnedBidsData({ player, playerData }) {
         <Typography sx={typographyStyle}>jugadas</Typography>
       </Box>
       <Box>
-        <Typography sx={numberStyle}>{playerData.totalExtraScore}</Typography>
+        <Typography sx={numberStyle}>
+          {playerData.playedGames !== 0 ? playerData.totalExtraScore : 0}
+        </Typography>
         <Typography sx={typographyStyle}>Apuestas</Typography>
         <Typography sx={typographyStyle}>ganadas</Typography>
       </Box>

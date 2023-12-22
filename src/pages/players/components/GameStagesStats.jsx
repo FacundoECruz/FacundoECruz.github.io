@@ -2,9 +2,9 @@
 import { Box, Typography } from "@mui/material";
 
 function GameStagesStats({ percentages }) {
-  const earlyPercentage = percentages.earlyPercentage;
-  const midPercentage = percentages.midPercentage;
-  const latePercentage = percentages.latePercentage;
+  const earlyPercentage = percentages ? percentages.earlyPercentage : 0;
+  const midPercentage = percentages ? percentages.midPercentage : 0;
+  const latePercentage = percentages ? percentages.latePercentage : 0;
 
   const containerStyle = {
     display: "flex",
@@ -18,7 +18,7 @@ function GameStagesStats({ percentages }) {
     flexDirection: "column",
     border: "1px solid white",
     padding: "5px",
-    width: `${earlyPercentage}%`,
+    width: earlyPercentage ? `${earlyPercentage}%` : "33%",
     alignItems: "center",
   };
 
@@ -27,7 +27,7 @@ function GameStagesStats({ percentages }) {
     flexDirection: "column",
     border: "1px solid white",
     padding: "5px",
-    width: `${midPercentage}%`,
+    width: midPercentage ? `${midPercentage}%` : "33%",
     alignItems: "center",
   };
 
@@ -36,7 +36,7 @@ function GameStagesStats({ percentages }) {
     flexDirection: "column",
     border: "1px solid white",
     padding: "5px",
-    width: `${latePercentage}%`,
+    width: latePercentage ? `${latePercentage}%` : "33%",
     alignItems: "center",
   };
 

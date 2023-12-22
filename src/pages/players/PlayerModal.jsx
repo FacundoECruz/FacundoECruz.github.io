@@ -26,25 +26,30 @@ function PlayerModal({ player, onClose, stats }) {
   });
 
   useEffect(() => {
-    api.getPlayerDataService(player.username).then((res) => {
-      setPlayerData(res.data);
-    });
+    api
+      .getPlayerDataService(player.username)
+      .then((res) => {
+        setPlayerData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [player]);
 
-  const earlyPercentage = (
+  const earlyPercentage = playerData.playedGames !== 0 ? (
     (playerData.earlyGameScore / playerData.totalScore) *
     100
-  ).toFixed(1);
-  const midPercentage = (
+  ).toFixed(1) : 0 ;
+  const midPercentage = playerData.playedGames !== 0 ? (
     (playerData.midGameScore / playerData.totalScore) *
     100
-  ).toFixed(1);
-  const latePercentage = (
+  ).toFixed(1) : 0;
+  const latePercentage = playerData.playedGames !== 0 ? (
     (playerData.lateGameScore / playerData.totalScore) *
     100
-  ).toFixed(1);
+  ).toFixed(1) : 0;
 
-  const percentages = { earlyPercentage, midPercentage, latePercentage };
+  const percentages = playerData.playedGames !== 0 ? { earlyPercentage, midPercentage, latePercentage } : null;
 
   const mainContainerStyle = {
     position: "fixed",

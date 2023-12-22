@@ -9,12 +9,12 @@ function RoundsChart({ playerData }) {
       data: [
         {
           id: 0,
-          value: playerData.winnedRounds,
+          value: playerData.playedGames !== 0 ? playerData.winnedRounds : 0,
           color: "green",
         },
         {
           id: 1,
-          value: playerData.lostRounds,
+          value: playerData.playedGames !== 0 ? playerData.lostRounds : 0,
           color: "red",
         },
       ],
@@ -46,7 +46,7 @@ function RoundsChart({ playerData }) {
     flexDirection: "row",
     justifyContent: "space-around",
   };
-
+  
   return (
     <Box sx={containerStyle}>
       <Box sx={chartContainerStyle}>
