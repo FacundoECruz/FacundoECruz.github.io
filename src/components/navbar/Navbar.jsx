@@ -31,6 +31,27 @@ function Navbar({ dataFromServer }) {
   const { user, logout } = useAuth();
   const round = window.localStorage.getItem("round");
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        const token = window.localStorage.getItem("token");
+        api
+          .authenticatedRequest(`/users/${user}`, "GET", null, token)
+          .then((res) => {
+            const { username, image, createdGames } = res;
+            const userData = {username, image, createdGames};
+            setUserData(userData)
+          })
+          .catch((error) => {
+            console.log(error);
+            window.localStorage.removeItem("token");
+            window.localStorage.removeItem("user");
+          });
+      }
+    };
+    fetchData();
+  }, [user]);
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -82,44 +103,6 @@ function Navbar({ dataFromServer }) {
       icon: <EmojiEventsIcon />,
     },
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (user) {
-        const token = window.localStorage.getItem("token");
-        api
-          .authenticatedRequest(`/users/${user}`, "GET", null, token)
-          .then((res1) => {
-              const { username, image, createdGames } = res1;
-              api
-                .getPlayer(user)
-                .then((res2) => {
-                  const { gamesPlayed, gamesWon, totalScore } = res2.data;
-                  const userData = {
-                    username,
-                    image,
-                    createdGames,
-                    gamesPlayed,
-                    gamesWon,
-                    totalScore,
-                  };
-                  setUserData(userData);
-                })
-                .catch((error) => {
-                  if (error.response && error.response.status === 403) {
-                    console.log("Hay un error 403")
-                  }
-                });
-              })          
-          .catch((error) => {
-            console.log(error)
-            window.localStorage.removeItem("token")
-            window.localStorage.removeItem("user")
-          });
-      }
-    };
-    fetchData();
-  }, [user]);
 
   return (
     <>

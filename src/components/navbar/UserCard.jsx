@@ -7,11 +7,37 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import api from "../../utils/api-client";
+import { CircularProgress } from "@mui/material";
 
 function UserCard({ userData, handleLogout, close }) {
-  const userAverage = (userData.totalScore / userData.gamesPlayed).toFixed(1);
+  const [playerData, setPlayerData] = useState(null);
+  const [userAverage, setUserAverage] = useState(null);
 
-  return (
+  useEffect(() => {
+    api
+      .getPlayer(userData.username)
+      .then((res) => {
+        const { gamesPlayed, gamesWon, totalScore } = res.data;
+        const playerStats = {
+          gamesPlayed,
+          gamesWon,
+          totalScore,
+        };
+        setPlayerData(playerStats);
+        setUserAverage(
+          (playerStats.totalScore / playerStats.gamesPlayed).toFixed(1)
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [userData.username]);
+
+  return playerData === null ? (
+    <CircularProgress />
+  ) : (
     <Card sx={{ width: "190px", height: "100%" }}>
       <CardMedia
         sx={{ height: 140, margin: "5px", borderRadius: "5%" }}
@@ -26,8 +52,10 @@ function UserCard({ userData, handleLogout, close }) {
         sx={{ border: "1px solid black", borderRadius: "5%", margin: "5px" }}
       >
         <Typography variant="body1">{userData.username}</Typography>
-        <Typography variant="body2">Jugadas: {userData.gamesPlayed}</Typography>
-        <Typography variant="body2">Ganadas: {userData.gamesWon}</Typography>
+        <Typography variant="body2">
+          Jugadas: {playerData.gamesPlayed}
+        </Typography>
+        <Typography variant="body2">Ganadas: {playerData.gamesWon}</Typography>
         <Typography variant="body2">
           Creadas: {userData.createdGames}
         </Typography>
