@@ -16,8 +16,9 @@ function Players() {
     api
       .getPlayers()
       .then((response) => {
+        console.log(response.data)
         const sortedPlayers = response.data.sort(
-          (a, b) => b.gamesWon - a.gamesWon
+          (a, b) => b.wonInCurrentSeason - a.wonInCurrentSeason
         );
         setPlayers(sortedPlayers);
       })
@@ -61,13 +62,13 @@ function Players() {
                   key={p.username}
                   image={p.image}
                   username={p.username}
-                  winned={p.gamesWon}
+                  winned={p.wonInCurrentSeason}
                   achievements={checkPlayerAchievements(
                     p.username,
                     achievements
                   )}
                   played={p.gamesPlayed}
-                  average={p.gamesPlayed === 0 ? "-" : ((p.totalScore / p.gamesPlayed).toFixed(1))}
+                  wonHistory={p.gamesWon}
                   width="45%"
                   margin="10px"
                   onClick={() => handlePlayerCardClick(p)}

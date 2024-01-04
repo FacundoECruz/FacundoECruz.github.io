@@ -28,7 +28,7 @@ function TopTenPlayer({ data }) {
         </Typography>
       </Box>
       <Box sx={{ width: "150px" }}>
-        <Stars value={data.gamesWon} />
+        <Stars value={data.gamesWon} starWidth={"12px"} />
       </Box>
       <Typography color={"white"}>{data.totalScore}</Typography>
     </Box>

@@ -16,7 +16,7 @@ function PlayerCard({
   winned,
   achievements,
   played,
-  average,
+  wonHistory,
   width,
   margin,
   onClick,
@@ -74,8 +74,8 @@ function PlayerCard({
             <Typography sx={{color: "yellow", ml: "4px"}}>{played}</Typography>
           </Box>
           <Box sx={{display: "flex" }}>
-            <Typography>Prom: </Typography>
-            <Typography sx={{color: "yellow", ml: "4px"}}>{average}</Typography>
+            <Typography>Ganadas: </Typography>
+            <Typography sx={{color: "yellow", ml: "4px"}}>{wonHistory}</Typography>
           </Box>
         </Box>
       </CardContent>
