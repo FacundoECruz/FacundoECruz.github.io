@@ -27,6 +27,8 @@ const api = {
   editUser: (username, userData) => server.put(`/users/${username}`, userData),
   deleteUser: (username) => server.delete(`/users/${username}`),
   getAchievements: () => server.get("/achievements"),
+  updateDataService: () => server.post("/data"),
+  getPlayerDataService: (player) => server.get(`/data/${player}`),
   authenticatedRequest: async (url, method, data, token) => {
     setAuthToken(token);
     try {
