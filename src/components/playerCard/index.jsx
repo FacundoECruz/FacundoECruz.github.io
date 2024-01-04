@@ -66,7 +66,7 @@ function PlayerCard({
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-            <Stars value={winned} />
+            <Stars value={winned} starWidth={"12px"} />
           </Box>
           <AchievementsBox data={achievements} />
           <Box sx={{display: "flex" }}>
