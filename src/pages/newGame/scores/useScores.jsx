@@ -140,6 +140,7 @@ export function useScores(backToForm) {
     api.getAchievements().then((res) => {
       window.localStorage.setItem("achievements", JSON.stringify(res.data));
     });
+    api.updateDataService().then((res) => console.log(res));
   }
 
   // PREV ROUND

@@ -30,6 +30,7 @@ function App() {
         window.localStorage.setItem("achievements", JSON.stringify(res.data));
       })
       .catch((error) => {
+        console.log(error)
           setDataFromServer("authError")
       });
   }, []);

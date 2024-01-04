@@ -1,93 +1,105 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import Stars from "../../components/Stars";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
-import AchievementsBox from "../../components/achievements/AchievementsBox";
+import { Box, Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import api from "../../utils/api-client";
+import PlayerDashboardHeader from "./components/PlayerDashboardHeader";
+import PlayedAndWinnedBidsData from "./components/PlayedAndWinnedBidsData";
+import StickersAndPerfectGame from "./components/StickersAndPerfectGame";
+import GameStagesStats from "./components/GameStagesStats";
+import RoundsChart from "./components/RoundsChart";
+import Streaks from "./components/Streaks";
 
 function PlayerModal({ player, onClose, stats }) {
-  const defaultImage =
-    "https://res.cloudinary.com/dfknsvqer/image/upload/v1689874326/empty_user_jyenqo.jpg";
+  const [playerData, setPlayerData] = useState({
+    winnedRounds: 0,
+    lostRounds: 0,
+    earlyGameScore: 0,
+    midGameScore: 0,
+    lateGameScore: 0,
+    playedGames: 0,
+    totalExtraScore: 0,
+    flawlessVictory: 0,
+    totalScore: 0,
+    bestStreak: 0,
+    worstStreak: 0,
+  });
 
-  const rowStyles = {display: "flex", flexDirection: "row", justifyContent: "flex-start", my: 1};
-  function iconStyles(color) {
-    return {color: color, mr: 1}
-  }
+  useEffect(() => {
+    api
+      .getPlayerDataService(player.username)
+      .then((res) => {
+        setPlayerData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [player]);
+
+  const earlyPercentage = playerData.playedGames !== 0 ? (
+    (playerData.earlyGameScore / playerData.totalScore) *
+    100
+  ).toFixed(1) : 0 ;
+  const midPercentage = playerData.playedGames !== 0 ? (
+    (playerData.midGameScore / playerData.totalScore) *
+    100
+  ).toFixed(1) : 0;
+  const latePercentage = playerData.playedGames !== 0 ? (
+    (playerData.lateGameScore / playerData.totalScore) *
+    100
+  ).toFixed(1) : 0;
+
+  const percentages = playerData.playedGames !== 0 ? { earlyPercentage, midPercentage, latePercentage } : null;
+
+  const mainContainerStyle = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  const modalContainerStyle = {
+    background: "black",
+    padding: "12px",
+    borderRadius: "8px",
+    width: "95%",
+    maxHeight: "100%",
+    overflow: "auto",
+  };
+
+  const playerDetailsContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+  };
+
+  const btnStyle = {
+    color: "lightblue",
+    border: "1px solid lightblue",
+    marginTop: "10px",
+  };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          background: "white",
-          padding: "10px",
-          borderRadius: "8px",
-          width: { md: "50%", sm: "95%" },
-          maxHeight: "350px",
-        }}
-      >
-        <Card
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            boxSizing: "border-box",
-            bgcolor: "green",
-          }}
-        >
-          <CardMedia
-            component="img"
-            alt="user pic"
-            image={player.image === "" ? defaultImage : player.image}
-            sx={{ width: "40%", maxHeight: "300px" }}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5">
-              {player.username}
-            </Typography>
-            <Box
-              sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
-            >
-              <Stars value={player.gamesWon} />
-            </Box>
-            <Box sx={rowStyles}>
-              <SportsEsportsIcon sx={iconStyles("orange")}/>
-              <Typography>Jugadas: {player.gamesPlayed}</Typography>
-            </Box>
-            <Box sx={rowStyles}>
-              <MilitaryTechIcon sx={iconStyles("purple")}/>
-              <Typography>
-                Promedio:
-                {player.totalScore === 0
-                  ? "-"
-                  : (player.totalScore / player.gamesPlayed).toFixed(1)}
-              </Typography>
-            </Box>
-            <AchievementsBox data={stats}/>
-          </CardContent>
-        </Card>
-        <Button onClick={onClose} sx={{ color: "red" }}>
-          Cerrar
-        </Button>
-      </div>
+    <div style={mainContainerStyle}>
+      <Box style={modalContainerStyle}>
+        <PlayerDashboardHeader player={player} />
+        <Box sx={playerDetailsContainerStyle}>
+          <PlayedAndWinnedBidsData player={player} playerData={playerData} />
+          <StickersAndPerfectGame playerData={playerData} stats={stats} />
+          <GameStagesStats percentages={percentages} />
+          <RoundsChart playerData={playerData} />
+          <Streaks playerData={playerData} />
+          <Button onClick={onClose} sx={btnStyle}>
+            Volver
+          </Button>
+        </Box>
+      </Box>
     </div>
   );
 }

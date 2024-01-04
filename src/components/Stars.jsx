@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import StarIcon from "@mui/icons-material/Star";
 
-function StarRating({ value }) {
+function StarRating({ value, starWidth }) {
   const stars = [];
 
   for (let i = 0; i < value; i++) {
-    stars.push(<StarIcon key={i} sx={{width: "12px", color: "gold"}}/>);
+    stars.push(<StarIcon key={i} sx={{width: starWidth, color: "gold"}}/>);
   }
 
   return <>{stars}</>;

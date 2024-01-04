@@ -34,13 +34,6 @@ function NewGame() {
       setCurrentPlayersInLocalStorage(gameData)
       setLoading(false);
       setGameState(gameData.status);
-    // api.createGame(playersForBackend).then((res) => {
-    //   saveGameDataInLocalStorage(res.data)
-    //   removeOldPlayersFromLocalStorage()
-    //   setCurrentPlayersInLocalStorage(res.data)
-    //   setLoading(false);
-    //   setGameState(res.data.status);
-    // });
   }
 
   function saveGameDataInLocalStorage(data){
