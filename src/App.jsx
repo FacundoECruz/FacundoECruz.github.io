@@ -31,14 +31,14 @@ function App() {
       })
       .catch((error) => {
         console.log(error)
-          setDataFromServer("authError")
+        setDataFromServer("authError")
       });
   }, []);
 
   return (
     <>
       <AuthProvider>
-        <Navbar dataFromServer={dataFromServer} />
+        <Navbar dataFromServer={dataFromServer}/>
         <Router basename="/" dataFromServer={dataFromServer}>
           <Routes dataFromServer={dataFromServer}>
             <Route

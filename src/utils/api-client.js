@@ -39,6 +39,8 @@ const api = {
       });
       return response.data;
     } catch (e) {
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("user");
       return e;
     }
   },
